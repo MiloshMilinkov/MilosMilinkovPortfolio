@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import HeroSection from './components/hero/HeroSection.vue'
 import AboutSection from './components/sections/AboutSection.vue'
+import SkillsSection from './components/sections/SkillsSection.vue'
 import SiteFooter from './components/layout/SiteFooter.vue'
 import SiteHeader from './components/layout/SiteHeader.vue'
 </script>
@@ -11,9 +12,7 @@ import SiteHeader from './components/layout/SiteHeader.vue'
   <main id="main" tabindex="-1">
     <HeroSection />
     <AboutSection />
-    <section id="skills" class="section stub" aria-labelledby="skills-title">
-      <div class="container"><h2 id="skills-title">Skills</h2></div>
-    </section>
+    <SkillsSection />
     <section id="experience" class="section stub" aria-labelledby="experience-title">
       <div class="container"><h2 id="experience-title">Experience</h2></div>
     </section>
