@@ -63,8 +63,7 @@ test('selecting a skill lists the projects that use it', async ({ page }) => {
   await expect(readout.getByRole('button', { name: 'Show in projects' })).toBeVisible()
 })
 
-// Projects section arrives in Task 9; un-fixme there.
-test.fixme('"Show in projects" filters the projects and moves focus there', async ({ page }) => {
+test('"Show in projects" filters the projects and moves focus there', async ({ page }) => {
   await page.goto('/')
   const skills = page.locator('#skills')
   await skills.getByRole('tab', { name: 'Frontend' }).click()

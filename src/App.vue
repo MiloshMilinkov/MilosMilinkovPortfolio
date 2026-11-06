@@ -2,6 +2,7 @@
 import HeroSection from './components/hero/HeroSection.vue'
 import AboutSection from './components/sections/AboutSection.vue'
 import SkillsSection from './components/sections/SkillsSection.vue'
+import ProjectsSection from './components/sections/ProjectsSection.vue'
 import SiteFooter from './components/layout/SiteFooter.vue'
 import SiteHeader from './components/layout/SiteHeader.vue'
 </script>
@@ -16,9 +17,7 @@ import SiteHeader from './components/layout/SiteHeader.vue'
     <section id="experience" class="section stub" aria-labelledby="experience-title">
       <div class="container"><h2 id="experience-title">Experience</h2></div>
     </section>
-    <section id="projects" class="section stub" aria-labelledby="projects-title">
-      <div class="container"><h2 id="projects-title">Projects</h2></div>
-    </section>
+    <ProjectsSection />
     <section id="contact" class="section stub" aria-labelledby="contact-title">
       <div class="container"><h2 id="contact-title">Contact</h2></div>
     </section>

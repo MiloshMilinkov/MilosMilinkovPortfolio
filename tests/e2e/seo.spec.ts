@@ -61,8 +61,7 @@ test('sitemap.xml lists the home page', async ({ request }) => {
 test.describe('without JavaScript', () => {
   test.use({ javaScriptEnabled: false })
 
-  // Bio arrives in Task 7 and projects in Task 9; un-fixme in Task 9.
-  test.fixme('content is readable from the prerendered HTML', async ({ page }) => {
+  test('content is readable from the prerendered HTML', async ({ page }) => {
     await page.goto('/')
     await expect(page.getByText(profile.bio[0]!.slice(0, 60))).toBeVisible()
     for (const p of projects) await expect(page.getByText(p.title, { exact: true }).first()).toBeAttached()
