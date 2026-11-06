@@ -1,4 +1,4 @@
-import type { Project, Skill } from '../data/types'
+import type { Project, Skill } from '../data/types.ts'
 
 export interface ProjectAction {
   href: string

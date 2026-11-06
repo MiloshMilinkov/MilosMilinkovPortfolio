@@ -1,4 +1,4 @@
-import type { Stat } from './types'
+import type { Stat } from './types.ts'
 
 export const profile = {
   headline: 'I build reliable back-office systems by day and fast, search-friendly web apps for clients.',

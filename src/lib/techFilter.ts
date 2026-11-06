@@ -1,4 +1,4 @@
-import type { Project, Skill } from '../data/types'
+import type { Project, Skill } from '../data/types.ts'
 
 /** Projects that use `techId`, in their original order; `null` means no filter. */
 export function projectsUsing(projects: Project[], techId: string | null): Project[] {

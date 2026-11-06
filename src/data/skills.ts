@@ -1,4 +1,4 @@
-import type { Skill, SkillGroupInfo } from './types'
+import type { Skill, SkillGroupInfo } from './types.ts'
 
 export const skillGroups: SkillGroupInfo[] = [
   {

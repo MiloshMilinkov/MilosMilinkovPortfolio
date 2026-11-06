@@ -1,4 +1,4 @@
-import type { Education, Role } from './types'
+import type { Education, Role } from './types.ts'
 
 export const roles: Role[] = [
   {

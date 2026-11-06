@@ -1,4 +1,4 @@
-import type { Project } from './types'
+import type { Project } from './types.ts'
 
 const gh = (repo: string) => `https://github.com/MiloshMilinkov/${repo}`
 
