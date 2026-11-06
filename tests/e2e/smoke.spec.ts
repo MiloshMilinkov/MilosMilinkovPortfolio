@@ -5,7 +5,8 @@ test('home page is prerendered and served', async ({ page, request }) => {
   expect(res.status()).toBe(200)
   const html = await res.text()
   // Name must be in the raw HTML (prerendered), not only after client render.
-  expect(html).toMatch(/<h1[^>]*>[\s\S]*Miloš Milinkov[\s\S]*<\/h1>/)
+  const h1 = html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/)?.[1] ?? ''
+  expect(h1.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim()).toBe('Miloš Milinkov')
 
   await page.goto('/')
   await expect(page.locator('h1')).toContainText('Miloš Milinkov')

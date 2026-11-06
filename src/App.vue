@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import HeroSection from './components/hero/HeroSection.vue'
 import SiteFooter from './components/layout/SiteFooter.vue'
 import SiteHeader from './components/layout/SiteHeader.vue'
 </script>
@@ -7,9 +8,7 @@ import SiteHeader from './components/layout/SiteHeader.vue'
   <a class="skip-link" href="#main">Skip to content</a>
   <SiteHeader />
   <main id="main" tabindex="-1">
-    <section id="top" class="section stub">
-      <div class="container"><h1>Miloš Milinkov</h1></div>
-    </section>
+    <HeroSection />
     <section id="about" class="section stub" aria-labelledby="about-title">
       <div class="container"><h2 id="about-title">About</h2></div>
     </section>
