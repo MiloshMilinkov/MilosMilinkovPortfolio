@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import HeroSection from './components/hero/HeroSection.vue'
+import AboutSection from './components/sections/AboutSection.vue'
 import SiteFooter from './components/layout/SiteFooter.vue'
 import SiteHeader from './components/layout/SiteHeader.vue'
 </script>
@@ -9,9 +10,7 @@ import SiteHeader from './components/layout/SiteHeader.vue'
   <SiteHeader />
   <main id="main" tabindex="-1">
     <HeroSection />
-    <section id="about" class="section stub" aria-labelledby="about-title">
-      <div class="container"><h2 id="about-title">About</h2></div>
-    </section>
+    <AboutSection />
     <section id="skills" class="section stub" aria-labelledby="skills-title">
       <div class="container"><h2 id="skills-title">Skills</h2></div>
     </section>

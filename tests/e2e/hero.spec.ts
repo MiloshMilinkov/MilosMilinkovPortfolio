@@ -25,10 +25,9 @@ test('warp canvas is decorative and animates', async ({ page }) => {
   await page.goto('/')
   const canvas = page.locator('#top canvas')
   await expect(canvas).toHaveAttribute('aria-hidden', 'true')
-  await page.waitForTimeout(300)
   const a = await snapshot(page)
-  await page.waitForTimeout(500)
-  expect(await snapshot(page)).not.toBe(a)
+  // Poll rather than sleep: under parallel load a browser may paint frames late.
+  await expect.poll(() => snapshot(page), { timeout: 5000 }).not.toBe(a)
 })
 
 test.describe('reduced motion', () => {
