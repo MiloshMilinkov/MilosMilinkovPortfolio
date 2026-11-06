@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import HeroSection from './components/hero/HeroSection.vue'
-import AboutSection from './components/sections/AboutSection.vue'
-import SkillsSection from './components/sections/SkillsSection.vue'
-import ProjectsSection from './components/sections/ProjectsSection.vue'
 import SiteFooter from './components/layout/SiteFooter.vue'
 import SiteHeader from './components/layout/SiteHeader.vue'
+import AboutSection from './components/sections/AboutSection.vue'
+import ContactSection from './components/sections/ContactSection.vue'
+import ExperienceSection from './components/sections/ExperienceSection.vue'
+import ProjectsSection from './components/sections/ProjectsSection.vue'
+import SkillsSection from './components/sections/SkillsSection.vue'
 </script>
 
 <template>
@@ -14,20 +16,9 @@ import SiteHeader from './components/layout/SiteHeader.vue'
     <HeroSection />
     <AboutSection />
     <SkillsSection />
-    <section id="experience" class="section stub" aria-labelledby="experience-title">
-      <div class="container"><h2 id="experience-title">Experience</h2></div>
-    </section>
+    <ExperienceSection />
     <ProjectsSection />
-    <section id="contact" class="section stub" aria-labelledby="contact-title">
-      <div class="container"><h2 id="contact-title">Contact</h2></div>
-    </section>
+    <ContactSection />
   </main>
   <SiteFooter />
 </template>
-
-<style>
-/* Temporary section stubs; each is replaced by its real component in later tasks. */
-.stub {
-  min-height: 70vh;
-}
-</style>
