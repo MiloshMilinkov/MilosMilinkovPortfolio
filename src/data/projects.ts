@@ -58,8 +58,8 @@ export const projects: Project[] = [
   {
     id: 'astra',
     title: 'ASTRA-engineering',
-    kind: 'Construction company portfolio',
-    summary: 'Responsive company profile with a dynamic project gallery that improved the client’s visibility and SEO.',
+    kind: 'Engineering company website',
+    summary: 'Responsive company site with services, a dynamic gallery and one-tap contact, built to improve the client’s visibility and SEO.',
     highlights: ['Company profile, services and a dynamic image gallery.', 'Deployed on Vercel.'],
     tech: ['vue', 'javascript', 'vercel'],
     status: 'live',

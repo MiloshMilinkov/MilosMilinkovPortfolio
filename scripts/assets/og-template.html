@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>OG image template</title>
+    <style>
+      @font-face {
+        font-family: 'Grenze Gotisch';
+        font-weight: 100 900;
+        src: url('../../node_modules/@fontsource-variable/grenze-gotisch/files/grenze-gotisch-latin-wght-normal.woff2') format('woff2');
+      }
+      @font-face {
+        font-family: 'Grenze Gotisch';
+        font-weight: 100 900;
+        src: url('../../node_modules/@fontsource-variable/grenze-gotisch/files/grenze-gotisch-latin-ext-wght-normal.woff2') format('woff2');
+        unicode-range: U+0100-02BA;
+      }
+      @font-face {
+        font-family: 'IBM Plex Sans';
+        font-weight: 100 700;
+        src: url('../../node_modules/@fontsource-variable/ibm-plex-sans/files/ibm-plex-sans-latin-wght-normal.woff2') format('woff2');
+      }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; width: 1200px; height: 630px; overflow: hidden; }
+      body {
+        background:
+          radial-gradient(ellipse 70% 90% at 82% 50%, rgb(217 65 43 / 0.16), transparent 60%),
+          radial-gradient(ellipse 80% 70% at 20% 0%, rgb(200 163 90 / 0.10), transparent 70%),
+          #0b0c0e;
+        color: #e6e1d6;
+        font-family: 'IBM Plex Sans', sans-serif;
+        display: grid;
+        grid-template-columns: 1fr 360px;
+        align-items: center;
+        gap: 64px;
+        padding: 0 84px;
+        position: relative;
+      }
+      body::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: repeating-linear-gradient(to bottom, transparent 0 2px, rgb(0 0 0 / 0.18) 2px 3px);
+      }
+      .rule { width: 120px; height: 3px; background: #c8a35a; margin: 28px 0 26px; }
+      h1 { margin: 0; font-family: 'Grenze Gotisch', serif; font-weight: 700; font-size: 112px; line-height: 0.92; }
+      p { margin: 0; font-size: 30px; line-height: 1.35; color: #c9c4b9; max-width: 640px; }
+      .tech { margin-top: 26px; font-size: 22px; color: #c8a35a; letter-spacing: 0.02em; }
+      .arch {
+        width: 360px; height: 470px; position: relative;
+        clip-path: path('M180 0C270 50 352 140 360 260V470H0V260C8 140 90 50 180 0Z');
+        background: #c8a35a;
+      }
+      .arch img {
+        position: absolute; inset: 5px; width: 350px; height: 460px; object-fit: cover;
+        clip-path: path('M175 0C262 50 342 138 350 255V460H0V255C8 138 88 50 175 0Z');
+        filter: grayscale(0.25) contrast(1.05);
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <h1>Miloš<br />Milinkov</h1>
+      <div class="rule"></div>
+      <p>Software developer — .NET &amp; SQL back-office systems, Vue.js web apps, AI-assisted engineering.</p>
+      <div class="tech">Belgrade, Serbia</div>
+    </div>
+    <div class="arch"><img src="../../public/images/portrait-360.webp" alt="" /></div>
+  </body>
+</html>

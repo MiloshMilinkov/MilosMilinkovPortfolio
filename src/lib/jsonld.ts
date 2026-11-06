@@ -22,7 +22,7 @@ export function buildJsonLd(): Record<string, unknown> {
     jobTitle: site.jobTitle,
     description: profile.headline,
     url: home,
-    image: `${site.SITE_URL}/images/portrait-640.webp`,
+    image: `${site.SITE_URL}/images/portrait-360.webp`,
     email: `mailto:${site.email}`,
     address: { '@type': 'PostalAddress', addressLocality: 'Belgrade', addressCountry: 'RS' },
     worksFor: { '@type': 'Organization', name: 'Euronet Worldwide' },

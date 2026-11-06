@@ -1,0 +1,16 @@
+{
+  "name": "Miloš Milinkov — Portfolio",
+  "short_name": "Miloš Milinkov",
+  "description": "Software developer in Belgrade: .NET & SQL Server back-office systems, Vue.js web apps and AI-assisted engineering.",
+  "lang": "en",
+  "start_url": "/",
+  "scope": "/",
+  "display": "minimal-ui",
+  "background_color": "#0b0c0e",
+  "theme_color": "#0b0c0e",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

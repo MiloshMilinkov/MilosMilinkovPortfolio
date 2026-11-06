@@ -1,0 +1,51 @@
+:root {
+  color-scheme: dark;
+
+  /* Palette (spec §5). Ember is never small body text; buttons use ember-deep. */
+  --void: #0b0c0e;
+  --gunmetal: #16181c;
+  --plate: #2a2d33;
+  --steel: #8a8f98;
+  --bone: #e6e1d6;
+  --brass: #c8a35a;
+  --brass-dim: #8c7240;
+  --ember: #d9412b;
+  --ember-deep: #a82c1b;
+  --ember-hot: #ff5a3c;
+  --terminal: #7fbf7f;
+
+  /* Type: gothic display, engineered body, mono only for terminal output. */
+  --font-display: 'Grenze Gotisch', 'Iowan Old Style', Georgia, serif;
+  --font-body: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Mono', Consolas, monospace;
+
+  /* Fluid scale, roughly the classic 16 · 21 · 24 · 36 · 48 · 72 sequence. */
+  --step--1: clamp(0.84rem, 0.82rem + 0.1vw, 0.9rem);
+  --step-0: clamp(1rem, 0.97rem + 0.15vw, 1.0625rem);
+  --step-1: clamp(1.2rem, 1.12rem + 0.4vw, 1.4rem);
+  --step-2: clamp(1.5rem, 1.32rem + 0.9vw, 2.1rem);
+  --step-3: clamp(2.4rem, 1.9rem + 2.4vw, 3.9rem);
+  --step-4: clamp(3.4rem, 2.2rem + 6vw, 7.4rem);
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4.5rem;
+
+  --measure: 66ch;
+  --header-h: 4rem;
+  --gutter: 1rem;
+  --chamfer: 14px;
+
+  --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+@media (min-width: 48rem) {
+  :root {
+    --gutter: 2rem;
+  }
+}

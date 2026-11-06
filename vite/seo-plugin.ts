@@ -47,6 +47,17 @@ export function seoPlugin(): Plugin {
         let out = html
         for (const [token, value] of Object.entries(tokens)) out = out.replaceAll(token, escapeAttr(value))
 
+        // Preload the display font (latin subset) — it sets the hero name, the LCP text.
+        const fontFile = ctx.bundle
+          ? Object.keys(ctx.bundle).find((f) => /grenze-gotisch-latin-wght-normal-[\w-]+\.woff2$/.test(f))
+          : undefined
+        if (fontFile) {
+          out = out.replace(
+            '<meta name="viewport"',
+            `<link rel="preload" href="/${fontFile}" as="font" type="font/woff2" crossorigin>\n    <meta name="viewport"`,
+          )
+        }
+
         if (ctx.path === '/index.html' || ctx.path === '/') {
           // Escape "<" so content can never close the script element early.
           const json = JSON.stringify(buildJsonLd()).replace(/</g, '\\u003c')

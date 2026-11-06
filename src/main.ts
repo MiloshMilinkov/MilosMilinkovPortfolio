@@ -4,6 +4,7 @@
  * Proprietary and confidential. Use, copying, modification or distribution
  * without written permission is prohibited. See the LICENSE file.
  */
+import './styles/index.css'
 import App from './App.vue'
 import { createPortfolioApp } from './app'
 

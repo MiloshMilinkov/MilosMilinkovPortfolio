@@ -1,2 +1,2 @@
-// The 404 page is static: this entry only pulls in the shared styles (added with the design system).
-export {}
+// The 404 page is static (no hydration): this entry only pulls in the shared styles.
+import './styles/index.css'
