@@ -8,8 +8,5 @@ import './styles/index.css'
 import App from './App.vue'
 import { createPortfolioApp } from './app'
 
-// Progressive enhancement hook: "hidden until revealed" styles apply only under html.js.
-document.documentElement.classList.add('js')
-
 // Production HTML is prerendered, so hydrate it; the dev server serves an empty shell.
 createPortfolioApp(App, { ssr: !import.meta.env.DEV }).mount('#app')

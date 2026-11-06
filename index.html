@@ -35,6 +35,16 @@
     <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
+    <noscript>
+      <style>
+        /* Without JavaScript the menu button cannot open the nav, so show the links instead. */
+        .menu-button { display: none !important; }
+        .site-nav { display: block !important; position: static !important; border: 0 !important; padding: 0 0 0.75rem !important; }
+        .site-nav ul { flex-direction: row !important; flex-wrap: wrap; gap: 0 1.25rem !important; }
+        .site-nav a { font-size: 1rem !important; font-family: inherit !important; }
+        .site-header__bar { flex-wrap: wrap; }
+      </style>
+    </noscript>
   </head>
   <body>
     <div id="app"><!--app-html--></div>
