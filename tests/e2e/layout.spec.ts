@@ -6,6 +6,7 @@ const NAV: [string, string][] = [
   ['Work', 'projects'],
   ['Process', 'process'],
   ['About', 'about'],
+  ['Workflow', 'skills'],
   ['Contact', 'contact'],
 ]
 const WEBKIT_TAB = 'WebKit (like Safari by default) does not move Tab focus to links'
@@ -70,7 +71,7 @@ test.describe('mobile menu', () => {
     await page.goto('/')
     const button = page.getByRole('button', { name: 'Menu' })
     await button.click()
-    await page.locator(`#${await button.getAttribute('aria-controls')}`).getByRole('link', { name: 'Work' }).click()
+    await page.locator(`#${await button.getAttribute('aria-controls')}`).getByRole('link', { name: 'Work', exact: true }).click()
     await expect(button).toHaveAttribute('aria-expanded', 'false')
     await expect(page).toHaveURL(/#projects$/)
   })

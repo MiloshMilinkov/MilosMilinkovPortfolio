@@ -29,7 +29,7 @@ sets CSP/HSTS/cache). Font: Geist (self-hosted, latin + latin-ext). Runtime depe
 
 - `src/data/` — all content: `site.ts` (name, `SITE_URL`, links), `profile.ts`, `projects.ts`,
   `services.ts` (services + process steps), `skills.ts`, `experience.ts`, `nav.ts`, `types.ts`.
-- `src/lib/` — pure logic: project link rules, tech filter, JSON-LD, schematic art.
+- `src/lib/` — pure logic: project link rules, skill usage, JSON-LD, schematic art.
 - `src/components/` — `hero/`, `sections/`, `projects/`, `layout/`, `ui/` (Icon, cards, badges…).
 - `src/styles/` — `tokens.css` (palette, type scale), `base.css` (cards, buttons, pills), `fonts.css`.
 - `vite/seo-plugin.ts` — fills `__TOKENS__` in index.html/404.html, injects JSON-LD and the font
@@ -43,6 +43,7 @@ sets CSP/HSTS/cache). Font: Geist (self-hosted, latin + latin-ext). Runtime depe
   Fictional showcase sites get `concept: true`: shown as Live but never counted as client work.
 - New live project screenshots: add `image: '<id>'`, then `node scripts/assets/capture-screenshots.mjs`.
 - `SITE_URL` in `src/data/site.ts` drives every absolute URL (canonical, OG, sitemap, JSON-LD).
+- Tool/technology names belong only in the workflow section (`#skills`); an e2e test enforces it.
 - Never publish the phone number or the CV PDF; tests check for `+381` / `tel:`.
 - English only, dark theme only. Copy is client-facing: the site sells Miloš's web-building service.
 

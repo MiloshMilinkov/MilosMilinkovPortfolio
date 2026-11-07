@@ -9,8 +9,8 @@ if (!source) {
   process.exit(1)
 }
 
-// The CV photo is 360×360; 240 and 360 avoid upscaling.
-const written = await writeVariants(source, path.join(publicDir, 'images', 'portrait'), [240, 360], (img) =>
+// The CV photo is 360×360, so only the 360 variant is made (no upscaling).
+const written = await writeVariants(source, path.join(publicDir, 'images', 'portrait'), [360], (img) =>
   img.resize({ width: 360, height: 360, fit: 'cover', position: 'attention' }),
 )
 console.log(written.join('\n'))

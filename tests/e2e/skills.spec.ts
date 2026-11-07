@@ -60,16 +60,4 @@ test('selecting a skill lists the projects that use it', async ({ page }) => {
   await expect(vue).toHaveAttribute('aria-pressed', 'true')
   const readout = skills.locator('.readout')
   await expect(readout.getByRole('listitem')).toHaveText(VUE_PROJECTS)
-  await expect(readout.getByRole('button', { name: 'Show in projects' })).toBeVisible()
-})
-
-test('"Show in projects" filters the projects and moves focus there', async ({ page }) => {
-  await page.goto('/')
-  const skills = page.locator('#skills')
-  await skills.getByRole('tab', { name: 'Frontend' }).click()
-  await skills.getByRole('button', { name: /Vue\.js/ }).click()
-  await skills.getByRole('button', { name: 'Show in projects' }).click()
-  await expect(page.locator('#projects-title')).toBeFocused()
-  await expect(page.locator('#projects-title')).toBeInViewport()
-  await expect(page.locator('#projects').getByRole('button', { name: 'Vue.js', pressed: true })).toBeVisible()
 })

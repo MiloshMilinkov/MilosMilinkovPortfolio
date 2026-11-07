@@ -21,7 +21,8 @@ test('portrait is described, sized and prioritised', async ({ page }) => {
 
 test('stats count up to their final values', async ({ page }) => {
   await page.goto('/')
-  const expected = profile.stats.filter((s) => !s.label.includes('live')).map((s) => `${s.value}${s.suffix}`)
+  await page.locator('#top .hero__stats').scrollIntoViewIfNeeded()
+  const expected = profile.stats.map((s) => `${s.value}${s.suffix}`)
   await expect(page.locator('#top .stat__value')).toHaveText(expected, { timeout: 4000 })
 })
 

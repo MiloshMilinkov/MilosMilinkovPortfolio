@@ -6,9 +6,8 @@ import ExternalLink from '../ui/ExternalLink.vue'
 import ResponsiveImage from '../ui/ResponsiveImage.vue'
 import SchematicArt from '../ui/SchematicArt.vue'
 import StatusBadge from '../ui/StatusBadge.vue'
-import TechTag from '../ui/TechTag.vue'
 
-const props = defineProps<{ project: Project; skillLabel: (id: string) => string; activeTech: string | null; flip?: boolean }>()
+const props = defineProps<{ project: Project; flip?: boolean }>()
 const link = computed(() => resolveProjectLink(props.project))
 
 /**
@@ -53,9 +52,6 @@ function onCardClick(event: MouseEvent) {
       <p class="project__summary">{{ project.summary }}</p>
       <ul v-if="project.highlights.length" class="project__highlights">
         <li v-for="(h, i) in project.highlights" :key="i">{{ h }}</li>
-      </ul>
-      <ul class="project__tech" aria-label="Technologies">
-        <li v-for="t in project.tech" :key="t"><TechTag :label="skillLabel(t)" :active="t === activeTech" /></li>
       </ul>
 
       <div class="project__footer">
@@ -173,13 +169,6 @@ function onCardClick(event: MouseEvent) {
 
 .project__highlights li::marker {
   color: var(--accent);
-}
-
-.project__tech {
-  list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2);
 }
 
 .project__footer {

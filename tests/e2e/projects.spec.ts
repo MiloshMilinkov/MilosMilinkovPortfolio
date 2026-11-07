@@ -1,8 +1,6 @@
 import { expect, test, type Page } from '@playwright/test'
 
 const card = (page: Page, id: string) => page.locator(`#projects [data-project="${id}"]`)
-const visibleIds = (page: Page) =>
-  page.locator('#projects [data-project]:visible').evaluateAll((els) => els.map((e) => e.getAttribute('data-project')))
 
 test('shows seven featured projects and no archive group', async ({ page }) => {
   await page.goto('/')
@@ -90,23 +88,13 @@ test('live projects show screenshots, others show schematic art', async ({ page 
   await expect(card(page, 'silicon-lottery').locator('svg.schematic')).toHaveCount(1)
 })
 
-test('filtering by technology shows only matching projects', async ({ page }) => {
+test('technology names appear only in the workflow section', async ({ page }) => {
   await page.goto('/')
-  const section = page.locator('#projects')
-  const chip = section.getByRole('button', { name: 'C#', exact: true })
-  await chip.click()
-  await expect(chip).toHaveAttribute('aria-pressed', 'true')
-  await expect(section.locator('[aria-live="polite"]')).toHaveText('Showing 2 projects using C#')
-  await expect.poll(() => visibleIds(page)).toEqual(['euronet', 'silicon-lottery'])
-
-  await section.getByRole('button', { name: 'Clear filter' }).click()
-  await expect.poll(async () => (await visibleIds(page)).length).toBe(7)
-})
-
-test('a filter matching one project says so', async ({ page }) => {
-  await page.goto('/')
-  const section = page.locator('#projects')
-  await section.getByRole('button', { name: 'React', exact: true }).click()
-  await expect(section.locator('[aria-live="polite"]')).toHaveText('Showing 1 project using React')
-  await expect.poll(() => visibleIds(page)).toEqual(['projectanvil'])
+  const tools =
+    /\b(Vue|React|Angular|ASP\.NET|SQL Server|SQLite|MongoDB|Cloudflare|Vite|TypeScript|Playwright|Docker|SSIS|Codex|Claude Code|Node\.js)\b|\.NET\b/
+  for (const id of ['top', 'services', 'projects', 'process', 'about', 'experience', 'contact']) {
+    const text = await page.locator(`#${id}`).innerText()
+    expect(text.match(tools)?.[0] ?? null, id).toBeNull()
+  }
+  await expect(page.locator('#skills')).toContainText('Claude Code')
 })

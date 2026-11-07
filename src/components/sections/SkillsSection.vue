@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import { computed, nextTick, ref } from 'vue'
-import { prefersReducedMotion } from '../../composables/useReducedMotion.ts'
-import { useTechFilter } from '../../composables/useTechFilter.ts'
+import { computed, ref } from 'vue'
+import { profile } from '../../data/profile.ts'
 import { projects } from '../../data/projects.ts'
 import { skillGroups, skills, tierLabel } from '../../data/skills.ts'
 import type { Skill, SkillGroup } from '../../data/types.ts'
-import { projectsUsing, usageCount } from '../../lib/techFilter.ts'
+import { projectsUsing } from '../../lib/skillUsage.ts'
 import SectionHeading from '../ui/SectionHeading.vue'
 
 const TIER_SEGMENTS: Record<Skill['tier'], number> = { core: 3, proficient: 2, familiar: 1 }
@@ -13,11 +12,10 @@ const TIER_SEGMENTS: Record<Skill['tier'], number> = { core: 3, proficient: 2, f
 const activeGroup = ref<SkillGroup>(skillGroups[0]!.id)
 const selected = ref<Skill | null>(null)
 const tabRefs = ref<HTMLButtonElement[]>([])
-const { setFilter } = useTechFilter()
 
 const skillsIn = (group: SkillGroup) => skills.filter((s) => s.group === group)
 const usageText = (id: string) => {
-  const n = usageCount(projects, id)
+  const n = projectsUsing(projects, id).length
   return n === 0 ? '' : `Used in ${n} project${n === 1 ? '' : 's'}`
 }
 const selectedProjects = computed(() => (selected.value ? projectsUsing(projects, selected.value.id) : []))
@@ -48,14 +46,6 @@ function onTabKeydown(event: KeyboardEvent, index: number) {
 function toggleSkill(skill: Skill) {
   selected.value = selected.value?.id === skill.id ? null : skill
 }
-
-async function showInProjects() {
-  if (!selected.value) return
-  setFilter(selected.value.id)
-  await nextTick()
-  document.getElementById('projects')?.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth' })
-  document.getElementById('projects-title')?.focus({ preventScroll: true })
-}
 </script>
 
 <template>
@@ -63,8 +53,8 @@ async function showInProjects() {
     <div class="container">
       <SectionHeading
         id="skills-title"
-        title="Tech I work with"
-        lede="Pick a skill to see where I’ve used it — then jump straight to those projects."
+        title="How I work and what I use"
+        :lede="profile.workflow"
       />
 
       <div class="skills__console card">
@@ -130,16 +120,8 @@ async function showInProjects() {
               <ul v-if="selectedProjects.length" class="readout__list">
                 <li v-for="p in selectedProjects" :key="p.id">{{ p.title }}</li>
               </ul>
-              <button
-                v-if="selectedProjects.length"
-                class="btn btn--ghost readout__go"
-                type="button"
-                @click="showInProjects"
-              >
-                Show in projects
-              </button>
             </template>
-            <p v-else class="readout__hint">Select a skill to see the projects that use it.</p>
+            <p v-else class="readout__hint">Pick a tool to see which of my projects use it.</p>
           </div>
         </div>
       </div>

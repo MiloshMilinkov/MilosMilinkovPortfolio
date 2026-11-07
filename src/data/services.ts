@@ -26,21 +26,21 @@ export const services: Service[] = [
     icon: 'layers',
     title: 'Web apps and dashboards',
     summary: 'Custom tools for your business: client portals, admin panels, internal dashboards and workflows.',
-    includes: ['Vue.js front end', 'Node.js or .NET API', 'SQL Server, SQLite or MongoDB', 'Logins and user roles'],
+    includes: ['Fast, responsive interface', 'Secure server and API', 'Reliable database', 'Logins and user roles'],
   },
   {
     id: 'content',
     icon: 'edit',
     title: 'Content you can edit',
     summary: 'Publish articles and update pages yourself through a simple admin editor with a live preview.',
-    includes: ['Admin editor', 'Markdown articles', 'Per-page SEO tags', 'Images optimised for speed'],
+    includes: ['Simple admin editor', 'Articles with images', 'Per-page SEO tags', 'Images optimised for speed'],
   },
   {
     id: 'care',
     icon: 'shield',
     title: 'Hosting, speed and care',
     summary: 'Deployment, domain and SSL, security headers and ongoing updates, so the site stays fast and online.',
-    includes: ['Cloudflare hosting', 'Custom domain and SSL', 'Security headers', 'Updates and fixes'],
+    includes: ['Fast global hosting', 'Custom domain and SSL', 'Security best practices', 'Updates and fixes'],
   },
 ]
 

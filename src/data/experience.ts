@@ -9,7 +9,7 @@ export const roles: Role[] = [
     points: [
       {
         label: 'Financial back-office',
-        text: 'Build and maintain a system that automates invoice generation and payment tracking (.NET, Microsoft SQL Server).',
+        text: 'Build and maintain a system that automates invoice generation and payment tracking.',
       },
       {
         label: 'DCC reporting',
@@ -17,14 +17,14 @@ export const roles: Role[] = [
       },
       {
         label: 'Data integration',
-        text: 'Design SSIS packages that move and transform data between internal and external systems.',
+        text: 'Design data pipelines that move and transform data between internal and external systems.',
       },
       {
         label: 'Database optimization',
         text: 'Write, tune and deploy advanced stored procedures, applying SQL best practices for data integrity, speed and scalability.',
       },
       {
-        text: 'Generate financial reports with .NET Framework libraries and work with cross-functional teams to align features with business needs.',
+        text: 'Generate financial reports and work with cross-functional teams to align features with business needs.',
       },
     ],
   },
@@ -48,7 +48,7 @@ export const roles: Role[] = [
     points: [
       {
         label: 'Courses',
-        text: 'Designed and taught beginner courses in C#, Python and Unity game development for children of different ages.',
+        text: 'Designed and taught beginner programming and game-development courses for children of different ages.',
       },
       {
         label: 'Teaching & content',
@@ -66,8 +66,8 @@ export const education: Education[] = [
     place: 'Belgrade',
     period: '2019 — 2023',
     points: [
-      'Specialization in object-oriented programming with a strong emphasis on .NET, plus front-end frameworks.',
-      'Final thesis “Silicon Lottery”: a full-stack e-commerce app with a .NET Web API backend and an Angular frontend.',
+      'Specialisation in object-oriented programming, with balanced back-end and front-end work.',
+      'Final thesis “Silicon Lottery”: a full-stack e-commerce app for computer components.',
     ],
   },
 ]

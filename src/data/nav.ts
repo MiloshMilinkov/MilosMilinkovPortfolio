@@ -6,5 +6,6 @@ export const navLinks = [
   { id: 'projects', label: 'Work' },
   { id: 'process', label: 'Process' },
   { id: 'about', label: 'About' },
+  { id: 'skills', label: 'Workflow' },
   { id: 'contact', label: 'Contact' },
 ] as const

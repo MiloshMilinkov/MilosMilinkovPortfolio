@@ -26,7 +26,7 @@ export interface Project {
   /** One sentence. */
   summary: string
   highlights: string[]
-  /** Skill ids — drives the skill ↔ project filter. */
+  /** Skill ids: usage counts in the workflow section, JSON-LD keywords and validation. */
   tech: string[]
   status: ProjectStatus
   /** Required when status = 'live'. */

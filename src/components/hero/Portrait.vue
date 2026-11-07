@@ -5,62 +5,83 @@ import ResponsiveImage from '../ui/ResponsiveImage.vue'
 </script>
 
 <template>
-  <figure class="portrait card">
-    <div class="portrait__photo">
+  <div class="portrait">
+    <figure class="portrait__frame card">
       <ResponsiveImage
         base="portrait"
-        :widths="[240, 360]"
-        sizes="(min-width: 56rem) 180px, 96px"
+        :widths="[360]"
+        sizes="(min-width: 56rem) 432px, min(24rem, 100vw)"
         :alt="profile.portraitAlt"
         :width="360"
         :height="360"
         eager
       />
-    </div>
-    <figcaption>
-      <span class="portrait__name">{{ site.name }}</span>
-      <span class="portrait__role">{{ site.roleLine }}</span>
-    </figcaption>
-  </figure>
+      <figcaption class="portrait__caption">
+        <span class="portrait__name">{{ site.name }}</span>
+        <span class="portrait__role">{{ site.roleLine }}</span>
+      </figcaption>
+    </figure>
+  </div>
 </template>
 
 <style scoped>
 .portrait {
-  display: flex;
-  align-items: center;
-  gap: var(--space-4);
+  position: relative;
   margin: 0;
-  padding: var(--space-4);
 }
 
-.portrait__photo {
-  width: 4.5rem;
-  aspect-ratio: 1;
-  flex: none;
+/* Soft magenta light behind the photo. */
+.portrait::before {
+  content: '';
+  position: absolute;
+  /* Horizontal spread stays inside the 2rem page gutter. */
+  inset: -12% -6% -6%;
+  z-index: -1;
+  background: radial-gradient(closest-side, rgb(217 70 239 / 0.3), rgb(34 211 238 / 0.06) 65%, transparent);
+  pointer-events: none;
+}
+
+/* On phones the photo is near full width: keep the glow inside the screen. */
+@media (max-width: 55.99rem) {
+  .portrait::before {
+    inset: -8% 0 -4%;
+  }
+}
+
+.portrait__frame {
+  position: relative;
+  margin: 0;
+  aspect-ratio: 4 / 5;
   overflow: hidden;
-  border-radius: 14px;
-  box-shadow: 0 0 0 1px var(--border-strong);
+  padding: 0;
+  border-radius: var(--radius-lg);
 }
 
-.portrait__photo :deep(picture),
-.portrait__photo :deep(img) {
+.portrait__frame :deep(picture),
+.portrait__frame :deep(img) {
   width: 100%;
   height: 100%;
 }
 
-.portrait__photo :deep(img) {
+.portrait__frame :deep(img) {
   object-fit: cover;
-  object-position: 50% 25%;
+  object-position: 50% 30%;
 }
 
-figcaption {
+.portrait__caption {
+  position: absolute;
+  inset: auto 0 0;
   display: grid;
   gap: 2px;
+  padding: 3.5rem var(--space-5) var(--space-5);
+  background: linear-gradient(to top, rgb(18 18 22 / 0.92), rgb(18 18 22 / 0.6) 55%, transparent);
 }
 
 .portrait__name {
-  font-weight: 600;
   color: var(--text);
+  font-size: var(--step-1);
+  font-weight: 600;
+  letter-spacing: -0.015em;
 }
 
 .portrait__role {

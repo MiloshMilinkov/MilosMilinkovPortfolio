@@ -9,7 +9,7 @@ const staticFiles = [
   '/icon-512.png',
   '/site.webmanifest',
   '/og-image.png',
-  '/images/portrait-240.avif',
+  '/images/portrait-360.avif',
   '/images/portrait-360.webp',
   '/images/projects/arizonalifts-1280.webp',
   '/images/projects/advokat-vladic-640.avif',

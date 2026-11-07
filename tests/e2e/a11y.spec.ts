@@ -18,12 +18,11 @@ test('home page has no WCAG A/AA violations', async ({ page }) => {
   expect(await audit(page)).toEqual([])
 })
 
-test('interactive states have no violations (skill selected, filter on, entries open)', async ({ page }) => {
+test('interactive states have no violations (skill selected, entries open)', async ({ page }) => {
   await page.goto('/')
   const skills = page.locator('#skills')
   await skills.getByRole('tab', { name: 'Frontend' }).click()
   await skills.getByRole('button', { name: /Vue\.js/ }).click()
-  await page.locator('#projects').getByRole('button', { name: 'C#', exact: true }).click()
   await page.locator('#experience summary').nth(1).click()
   await page.waitForTimeout(400)
   expect(await audit(page)).toEqual([])

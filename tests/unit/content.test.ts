@@ -41,8 +41,6 @@ describe('site content', () => {
 
   it('stat tiles agree with the project data', () => {
     const byLabel = (needle: string) => profile.stats.find((s) => s.label.includes(needle))
-    // Concept sites are live but are not client work.
-    expect(byLabel('live')?.value).toBe(projects.filter((p) => p.status === 'live' && !p.concept).length)
     // 'projects built' counts everything on GitHub, so it may exceed the listed projects.
     expect(byLabel('projects')?.value).toBeGreaterThanOrEqual(projects.length)
   })

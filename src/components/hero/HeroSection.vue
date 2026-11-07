@@ -25,33 +25,34 @@ const liveCount = projects.filter((p) => p.status === 'live' && !p.concept).leng
         </div>
       </div>
 
-      <div class="hero__bento">
-        <Portrait class="hero__portrait" />
+      <Portrait class="hero__portrait" />
+    </div>
 
-        <div class="card card--glow hero__live">
-          <span class="chip-icon chip-icon--accent"><Icon name="rocket" /></span>
+    <div class="container hero__strip">
+      <div class="card card--glow hero__live">
+        <span class="chip-icon chip-icon--accent"><Icon name="rocket" /></span>
+        <div>
           <p class="hero__live-value">{{ liveCount }} client sites live</p>
           <p class="hero__live-text">A law office and a fitness coach, both built, launched and maintained by me.</p>
         </div>
-
-        <ul ref="statsEl" class="hero__stats" aria-label="At a glance">
-          <StatTile v-for="stat in profile.stats.filter((s) => !s.label.includes('live'))" :key="stat.label" :stat="stat" :start="statsInView" />
-        </ul>
       </div>
+      <ul ref="statsEl" class="hero__stats" aria-label="At a glance">
+        <StatTile v-for="stat in profile.stats" :key="stat.label" :stat="stat" :start="statsInView" />
+      </ul>
     </div>
   </section>
 </template>
 
 <style scoped>
 .hero {
-  padding-block: clamp(3rem, 2rem + 5vw, 6.5rem) clamp(3rem, 2rem + 4vw, 5rem);
+  padding-block: clamp(2.5rem, 2rem + 4vw, 5.5rem) clamp(3rem, 2rem + 4vw, 5rem);
 }
 
 .hero__grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.85fr);
   align-items: center;
-  gap: clamp(2.5rem, 5vw, 4.5rem);
+  gap: clamp(2.5rem, 6vw, 5.5rem);
 }
 
 .hero__pill {
@@ -81,23 +82,29 @@ const liveCount = projects.filter((p) => p.status === 'live' && !p.concept).leng
   margin-top: var(--space-6);
 }
 
-.hero__bento {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--space-3);
+.hero__portrait {
+  width: 100%;
+  max-width: 27rem;
+  justify-self: end;
 }
 
-.hero__portrait {
-  grid-column: 1 / -1;
+/* Proof strip under the hero: live sites + stat tiles. */
+.hero__strip {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 2fr);
+  gap: var(--space-3);
+  margin-top: clamp(2.5rem, 2rem + 3vw, 4rem);
 }
 
 .hero__live {
-  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
   padding: var(--space-5);
 }
 
 .hero__live-value {
-  margin: var(--space-4) 0 var(--space-1);
+  margin: 0 0 var(--space-1);
   font-size: var(--step-2);
   font-weight: 600;
   letter-spacing: -0.02em;
@@ -110,7 +117,6 @@ const liveCount = projects.filter((p) => p.status === 'live' && !p.concept).leng
 }
 
 .hero__stats {
-  grid-column: 1 / -1;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--space-3);
@@ -119,7 +125,8 @@ const liveCount = projects.filter((p) => p.status === 'live' && !p.concept).leng
 
 @media (prefers-reduced-motion: no-preference) {
   .hero__text > *,
-  .hero__bento > * {
+  .hero__portrait,
+  .hero__strip > * {
     animation: rise 0.7s var(--ease-out) both;
   }
 
@@ -135,16 +142,12 @@ const liveCount = projects.filter((p) => p.status === 'live' && !p.concept).leng
     animation-delay: 0.15s;
   }
 
-  .hero__bento > :nth-child(1) {
-    animation-delay: 0.15s;
+  .hero__portrait {
+    animation-delay: 0.12s;
   }
 
-  .hero__bento > :nth-child(2) {
-    animation-delay: 0.22s;
-  }
-
-  .hero__bento > :nth-child(3) {
-    animation-delay: 0.29s;
+  .hero__strip > * {
+    animation-delay: 0.25s;
   }
 }
 
@@ -156,9 +159,14 @@ const liveCount = projects.filter((p) => p.status === 'live' && !p.concept).leng
 }
 
 @media (max-width: 55.99rem) {
-  .hero__grid {
+  .hero__grid,
+  .hero__strip {
     grid-template-columns: 1fr;
   }
-}
 
+  .hero__portrait {
+    justify-self: start;
+    max-width: 24rem;
+  }
+}
 </style>

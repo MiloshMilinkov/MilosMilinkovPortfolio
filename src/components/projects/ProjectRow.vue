@@ -3,9 +3,8 @@ import { computed } from 'vue'
 import type { Project } from '../../data/types.ts'
 import { resolveProjectLink } from '../../lib/projectLinks.ts'
 import ExternalLink from '../ui/ExternalLink.vue'
-import TechTag from '../ui/TechTag.vue'
 
-const props = defineProps<{ project: Project; skillLabel: (id: string) => string; activeTech: string | null }>()
+const props = defineProps<{ project: Project }>()
 const link = computed(() => resolveProjectLink(props.project))
 </script>
 
@@ -16,9 +15,6 @@ const link = computed(() => resolveProjectLink(props.project))
       <span class="row__kind">{{ project.kind }}</span>
     </div>
     <p class="row__summary">{{ project.summary }}</p>
-    <ul class="row__tech" aria-label="Technologies">
-      <li v-for="t in project.tech" :key="t"><TechTag :label="skillLabel(t)" :active="t === activeTech" /></li>
-    </ul>
     <ExternalLink v-if="link.primary" :href="link.primary.href" class="row__link">{{ link.primary.label }}</ExternalLink>
   </li>
 </template>
@@ -28,9 +24,7 @@ const link = computed(() => resolveProjectLink(props.project))
   position: relative;
   display: grid;
   grid-template-columns: minmax(0, 14rem) minmax(0, 1fr) auto;
-  grid-template-areas:
-    'head summary link'
-    'head tech link';
+  grid-template-areas: 'head summary link';
   gap: var(--space-2) var(--space-6);
   align-items: start;
   padding-block: var(--space-5);
@@ -70,14 +64,6 @@ const link = computed(() => resolveProjectLink(props.project))
   color: var(--muted);
 }
 
-.row__tech {
-  grid-area: tech;
-  list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2);
-}
-
 .row__link {
   grid-area: link;
   align-self: center;
@@ -96,7 +82,7 @@ const link = computed(() => resolveProjectLink(props.project))
 @media (max-width: 47.99rem) {
   .row {
     grid-template-columns: 1fr;
-    grid-template-areas: 'head' 'summary' 'tech' 'link';
+    grid-template-areas: 'head' 'summary' 'link';
   }
 
   .row__link {
