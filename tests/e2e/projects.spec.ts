@@ -4,10 +4,10 @@ const card = (page: Page, id: string) => page.locator(`#projects [data-project="
 const visibleIds = (page: Page) =>
   page.locator('#projects [data-project]:visible').evaluateAll((els) => els.map((e) => e.getAttribute('data-project')))
 
-test('shows six featured projects and four archive rows', async ({ page }) => {
+test('shows five featured projects and no archive group', async ({ page }) => {
   await page.goto('/')
-  await expect(page.locator('#projects .featured > [data-project]')).toHaveCount(6)
-  await expect(page.locator('#projects .archive [data-project]')).toHaveCount(4)
+  await expect(page.locator('#projects .featured > [data-project]')).toHaveCount(5)
+  await expect(page.locator('#projects .archive')).toHaveCount(0)
 })
 
 test('a live project links to the site, with the source as a second link', async ({ page }) => {
@@ -15,7 +15,7 @@ test('a live project links to the site, with the source as a second link', async
   const vladic = card(page, 'advokat-vladic')
   await expect(vladic.locator('[data-status]')).toHaveText('Live')
   const visit = vladic.getByRole('link', { name: /Visit live site/ })
-  await expect(visit).toHaveAttribute('href', 'https://advokatvladic.rs')
+  await expect(visit).toHaveAttribute('href', 'https://advokat-vladic.milos300399.workers.dev/')
   await expect(visit).toHaveAttribute('target', '_blank')
   await expect(visit).toHaveAttribute('rel', /noopener/)
   await expect(visit).toHaveAttribute('rel', /noreferrer/)
@@ -46,20 +46,20 @@ test('the classified project has no link and explains why', async ({ page }) => 
 
 test('clicking anywhere on a live card opens the site', async ({ page, context }) => {
   await page.goto('/')
-  const astra = card(page, 'astra')
-  await astra.scrollIntoViewIfNeeded()
-  const box = (await astra.locator('h3').boundingBox())!
+  const arizona = card(page, 'arizonalifts')
+  await arizona.scrollIntoViewIfNeeded()
+  const box = (await arizona.locator('h3').boundingBox())!
   // Do not actually leave for the live site: capture the popup's URL and close it.
-  await context.route('https://astra-engineering-website.vercel.app/**', (route) => route.fulfill({ body: 'ok' }))
+  await context.route('https://arizonalifts.com/**', (route) => route.fulfill({ body: 'ok' }))
   const [popup] = await Promise.all([page.waitForEvent('popup'), page.mouse.click(box.x + 5, box.y + box.height / 2)])
-  expect(popup.url()).toContain('astra-engineering-website.vercel.app')
+  expect(popup.url()).toContain('arizonalifts.com')
   await popup.close()
 })
 
 test('every new-tab link announces that it opens a new tab', async ({ page }) => {
   await page.goto('/')
   const links = page.locator('#projects a[target="_blank"]')
-  expect(await links.count()).toBeGreaterThan(8)
+  expect(await links.count()).toBeGreaterThanOrEqual(6)
   for (const text of await links.allTextContents()) expect(text).toContain('(opens in a new tab)')
 })
 
@@ -78,17 +78,17 @@ test('filtering by technology shows only matching projects', async ({ page }) =>
   const chip = section.getByRole('button', { name: 'C#', exact: true })
   await chip.click()
   await expect(chip).toHaveAttribute('aria-pressed', 'true')
-  await expect(section.locator('[aria-live="polite"]')).toHaveText('Showing 4 projects using C#')
-  await expect.poll(() => visibleIds(page)).toEqual(['euronet', 'silicon-lottery', 'spendsmart', 'recipe-sharing'])
+  await expect(section.locator('[aria-live="polite"]')).toHaveText('Showing 2 projects using C#')
+  await expect.poll(() => visibleIds(page)).toEqual(['euronet', 'silicon-lottery'])
 
   await section.getByRole('button', { name: 'Clear filter' }).click()
-  await expect.poll(async () => (await visibleIds(page)).length).toBe(10)
+  await expect.poll(async () => (await visibleIds(page)).length).toBe(5)
 })
 
-test('a filter with no archive matches hides the archive group', async ({ page }) => {
+test('a filter matching one project says so', async ({ page }) => {
   await page.goto('/')
   const section = page.locator('#projects')
   await section.getByRole('button', { name: 'React', exact: true }).click()
   await expect(section.locator('[aria-live="polite"]')).toHaveText('Showing 1 project using React')
-  await expect(section.locator('.archive')).toHaveCount(0)
+  await expect.poll(() => visibleIds(page)).toEqual(['projectanvil'])
 })

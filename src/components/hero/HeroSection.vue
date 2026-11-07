@@ -31,7 +31,7 @@ const liveCount = projects.filter((p) => p.status === 'live').length
         <div class="card card--glow hero__live">
           <span class="chip-icon chip-icon--accent"><Icon name="rocket" /></span>
           <p class="hero__live-value">{{ liveCount }} client sites live</p>
-          <p class="hero__live-text">Law office, fitness coach and engineering company, all built, launched and maintained by me.</p>
+          <p class="hero__live-text">A law office and a fitness coach, both built, launched and maintained by me.</p>
         </div>
 
         <ul ref="statsEl" class="hero__stats" aria-label="At a glance">

@@ -11,7 +11,7 @@ const staticFiles = [
   '/og-image.png',
   '/images/portrait-240.avif',
   '/images/portrait-360.webp',
-  '/images/projects/astra-1280.webp',
+  '/images/projects/arizonalifts-1280.webp',
   '/images/projects/advokat-vladic-640.avif',
   '/images/projects/arizonalifts-960.webp',
 ]

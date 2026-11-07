@@ -2,7 +2,7 @@
 import { computed } from 'vue'
 
 const props = defineProps<{
-  /** Path under /images without width/extension, e.g. 'portrait' or 'projects/astra'. */
+  /** Path under /images without width/extension, e.g. 'portrait' or 'projects/arizonalifts'. */
   base: string
   widths: number[]
   sizes: string

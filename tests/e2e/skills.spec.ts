@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test'
 
 const TABS = ['Backend', 'Frontend', 'Data', 'AI', 'Tools']
-const VUE_PROJECTS = ['Advokatska kancelarija Vladić', 'ARIZONALIFTS', 'ASTRA-engineering', 'Blog App', 'Job Board']
+const VUE_PROJECTS = ['Advokatska kancelarija Vladić', 'ARIZONALIFTS']
 
 test('every skill group is in the prerendered HTML', async ({ request }) => {
   const html = await (await request.get('/')).text()
@@ -47,7 +47,7 @@ test('skills show their level and how many projects use them', async ({ page }) 
   await skills.getByRole('tab', { name: 'Frontend' }).click()
   const vue = skills.getByRole('button', { name: /Vue\.js/ })
   await expect(vue).toContainText('Core')
-  await expect(vue).toContainText('Used in 5 projects')
+  await expect(vue).toContainText('Used in 2 projects')
   await expect(skills.getByRole('button', { name: /React/ })).toContainText('Used in 1 project')
 })
 

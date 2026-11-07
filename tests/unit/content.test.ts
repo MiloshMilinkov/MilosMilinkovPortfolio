@@ -20,14 +20,14 @@ describe('site content', () => {
     expect(validateProjects(projects, skills)).toEqual([])
   })
 
-  it('has 10 projects, 6 featured', () => {
-    expect(projects).toHaveLength(10)
-    expect(projects.filter((p) => p.featured)).toHaveLength(6)
+  it('has 5 projects, all featured', () => {
+    expect(projects).toHaveLength(5)
+    expect(projects.filter((p) => p.featured)).toHaveLength(5)
   })
 
   it('marks exactly the hosted sites as live and Euronet as classified', () => {
     const ids = (status: string) => projects.filter((p) => p.status === status).map((p) => p.id)
-    expect(ids('live').sort()).toEqual(['advokat-vladic', 'arizonalifts', 'astra'])
+    expect(ids('live').sort()).toEqual(['advokat-vladic', 'arizonalifts'])
     expect(ids('classified')).toEqual(['euronet'])
   })
 
@@ -41,7 +41,8 @@ describe('site content', () => {
   it('stat tiles agree with the project data', () => {
     const byLabel = (needle: string) => profile.stats.find((s) => s.label.includes(needle))
     expect(byLabel('live')?.value).toBe(projects.filter((p) => p.status === 'live').length)
-    expect(byLabel('projects')?.value).toBe(projects.length)
+    // 'projects built' counts everything on GitHub, so it may exceed the listed projects.
+    expect(byLabel('projects')?.value).toBeGreaterThanOrEqual(projects.length)
   })
 
   it('every skill group has at least one skill', () => {

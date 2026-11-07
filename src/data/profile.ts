@@ -11,7 +11,7 @@ export const profile = {
   ],
   stats: [
     { value: 4, suffix: '+', label: 'years in production' },
-    { value: 3, suffix: '', label: 'live client sites' },
+    { value: 2, suffix: '', label: 'live client sites' },
     { value: 10, suffix: '', label: 'projects built' },
     { value: 2, suffix: '', label: 'AI agents in the daily workflow' },
   ] satisfies Stat[],
