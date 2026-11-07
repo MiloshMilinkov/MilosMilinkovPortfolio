@@ -47,14 +47,15 @@ export function seoPlugin(): Plugin {
         let out = html
         for (const [token, value] of Object.entries(tokens)) out = out.replaceAll(token, escapeAttr(value))
 
-        // Preload the display font (latin subset) — it sets the hero name, the LCP text.
-        const fontFile = ctx.bundle
-          ? Object.keys(ctx.bundle).find((f) => /grenze-gotisch-latin-wght-normal-[\w-]+\.woff2$/.test(f))
-          : undefined
-        if (fontFile) {
+        // Preload the latin display and body fonts: the hero name is the LCP text, and
+        // fonts arriving after first paint would force a costly full-page relayout.
+        const files = ctx.bundle ? Object.keys(ctx.bundle) : []
+        for (const family of ['grenze-gotisch', 'ibm-plex-sans']) {
+          const file = files.find((f) => new RegExp(`${family}-latin-wght-normal-[\\w-]+\\.woff2$`).test(f))
+          if (!file) continue
           out = out.replace(
             '<meta name="viewport"',
-            `<link rel="preload" href="/${fontFile}" as="font" type="font/woff2" crossorigin>\n    <meta name="viewport"`,
+            `<link rel="preload" href="/${file}" as="font" type="font/woff2" crossorigin>\n    <meta name="viewport"`,
           )
         }
 

@@ -13,6 +13,12 @@ const canvas = ref<HTMLCanvasElement | null>(null)
 let cleanup: (() => void) | undefined
 
 onMounted(() => {
+  // Start after hydration has finished, so canvas setup never lengthens that task.
+  const idle = window.requestIdleCallback ?? ((cb: () => void) => window.setTimeout(cb, 120))
+  idle(init, { timeout: 600 })
+})
+
+function init() {
   const el = canvas.value
   const ctx = el?.getContext('2d')
   if (!el || !ctx) return // CSS gradient behind the canvas remains as the fallback
@@ -127,7 +133,7 @@ onMounted(() => {
     window.removeEventListener('scroll', onScroll)
     document.removeEventListener('visibilitychange', onVisibility)
   }
-})
+}
 
 onBeforeUnmount(() => cleanup?.())
 </script>
