@@ -34,6 +34,8 @@ export interface Project {
   /** Required when status = 'source'; optional for 'live'; never for 'classified'. */
   repoUrl?: string
   featured: boolean
+  /** A showcase site for a fictional business: live, but not client work. */
+  concept?: boolean
   /** Base name of a screenshot in /images/projects (`<image>-<width>.<avif|webp>`). */
   image?: string
 }

@@ -9,7 +9,7 @@ import Portrait from './Portrait.vue'
 
 const statsEl = ref<HTMLElement | null>(null)
 const statsInView = useInView(statsEl, { rootMargin: '0px' })
-const liveCount = projects.filter((p) => p.status === 'live').length
+const liveCount = projects.filter((p) => p.status === 'live' && !p.concept).length
 </script>
 
 <template>

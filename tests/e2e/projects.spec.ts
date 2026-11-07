@@ -4,9 +4,9 @@ const card = (page: Page, id: string) => page.locator(`#projects [data-project="
 const visibleIds = (page: Page) =>
   page.locator('#projects [data-project]:visible').evaluateAll((els) => els.map((e) => e.getAttribute('data-project')))
 
-test('shows five featured projects and no archive group', async ({ page }) => {
+test('shows seven featured projects and no archive group', async ({ page }) => {
   await page.goto('/')
-  await expect(page.locator('#projects .featured > [data-project]')).toHaveCount(5)
+  await expect(page.locator('#projects .featured > [data-project]')).toHaveCount(7)
   await expect(page.locator('#projects .archive')).toHaveCount(0)
 })
 
@@ -23,6 +23,24 @@ test('a live project links to the site, with the source as a second link', async
     'href',
     'https://github.com/MiloshMilinkov/advokat-vladic',
   )
+})
+
+test('concept sites link to the live demo and say they are concepts', async ({ page }) => {
+  await page.goto('/')
+  for (const [id, url] of [
+    ['little-fern-coffee', 'https://little-fern-coffee.milos300399.workers.dev/'],
+    ['mabels-chair', 'https://mabels-chair.milos300399.workers.dev/'],
+  ]) {
+    const c = card(page, id!)
+    await expect(c.locator('[data-status]')).toHaveText('Live')
+    await expect(c).toContainText('Concept site')
+    await expect(c.getByRole('link', { name: /Visit live site/ })).toHaveAttribute('href', url!)
+  }
+})
+
+test('the hero counts only real client sites', async ({ page }) => {
+  await page.goto('/')
+  await expect(page.locator('#top')).toContainText('2 client sites live')
 })
 
 test('a project that is not hosted links to its repo and says so', async ({ page }) => {
@@ -59,7 +77,7 @@ test('clicking anywhere on a live card opens the site', async ({ page, context }
 test('every new-tab link announces that it opens a new tab', async ({ page }) => {
   await page.goto('/')
   const links = page.locator('#projects a[target="_blank"]')
-  expect(await links.count()).toBeGreaterThanOrEqual(6)
+  expect(await links.count()).toBeGreaterThanOrEqual(10)
   for (const text of await links.allTextContents()) expect(text).toContain('(opens in a new tab)')
 })
 
@@ -82,7 +100,7 @@ test('filtering by technology shows only matching projects', async ({ page }) =>
   await expect.poll(() => visibleIds(page)).toEqual(['euronet', 'silicon-lottery'])
 
   await section.getByRole('button', { name: 'Clear filter' }).click()
-  await expect.poll(async () => (await visibleIds(page)).length).toBe(5)
+  await expect.poll(async () => (await visibleIds(page)).length).toBe(7)
 })
 
 test('a filter matching one project says so', async ({ page }) => {

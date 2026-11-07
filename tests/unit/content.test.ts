@@ -20,14 +20,15 @@ describe('site content', () => {
     expect(validateProjects(projects, skills)).toEqual([])
   })
 
-  it('has 5 projects, all featured', () => {
-    expect(projects).toHaveLength(5)
-    expect(projects.filter((p) => p.featured)).toHaveLength(5)
+  it('has 7 projects, all featured', () => {
+    expect(projects).toHaveLength(7)
+    expect(projects.filter((p) => p.featured)).toHaveLength(7)
   })
 
   it('marks exactly the hosted sites as live and Euronet as classified', () => {
     const ids = (status: string) => projects.filter((p) => p.status === status).map((p) => p.id)
-    expect(ids('live').sort()).toEqual(['advokat-vladic', 'arizonalifts'])
+    expect(ids('live').sort()).toEqual(['advokat-vladic', 'arizonalifts', 'little-fern-coffee', 'mabels-chair'])
+    expect(projects.filter((p) => p.concept).map((p) => p.id)).toEqual(['little-fern-coffee', 'mabels-chair'])
     expect(ids('classified')).toEqual(['euronet'])
   })
 
@@ -40,7 +41,8 @@ describe('site content', () => {
 
   it('stat tiles agree with the project data', () => {
     const byLabel = (needle: string) => profile.stats.find((s) => s.label.includes(needle))
-    expect(byLabel('live')?.value).toBe(projects.filter((p) => p.status === 'live').length)
+    // Concept sites are live but are not client work.
+    expect(byLabel('live')?.value).toBe(projects.filter((p) => p.status === 'live' && !p.concept).length)
     // 'projects built' counts everything on GitHub, so it may exceed the listed projects.
     expect(byLabel('projects')?.value).toBeGreaterThanOrEqual(projects.length)
   })

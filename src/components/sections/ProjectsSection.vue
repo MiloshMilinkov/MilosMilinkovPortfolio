@@ -37,7 +37,7 @@ const status = computed(() => {
       <SectionHeading
         id="projects-title"
         title="Selected work"
-        lede="Client sites you can visit today, plus apps and systems I’ve built. Live sites open in a new tab; projects that aren’t hosted link to their source code."
+        lede="Client sites and concept sites you can visit today, plus apps and systems I’ve built. Live sites open in a new tab; projects that aren’t hosted link to their source code."
       />
 
       <div class="projects__controls">
