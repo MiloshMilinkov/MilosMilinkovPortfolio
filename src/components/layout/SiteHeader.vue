@@ -56,11 +56,11 @@ onBeforeUnmount(() => document.removeEventListener('keydown', onKeydown))
   <header class="site-header">
     <div class="site-header__bar container">
       <a class="brand" :href="minimal ? '/' : '#top'" :aria-label="minimal ? 'Miloš Milinkov — home' : 'Miloš Milinkov — back to top'">
-        <Monogram :size="34" />
+        <Monogram :size="32" />
         <span class="brand__name" aria-hidden="true">Miloš Milinkov</span>
       </a>
 
-      <a v-if="minimal" class="site-header__home" href="/">Back to the portfolio</a>
+      <a v-if="minimal" class="btn btn--ghost site-header__home" href="/">Back to the portfolio</a>
 
       <template v-else>
         <button
@@ -76,13 +76,14 @@ onBeforeUnmount(() => document.removeEventListener('keydown', onKeydown))
         </button>
 
         <nav id="site-menu" ref="panel" class="site-nav" :class="{ 'is-open': open }" aria-label="Main">
-          <ul>
+          <ul class="site-nav__links">
             <li v-for="link in navLinks" :key="link.id">
               <a :href="`#${link.id}`" :aria-current="active === link.id ? 'true' : undefined" @click="close()">
                 {{ link.label }}
               </a>
             </li>
           </ul>
+          <a class="btn btn--primary site-nav__cta" href="#contact" @click="close()">Start a project</a>
         </nav>
       </template>
     </div>
@@ -94,11 +95,10 @@ onBeforeUnmount(() => document.removeEventListener('keydown', onKeydown))
   position: sticky;
   top: 0;
   z-index: 50;
-  background: rgb(11 12 14 / 0.82);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border-bottom: 1px solid transparent;
-  border-image: linear-gradient(90deg, transparent, var(--brass-dim) 20%, var(--brass-dim) 80%, transparent) 1;
+  background: rgb(18 18 22 / 0.78);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border-bottom: 1px solid var(--border);
 }
 
 .site-header__bar {
@@ -113,94 +113,92 @@ onBeforeUnmount(() => document.removeEventListener('keydown', onKeydown))
   display: inline-flex;
   align-items: center;
   gap: var(--space-3);
-  color: var(--bone);
+  color: var(--text);
   text-decoration: none;
 }
 
 .brand__name {
-  font-family: var(--font-display);
-  font-size: var(--step-1);
-  font-weight: 700;
-  letter-spacing: 0.01em;
+  font-size: var(--step-0);
+  font-weight: 600;
+  letter-spacing: -0.01em;
 }
 
 .site-header__home {
+  min-height: 2.5rem;
   font-size: var(--step--1);
 }
 
-.site-nav ul {
+.site-nav {
   display: flex;
-  gap: clamp(1rem, 2vw, 2rem);
-  list-style: none;
+  align-items: center;
+  gap: var(--space-4);
 }
 
-.site-nav a {
-  position: relative;
+.site-nav__links {
+  display: flex;
+  gap: 2px;
+  padding: 4px;
+  list-style: none;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.03);
+}
+
+.site-nav__links a {
   display: inline-block;
-  padding-block: var(--space-2);
-  color: var(--steel);
-  text-decoration: none;
+  padding: 0.45em 0.95em;
+  border-radius: 999px;
+  color: var(--muted);
   font-size: var(--step--1);
   font-weight: 500;
-  letter-spacing: 0.02em;
-  transition: color 0.15s;
+  text-decoration: none;
+  transition:
+    color 0.15s,
+    background-color 0.15s;
 }
 
-.site-nav a::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 2px;
-  background: var(--brass);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.25s var(--ease-out);
+.site-nav__links a:hover {
+  color: var(--text);
 }
 
-.site-nav a:hover,
-.site-nav a[aria-current='true'] {
-  color: var(--bone);
+.site-nav__links a[aria-current='true'] {
+  color: var(--text);
+  background: rgb(255 255 255 / 0.08);
 }
 
-.site-nav a[aria-current='true']::after {
-  transform: scaleX(1);
+.site-nav__cta {
+  min-height: 2.5rem;
+  padding-inline: 1.1em;
+  font-size: var(--step--1);
 }
 
 .menu-button {
   display: none;
 }
 
-@media (max-width: 47.99rem) {
-  .brand__name {
-    font-size: var(--step-0);
-  }
-
+@media (max-width: 55.99rem) {
   .menu-button {
     display: inline-flex;
     align-items: center;
     gap: var(--space-3);
     min-height: 2.75rem;
     padding: 0 var(--space-4);
-    background: transparent;
-    border: 1px solid var(--plate);
-    color: var(--bone);
+    border: 1px solid var(--border-strong);
+    border-radius: 999px;
+    background: rgb(255 255 255 / 0.04);
+    color: var(--text);
     font-size: var(--step--1);
     font-weight: 600;
     cursor: pointer;
   }
 
-  .menu-button[aria-expanded='true'] {
-    border-color: var(--brass-dim);
-  }
-
   .menu-button__bars,
   .menu-button__bars::before {
     display: block;
-    width: 18px;
+    width: 16px;
     height: 2px;
-    background: var(--brass);
+    border-radius: 2px;
+    background: currentColor;
   }
 
   .menu-button__bars {
@@ -212,7 +210,6 @@ onBeforeUnmount(() => document.removeEventListener('keydown', onKeydown))
     content: '';
     position: absolute;
     top: 6px;
-    width: 12px;
   }
 
   .site-nav {
@@ -221,35 +218,42 @@ onBeforeUnmount(() => document.removeEventListener('keydown', onKeydown))
     top: 100%;
     left: 0;
     right: 0;
-    background: var(--void);
-    border-bottom: 1px solid var(--brass-dim);
+    flex-direction: column;
+    align-items: stretch;
     padding: var(--space-4) var(--gutter) var(--space-6);
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
   }
 
   .site-nav.is-open {
-    display: block;
+    display: flex;
   }
 
-  .site-nav ul {
+  .site-nav__links {
     flex-direction: column;
-    gap: 0;
+    padding: 0;
+    border: 0;
+    background: none;
   }
 
-  .site-nav a {
+  .site-nav__links a {
     display: block;
-    padding-block: var(--space-3);
-    font-family: var(--font-display);
+    padding: var(--space-3) 0;
+    border-radius: 0;
     font-size: var(--step-2);
-    color: var(--bone);
-    letter-spacing: 0;
+    font-weight: 600;
+    color: var(--text);
   }
 
-  .site-nav a::after {
-    display: none;
+  .site-nav__links a[aria-current='true'] {
+    background: none;
+    color: var(--accent);
   }
 
-  .site-nav a[aria-current='true'] {
-    color: var(--brass);
+  .site-nav__cta {
+    margin-top: var(--space-4);
+    min-height: 2.9rem;
+    font-size: var(--step-0);
   }
 }
 </style>

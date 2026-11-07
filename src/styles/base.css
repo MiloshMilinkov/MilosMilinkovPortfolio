@@ -8,7 +8,7 @@ html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
   scroll-padding-top: calc(var(--header-h) + var(--space-4));
-  background-color: var(--void);
+  background-color: var(--bg);
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -21,33 +21,32 @@ body {
   margin: 0;
   min-height: 100vh;
   /* Solid colour on body (decoration lives in ::before) so contrast checkers can read it. */
-  background-color: var(--void);
-  color: var(--bone);
-  font-family: var(--font-body);
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
   font-size: var(--step-0);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   overflow-x: clip;
 }
 
-/* Film grain + faint scanlines, behind all content. */
+/* Soft magenta light at the top of the page. */
 body::before {
   content: '';
-  position: fixed;
-  inset: 0;
+  position: absolute;
+  inset: 0 0 auto;
+  height: 900px;
   z-index: -1;
   pointer-events: none;
-  background-image:
-    radial-gradient(ellipse 90% 60% at 50% -10%, rgb(200 163 90 / 0.07), transparent 70%),
-    repeating-linear-gradient(to bottom, transparent 0 2px, rgb(0 0 0 / 0.16) 2px 3px),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background:
+    radial-gradient(ellipse 50% 60% at 82% -10%, rgb(217 70 239 / 0.18), transparent 70%),
+    radial-gradient(ellipse 40% 45% at 0% 0%, rgb(34 211 238 / 0.06), transparent 70%);
 }
 
 img,
 svg,
-canvas,
-picture,
-video {
+picture {
   display: block;
   max-width: 100%;
 }
@@ -58,18 +57,19 @@ img {
 
 h1,
 h2,
-h3 {
+h3,
+h4 {
   margin: 0;
-  font-family: var(--font-display);
-  font-weight: 700;
-  line-height: 1.02;
-  color: var(--bone);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  color: var(--text);
   text-wrap: balance;
 }
 
 h3 {
-  font-size: var(--step-2);
-  font-weight: 600;
+  font-size: var(--step-1);
+  letter-spacing: -0.015em;
 }
 
 p {
@@ -85,13 +85,14 @@ ol {
 }
 
 a {
-  color: var(--brass);
+  color: var(--text);
+  text-decoration-color: var(--accent);
   text-decoration-thickness: 1px;
   text-underline-offset: 0.22em;
 }
 
 a:hover {
-  color: var(--bone);
+  color: var(--accent);
 }
 
 button {
@@ -100,13 +101,14 @@ button {
 }
 
 :focus-visible {
-  outline: 2px solid var(--brass);
+  outline: 2px solid var(--accent);
   outline-offset: 3px;
+  border-radius: 6px;
 }
 
 ::selection {
-  background: var(--brass);
-  color: var(--void);
+  background: var(--accent-strong);
+  color: #fff;
 }
 
 .sr-only {
@@ -127,8 +129,9 @@ button {
   left: var(--space-2);
   z-index: 100;
   padding: var(--space-3) var(--space-4);
-  background: var(--brass);
-  color: var(--void);
+  border-radius: var(--radius-sm);
+  background: var(--text);
+  color: var(--bg);
   font-weight: 600;
   text-decoration: none;
   transform: translateY(-200%);
@@ -143,105 +146,128 @@ main:focus {
 }
 
 .container {
-  width: min(100% - 2 * var(--gutter), 74rem);
+  width: min(100% - 2 * var(--gutter), 72rem);
   margin-inline: auto;
 }
 
 .section {
   position: relative;
-  padding-block: clamp(4.5rem, 3rem + 6vw, 8.5rem);
+  padding-block: clamp(4rem, 3rem + 5vw, 7.5rem);
 }
 
-/*
- * Chamfered "armour plate" frame. The element's background is the edge colour;
- * ::before paints the fill 1px inside, so the border follows the cut corners.
- * --c-tl / --c-br set the top-left and bottom-right cuts.
- */
-.frame {
-  --c-tl: var(--chamfer);
-  --c-br: var(--chamfer);
-  --frame-edge: var(--plate);
-  --frame-fill: var(--gunmetal);
+/* Card: the raised surface used everywhere. */
+.card {
   position: relative;
-  isolation: isolate;
-  background: var(--frame-edge);
-  clip-path: polygon(
-    var(--c-tl) 0,
-    100% 0,
-    100% calc(100% - var(--c-br)),
-    calc(100% - var(--c-br)) 100%,
-    0 100%,
-    0 var(--c-tl)
-  );
+  background: linear-gradient(180deg, var(--surface-2), var(--surface) 60%);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
 }
 
-.frame::before {
-  content: '';
-  position: absolute;
-  inset: 1px;
-  z-index: -1;
-  background: var(--frame-fill);
-  clip-path: polygon(
-    calc(var(--c-tl) - 0.6px) 0,
-    100% 0,
-    100% calc(100% - var(--c-br) + 0.6px),
-    calc(100% - var(--c-br) + 0.6px) 100%,
-    0 100%,
-    0 calc(var(--c-tl) - 0.6px)
-  );
+/* Highlighted card: a magenta glow in one corner, as in the reference. */
+.card--glow {
+  background:
+    radial-gradient(ellipse 80% 70% at 100% 0%, rgb(217 70 239 / 0.32), transparent 60%),
+    linear-gradient(180deg, var(--surface-2), var(--surface) 60%);
+  border-color: rgb(217 70 239 / 0.25);
 }
 
-.frame--tl {
-  --c-br: 0px;
+/* Rounded-square icon chip. */
+.chip-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  flex: none;
+  border-radius: 12px;
+  background: rgb(255 255 255 / 0.05);
+  border: 1px solid var(--border-strong);
+  color: var(--text);
 }
 
-.frame--br {
-  --c-tl: 0px;
+.chip-icon svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.chip-icon--accent {
+  background: linear-gradient(135deg, var(--accent-strong), var(--accent-deep));
+  border-color: transparent;
+  color: #fff;
+}
+
+/* Pill label */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.3em 0.85em;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.04);
+  color: var(--muted);
+  font-size: var(--step--1);
+  font-weight: 500;
+}
+
+.pill__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 4px var(--accent-soft);
 }
 
 /* Buttons */
 .btn {
-  --chamfer: 10px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.6em;
-  min-height: 2.875rem;
-  padding: 0.7em 1.5em;
-  border: 0;
-  font-family: var(--font-body);
+  gap: 0.55em;
+  min-height: 2.9rem;
+  padding: 0.7em 1.35em;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font-family: var(--font);
   font-size: var(--step-0);
   font-weight: 600;
   line-height: 1.1;
-  letter-spacing: 0.01em;
   text-decoration: none;
   cursor: pointer;
   transition:
-    color 0.15s,
-    box-shadow 0.15s;
+    background-color 0.18s,
+    border-color 0.18s,
+    color 0.18s,
+    box-shadow 0.18s,
+    transform 0.18s var(--ease-out);
+}
+
+.btn svg {
+  width: 1.05em;
+  height: 1.05em;
 }
 
 .btn--primary {
-  --frame-edge: var(--ember-deep);
-  --frame-fill: var(--ember-deep);
-  color: var(--bone);
+  background: linear-gradient(135deg, var(--accent-strong), var(--accent-deep));
+  color: #fff;
+  box-shadow: 0 10px 30px -12px rgb(217 70 239 / 0.7);
 }
 
 .btn--primary:hover {
-  --frame-fill: #8f2416;
   color: #fff;
-  box-shadow: inset 0 -3px 0 var(--ember-hot);
+  box-shadow: 0 14px 34px -10px rgb(217 70 239 / 0.85);
+  transform: translateY(-1px);
 }
 
 .btn--ghost {
-  --frame-edge: var(--brass-dim);
-  --frame-fill: var(--void);
-  color: var(--brass);
+  background: rgb(255 255 255 / 0.04);
+  border-color: var(--border-strong);
+  color: var(--text);
 }
 
 .btn--ghost:hover {
-  --frame-edge: var(--brass);
-  color: var(--bone);
+  background: rgb(255 255 255 / 0.08);
+  color: var(--text);
 }
 
 .btn:active {

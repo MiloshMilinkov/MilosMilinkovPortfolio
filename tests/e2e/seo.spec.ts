@@ -13,7 +13,8 @@ test.describe('home page head', () => {
 
   test('has language, title and a short description', () => {
     expect(html).toMatch(/<html lang="en"/)
-    expect(attr(html, /<title>([^<]*)<\/title>/)).toBe(site.title)
+    // The title is HTML-escaped in the source ("&" → "&amp;"); browsers show it decoded.
+    expect(attr(html, /<title>([^<]*)<\/title>/)?.replaceAll('&amp;', '&')).toBe(site.title)
     const description = attr(html, /<meta name="description" content="([^"]*)"/) ?? ''
     expect(description.length).toBeGreaterThan(50)
     expect(description.length).toBeLessThanOrEqual(160)

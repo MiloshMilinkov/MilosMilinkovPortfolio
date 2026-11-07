@@ -9,16 +9,18 @@ defineProps<{ label: string; active?: boolean }>()
 <style scoped>
 .tag {
   display: inline-block;
-  padding: 0.15em 0.6em;
-  border: 1px solid var(--plate);
-  color: var(--steel);
+  padding: 0.15em 0.65em;
+  border-radius: 8px;
+  background: rgb(255 255 255 / 0.05);
+  color: var(--muted);
   font-size: var(--step--1);
-  line-height: 1.5;
+  line-height: 1.6;
   white-space: nowrap;
 }
 
 .tag--active {
-  border-color: var(--brass);
-  color: var(--brass);
+  background: var(--accent-soft);
+  color: var(--text);
+  box-shadow: inset 0 0 0 1px rgb(217 70 239 / 0.45);
 }
 </style>

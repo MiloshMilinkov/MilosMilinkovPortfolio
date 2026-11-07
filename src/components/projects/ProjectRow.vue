@@ -34,16 +34,16 @@ const link = computed(() => resolveProjectLink(props.project))
   gap: var(--space-2) var(--space-6);
   align-items: start;
   padding-block: var(--space-5);
-  border-top: 1px solid var(--plate);
+  border-top: 1px solid var(--border-strong);
   transition: background-color 0.2s;
 }
 
 .row:last-child {
-  border-bottom: 1px solid var(--plate);
+  border-bottom: 1px solid var(--border-strong);
 }
 
 .row--linked:hover {
-  background: rgb(200 163 90 / 0.04);
+  background: rgb(255 255 255 / 0.03);
 }
 
 .row__head {
@@ -54,21 +54,20 @@ const link = computed(() => resolveProjectLink(props.project))
 
 .row__title {
   margin: 0;
-  font-family: var(--font-display);
   font-size: var(--step-1);
-  font-weight: 700;
-  color: var(--bone);
+  font-weight: 600;
+  color: var(--text);
 }
 
 .row__kind {
-  color: var(--steel);
+  color: var(--muted);
   font-size: var(--step--1);
 }
 
 .row__summary {
   grid-area: summary;
   margin: 0;
-  color: var(--steel);
+  color: var(--muted);
 }
 
 .row__tech {

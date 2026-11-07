@@ -26,7 +26,7 @@ function onCardClick(event: MouseEvent) {
 
 <template>
   <article
-    class="project frame"
+    class="project card"
     :class="{ 'project--flip': flip, 'project--linked': link.primary, [`project--${project.status}`]: true }"
     @click="onCardClick"
   >
@@ -40,7 +40,7 @@ function onCardClick(event: MouseEvent) {
         :width="1280"
         :height="800"
       />
-      <SchematicArt v-else :seed="project.id" />
+      <SchematicArt v-else :seed="project.id" :label="project.title" />
     </div>
 
     <div class="project__body">
@@ -61,7 +61,7 @@ function onCardClick(event: MouseEvent) {
       <div class="project__footer">
         <p v-if="link.note" class="project__note">{{ link.note }}</p>
         <div v-if="link.primary || link.secondary" class="project__actions">
-          <ExternalLink v-if="link.primary" :href="link.primary.href" class="btn btn--primary frame frame--br project__primary">
+          <ExternalLink v-if="link.primary" :href="link.primary.href" class="btn btn--primary project__primary">
             {{ link.primary.label }}
           </ExternalLink>
           <ExternalLink v-if="link.secondary" :href="link.secondary.href" class="project__secondary">
@@ -75,16 +75,17 @@ function onCardClick(event: MouseEvent) {
 
 <style scoped>
 .project {
-  --chamfer: 22px;
-  --frame-fill: var(--gunmetal);
   display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
-  transition: background-color 0.2s;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  overflow: hidden;
+  transition:
+    border-color 0.2s,
+    transform 0.25s var(--ease-out);
 }
 
 .project--linked:hover,
 .project--linked:focus-within {
-  --frame-edge: var(--brass-dim);
+  border-color: rgb(217 70 239 / 0.4);
 }
 
 .project--flip .project__media {
@@ -94,34 +95,17 @@ function onCardClick(event: MouseEvent) {
 .project__media {
   position: relative;
   aspect-ratio: 16 / 10;
+  margin: var(--space-3);
   overflow: hidden;
-  background: #101215;
-  border-right: 1px solid var(--plate);
-}
-
-.project--flip .project__media {
-  border-right: 0;
-  border-left: 1px solid var(--plate);
+  border-radius: calc(var(--radius) - 6px);
+  background: #18181e;
+  box-shadow: 0 0 0 1px var(--border);
 }
 
 .project__media :deep(picture),
 .project__media :deep(img) {
   width: 100%;
   height: 100%;
-}
-
-/* Wide screens: the media fills the card's full height beside the text. */
-@media (min-width: 64rem) {
-  .project__media {
-    aspect-ratio: auto;
-    min-height: 20rem;
-  }
-
-  .project__media > :deep(picture),
-  .project__media > :deep(svg) {
-    position: absolute;
-    inset: 0;
-  }
 }
 
 .project__media :deep(img) {
@@ -131,45 +115,64 @@ function onCardClick(event: MouseEvent) {
 }
 
 .project--linked:hover .project__media :deep(img) {
-  transform: scale(1.025);
+  transform: scale(1.03);
+}
+
+/* Wide screens: the media fills the card's full height beside the text. */
+@media (min-width: 64rem) {
+  .project__media {
+    aspect-ratio: auto;
+    min-height: 19rem;
+  }
+
+  .project__media > :deep(picture),
+  .project__media > :deep(div) {
+    position: absolute;
+    inset: 0;
+  }
 }
 
 .project__body {
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
-  padding: clamp(1.25rem, 1rem + 1.5vw, 2.25rem);
+  padding: clamp(1.25rem, 1rem + 1.2vw, 2rem);
 }
 
 .project__meta {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: var(--space-2) var(--space-4);
+  gap: var(--space-2) var(--space-3);
   margin: 0;
+  color: var(--muted);
   font-size: var(--step--1);
-  color: var(--steel);
+}
+
+.project__year {
+  color: var(--subtle);
 }
 
 .project__title {
   font-size: var(--step-2);
+  letter-spacing: -0.025em;
 }
 
 .project__summary {
   margin: 0;
-  color: var(--bone);
+  color: var(--text);
 }
 
 .project__highlights {
   display: grid;
   gap: var(--space-2);
   padding-left: 1.1em;
-  color: var(--steel);
+  color: var(--muted);
   font-size: var(--step--1);
 }
 
 .project__highlights li::marker {
-  color: var(--brass-dim);
+  color: var(--accent);
 }
 
 .project__tech {
@@ -186,13 +189,8 @@ function onCardClick(event: MouseEvent) {
 
 .project__note {
   margin: 0 0 var(--space-3);
-  color: var(--steel);
+  color: var(--muted);
   font-size: var(--step--1);
-}
-
-.project--classified .project__note {
-  padding-left: var(--space-3);
-  border-left: 2px solid var(--plate);
 }
 
 .project__actions {
@@ -207,8 +205,9 @@ function onCardClick(event: MouseEvent) {
 }
 
 .project__secondary {
+  color: var(--muted);
   font-size: var(--step--1);
-  font-weight: 600;
+  font-weight: 500;
 }
 
 @media (max-width: 63.99rem) {
@@ -218,12 +217,6 @@ function onCardClick(event: MouseEvent) {
 
   .project--flip .project__media {
     order: 0;
-  }
-
-  .project__media,
-  .project--flip .project__media {
-    border: 0;
-    border-bottom: 1px solid var(--plate);
   }
 }
 </style>

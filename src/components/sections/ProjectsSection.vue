@@ -36,8 +36,8 @@ const status = computed(() => {
     <div class="container">
       <SectionHeading
         id="projects-title"
-        title="Projects"
-        lede="Live sites open in a new tab. Projects that aren’t hosted link to their source code instead."
+        title="Selected work"
+        lede="Client sites you can visit today, plus apps and systems I’ve built. Live sites open in a new tab; projects that aren’t hosted link to their source code."
       />
 
       <div class="projects__controls">
@@ -81,7 +81,7 @@ const status = computed(() => {
 
 .projects__status p {
   margin: 0;
-  color: var(--steel);
+  color: var(--muted);
   font-size: var(--step--1);
 }
 
@@ -89,7 +89,7 @@ const status = computed(() => {
   padding: 0;
   background: none;
   border: 0;
-  color: var(--brass);
+  color: var(--accent);
   font-size: var(--step--1);
   font-weight: 600;
   text-decoration: underline;

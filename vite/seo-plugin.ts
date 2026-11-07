@@ -47,10 +47,10 @@ export function seoPlugin(): Plugin {
         let out = html
         for (const [token, value] of Object.entries(tokens)) out = out.replaceAll(token, escapeAttr(value))
 
-        // Preload the latin display and body fonts: the hero name is the LCP text, and
+        // Preload the latin Geist file: the hero heading is the LCP text, and
         // fonts arriving after first paint would force a costly full-page relayout.
         const files = ctx.bundle ? Object.keys(ctx.bundle) : []
-        for (const family of ['grenze-gotisch', 'ibm-plex-sans']) {
+        for (const family of ['geist']) {
           const file = files.find((f) => new RegExp(`${family}-latin-wght-normal-[\\w-]+\\.woff2$`).test(f))
           if (!file) continue
           out = out.replace(

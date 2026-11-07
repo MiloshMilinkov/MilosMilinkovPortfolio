@@ -4,24 +4,6 @@ const gh = (repo: string) => `https://github.com/MiloshMilinkov/${repo}`
 
 export const projects: Project[] = [
   {
-    id: 'projectanvil',
-    title: 'ProjectAnvil',
-    kind: 'Project, task & knowledge workspace',
-    year: '2026',
-    summary:
-      'An installable, offline-capable workspace for projects, tasks, Markdown notes, canvases, a relationship graph and decision records.',
-    highlights: [
-      'Team workspaces with Viewer / Editor / Admin roles, live collaborative editing, mentions and notifications.',
-      'Recurring tasks with time-zone-aware reminders, bulk editing, and saved board, list and timeline views.',
-      'CSP, rate limiting and verified backups with rollback; Playwright tests on Chromium, Firefox and WebKit in CI.',
-      'Built with an AI-agent workflow (OpenAI Codex): I set the architecture, standards and docs; agents implemented under my review.',
-    ],
-    tech: ['typescript', 'react', 'vite', 'playwright', 'codex'],
-    status: 'source',
-    repoUrl: gh('ProjectAnvil'),
-    featured: true,
-  },
-  {
     id: 'advokat-vladic',
     title: 'Advokatska kancelarija Vladić',
     kind: 'Law office website',
@@ -67,6 +49,24 @@ export const projects: Project[] = [
     repoUrl: gh('Astra_engineering--website-'),
     featured: true,
     image: 'astra',
+  },
+  {
+    id: 'projectanvil',
+    title: 'ProjectAnvil',
+    kind: 'Project, task & knowledge workspace',
+    year: '2026',
+    summary:
+      'An installable, offline-capable workspace for projects, tasks, Markdown notes, canvases, a relationship graph and decision records.',
+    highlights: [
+      'Team workspaces with Viewer / Editor / Admin roles, live collaborative editing, mentions and notifications.',
+      'Recurring tasks with time-zone-aware reminders, bulk editing, and saved board, list and timeline views.',
+      'CSP, rate limiting and verified backups with rollback; Playwright tests on Chromium, Firefox and WebKit in CI.',
+      'Built with an AI-agent workflow (OpenAI Codex): I set the architecture, standards and docs; agents implemented under my review.',
+    ],
+    tech: ['typescript', 'react', 'vite', 'playwright', 'codex'],
+    status: 'source',
+    repoUrl: gh('ProjectAnvil'),
+    featured: true,
   },
   {
     id: 'euronet',

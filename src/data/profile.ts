@@ -1,7 +1,9 @@
 import type { Stat } from './types.ts'
 
 export const profile = {
-  headline: 'I build reliable back-office systems by day and fast, search-friendly web apps for clients.',
+  headline: 'Fast, modern websites that bring you clients.',
+  heroLead:
+    'I’m Miloš, a full-stack developer in Belgrade. I design, build and host websites and web apps for businesses: quick on every phone, easy to find on Google, and looked after once they launch.',
   bio: [
     'I’m a software developer with 4+ years building financial back-office and reporting systems on .NET and Microsoft SQL Server at Euronet Worldwide. Alongside that, I build full-stack web apps with Vue.js and Node.js — from client websites to a complete project-management workspace.',
     'AI coding agents are part of my daily workflow. I use Claude Code and OpenAI Codex to plan, implement, test and document features, while I own the architecture, code review and quality gates.',

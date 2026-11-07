@@ -34,8 +34,10 @@ const emit = defineEmits<{ select: [id: string | null] }>()
   min-height: 2.25rem;
   padding: 0.3em 0.85em;
   background: transparent;
-  border: 1px solid var(--plate);
-  color: var(--steel);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.03);
+  color: var(--muted);
   font-size: var(--step--1);
   cursor: pointer;
   transition:
@@ -44,14 +46,14 @@ const emit = defineEmits<{ select: [id: string | null] }>()
 }
 
 .chip:hover {
-  border-color: var(--brass-dim);
-  color: var(--bone);
+  border-color: var(--border-strong);
+  color: var(--text);
 }
 
 .chip[aria-pressed='true'] {
-  border-color: var(--brass);
-  background: var(--brass);
-  color: var(--void);
+  border-color: transparent;
+  background: linear-gradient(135deg, var(--accent-strong), var(--accent-deep));
+  color: #fff;
   font-weight: 600;
 }
 

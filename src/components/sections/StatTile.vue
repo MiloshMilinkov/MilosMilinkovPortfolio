@@ -8,7 +8,7 @@ const shown = useCountUp(props.stat.value, toRef(props, 'start'))
 </script>
 
 <template>
-  <li class="stat">
+  <li class="stat card">
     <data class="stat__value" :value="stat.value">{{ shown }}{{ stat.suffix }}</data>
     <span class="stat__label">{{ stat.label }}</span>
   </li>
@@ -17,27 +17,23 @@ const shown = useCountUp(props.stat.value, toRef(props, 'start'))
 <style scoped>
 .stat {
   display: grid;
-  grid-template-columns: 5.5rem 1fr;
-  align-items: baseline;
-  gap: var(--space-4);
-  padding-block: var(--space-4);
-  border-top: 1px solid var(--plate);
-}
-
-.stat:last-child {
-  border-bottom: 1px solid var(--plate);
+  align-content: end;
+  gap: var(--space-1);
+  min-height: 6.5rem;
+  padding: var(--space-4) var(--space-3) var(--space-3);
 }
 
 .stat__value {
-  font-family: var(--font-display);
   font-size: var(--step-3);
-  font-weight: 700;
+  font-weight: 600;
   line-height: 1;
-  color: var(--brass);
+  letter-spacing: -0.03em;
   font-variant-numeric: tabular-nums;
 }
 
 .stat__label {
-  color: var(--steel);
+  color: var(--muted);
+  font-size: var(--step--1);
+  line-height: 1.35;
 }
 </style>

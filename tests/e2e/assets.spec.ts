@@ -57,5 +57,5 @@ test('hashed build assets are cached immutably', async ({ request }) => {
 
 test('theme fonts are preloaded', async ({ request }) => {
   const html = await (await request.get('/')).text()
-  expect(html).toMatch(/<link rel="preload" href="\/assets\/grenze-gotisch-latin-wght-normal-[^"]+\.woff2" as="font" type="font\/woff2" crossorigin>/)
+  expect(html).toMatch(/<link rel="preload" href="\/assets\/geist-latin-wght-normal-[^"]+\.woff2" as="font" type="font\/woff2" crossorigin>/)
 })

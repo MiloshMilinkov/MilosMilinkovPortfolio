@@ -15,12 +15,7 @@ const label = computed(() => labels[props.status])
 
 <template>
   <span class="status" :class="`status--${status}`" :data-status="status">
-    <svg class="status__icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
-      <circle v-if="status === 'live'" cx="8" cy="8" r="4" />
-      <path v-else-if="status === 'source'" d="M5.5 4 2 8l3.5 4M10.5 4 14 8l-3.5 4" />
-      <path v-else d="M4.5 7V5.5a3.5 3.5 0 0 1 7 0V7M3.5 7h9v6.5h-9z" />
-    </svg>
-    {{ label }}
+    <span class="status__dot" aria-hidden="true" />{{ label }}
   </span>
 </template>
 
@@ -29,48 +24,35 @@ const label = computed(() => labels[props.status])
   display: inline-flex;
   align-items: center;
   gap: 0.45em;
+  padding: 0.2em 0.7em;
+  border-radius: 999px;
+  border: 1px solid var(--border-strong);
+  background: rgb(255 255 255 / 0.04);
+  color: var(--muted);
   font-size: var(--step--1);
-  font-weight: 600;
-  letter-spacing: 0.02em;
+  font-weight: 500;
   white-space: nowrap;
 }
 
-.status__icon {
-  width: 1em;
-  height: 1em;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.6;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+.status__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--subtle);
 }
 
 .status--live {
-  color: var(--ember-hot);
+  color: var(--text);
+  border-color: rgb(34 211 238 / 0.35);
+  background: rgb(34 211 238 / 0.08);
 }
 
-.status--live .status__icon {
-  fill: currentColor;
-  stroke: none;
+.status--live .status__dot {
+  background: var(--cyan);
+  box-shadow: 0 0 0 3px rgb(34 211 238 / 0.2);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .status--live .status__icon {
-    animation: pulse 2.4s ease-in-out infinite;
-  }
-}
-
-.status--source {
-  color: var(--brass);
-}
-
-.status--classified {
-  color: var(--steel);
-}
-
-@keyframes pulse {
-  50% {
-    opacity: 0.35;
-  }
+.status--source .status__dot {
+  background: var(--accent);
 }
 </style>

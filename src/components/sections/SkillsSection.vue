@@ -63,12 +63,12 @@ async function showInProjects() {
     <div class="container">
       <SectionHeading
         id="skills-title"
-        title="Skills"
+        title="Tech I work with"
         lede="Pick a skill to see where I’ve used it — then jump straight to those projects."
       />
 
-      <div class="skills__console frame">
-        <div class="skills__tabs" role="tablist" aria-label="Skill groups" aria-orientation="vertical">
+      <div class="skills__console card">
+        <div class="skills__tabs" role="tablist" aria-label="Skill groups" aria-orientation="horizontal">
           <button
             v-for="(group, i) in skillGroups"
             :id="`tab-${group.id}`"
@@ -132,7 +132,7 @@ async function showInProjects() {
               </ul>
               <button
                 v-if="selectedProjects.length"
-                class="btn btn--ghost frame frame--br readout__go"
+                class="btn btn--ghost readout__go"
                 type="button"
                 @click="showInProjects"
               >
@@ -149,58 +149,48 @@ async function showInProjects() {
 
 <style scoped>
 .skills__console {
-  --chamfer: 22px;
-  display: grid;
-  grid-template-columns: 12rem minmax(0, 1fr);
+  padding: clamp(1rem, 0.75rem + 1.2vw, 2rem);
 }
 
+/* Segmented control */
 .skills__tabs {
-  display: flex;
-  flex-direction: column;
-  padding: var(--space-5) 0;
-  border-right: 1px solid var(--plate);
+  display: inline-flex;
+  max-width: 100%;
+  gap: 2px;
+  padding: 4px;
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: rgb(0 0 0 / 0.25);
+  scrollbar-width: none;
 }
 
 .skills__tab {
-  position: relative;
-  padding: var(--space-3) var(--space-5);
-  background: none;
+  padding: 0.5em 1.1em;
   border: 0;
-  color: var(--steel);
-  /* Body face: blackletter capitals (e.g. "AI") are hard to read at this size. */
-  font-family: var(--font-body);
-  font-size: var(--step-1);
+  border-radius: 999px;
+  background: none;
+  color: var(--muted);
+  font-size: var(--step--1);
   font-weight: 600;
-  letter-spacing: 0.01em;
-  text-align: left;
+  white-space: nowrap;
   cursor: pointer;
-  transition: color 0.15s;
+  transition:
+    color 0.15s,
+    background-color 0.15s;
 }
 
 .skills__tab:hover {
-  color: var(--bone);
+  color: var(--text);
 }
 
 .skills__tab[aria-selected='true'] {
-  color: var(--brass);
-}
-
-.skills__tab[aria-selected='true']::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 22%;
-  bottom: 22%;
-  width: 3px;
-  background: var(--ember);
-}
-
-.skills__tab:focus-visible {
-  outline-offset: -4px;
+  background: linear-gradient(135deg, var(--accent-strong), var(--accent-deep));
+  color: #fff;
 }
 
 .skills__panels {
-  padding: clamp(1.25rem, 1rem + 1.5vw, 2.5rem);
+  margin-top: var(--space-5);
   min-width: 0;
 }
 
@@ -209,14 +199,14 @@ async function showInProjects() {
 }
 
 .skills__blurb {
-  color: var(--steel);
+  color: var(--muted);
   margin-bottom: var(--space-5);
 }
 
 .skills__grid {
   list-style: none;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 14.5rem), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr));
   gap: var(--space-3);
 }
 
@@ -226,25 +216,29 @@ async function showInProjects() {
   width: 100%;
   height: 100%;
   padding: var(--space-3) var(--space-4);
-  background: var(--void);
-  border: 1px solid var(--plate);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: rgb(255 255 255 / 0.03);
   text-align: left;
   cursor: pointer;
-  transition: border-color 0.15s;
+  transition:
+    border-color 0.15s,
+    background-color 0.15s;
 }
 
 .skill:hover {
-  border-color: var(--brass-dim);
+  border-color: var(--border-strong);
+  background: rgb(255 255 255 / 0.05);
 }
 
 .skill[aria-pressed='true'] {
-  border-color: var(--brass);
-  background: rgb(200 163 90 / 0.08);
+  border-color: rgb(217 70 239 / 0.55);
+  background: var(--accent-soft);
 }
 
 .skill__label {
   font-weight: 600;
-  color: var(--bone);
+  color: var(--text);
 }
 
 .skill__meta {
@@ -253,7 +247,7 @@ async function showInProjects() {
   align-items: center;
   gap: var(--space-1) var(--space-3);
   font-size: var(--step--1);
-  color: var(--steel);
+  color: var(--muted);
 }
 
 .meter {
@@ -263,85 +257,52 @@ async function showInProjects() {
 
 .meter i {
   width: 14px;
-  height: 6px;
-  background: var(--plate);
-  clip-path: polygon(0 0, 75% 0, 100% 100%, 25% 100%);
+  height: 5px;
+  border-radius: 3px;
+  background: rgb(255 255 255 / 0.12);
 }
 
 .meter i.on {
-  background: var(--brass);
+  background: linear-gradient(90deg, var(--accent), var(--accent-strong));
 }
 
 .skill__usage {
-  color: var(--brass);
+  color: var(--text);
 }
 
 .readout {
-  margin-top: var(--space-6);
+  margin-top: var(--space-5);
   padding-top: var(--space-5);
-  border-top: 1px dashed var(--plate);
+  border-top: 1px solid var(--border);
   min-height: 5.5rem;
 }
 
 .readout__hint {
   margin: 0;
-  color: var(--steel);
+  color: var(--muted);
 }
 
 .readout__title {
   margin-bottom: var(--space-3);
-  color: var(--steel);
+  color: var(--muted);
 }
 
 .readout__title strong {
-  color: var(--bone);
+  color: var(--text);
 }
 
 .readout__list {
   list-style: none;
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-2) var(--space-5);
+  gap: var(--space-2);
   margin-bottom: var(--space-5);
 }
 
-.readout__list li::before {
-  content: '';
-  display: inline-block;
-  width: 6px;
-  height: 6px;
-  margin-right: var(--space-2);
-  background: var(--ember);
-  transform: rotate(45deg) translateY(-2px);
-}
-
-@media (max-width: 47.99rem) {
-  .skills__console {
-    grid-template-columns: 1fr;
-  }
-
-  .skills__tabs {
-    flex-direction: row;
-    overflow-x: auto;
-    padding: var(--space-2) var(--space-3) 0;
-    border-right: 0;
-    border-bottom: 1px solid var(--plate);
-    scrollbar-width: none;
-  }
-
-  .skills__tab {
-    padding: var(--space-3);
-    font-size: var(--step-0);
-    white-space: nowrap;
-  }
-
-  .skills__tab[aria-selected='true']::before {
-    left: 20%;
-    right: 20%;
-    top: auto;
-    bottom: 0;
-    width: auto;
-    height: 3px;
-  }
+.readout__list li {
+  padding: 0.2em 0.75em;
+  border-radius: 8px;
+  background: rgb(255 255 255 / 0.05);
+  font-size: var(--step--1);
 }
 </style>

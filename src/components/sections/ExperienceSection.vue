@@ -64,7 +64,7 @@ import SectionHeading from '../ui/SectionHeading.vue'
   bottom: 0.6rem;
   left: var(--rail);
   width: 1px;
-  background: linear-gradient(to bottom, var(--brass), var(--brass-dim) 70%, transparent);
+  background: linear-gradient(to bottom, var(--accent), var(--border-strong) 75%, transparent);
 }
 
 .timeline__item {
@@ -78,18 +78,18 @@ import SectionHeading from '../ui/SectionHeading.vue'
   left: calc(var(--rail) - 5px);
   width: 11px;
   height: 11px;
-  background: var(--void);
-  border: 1px solid var(--brass);
-  transform: rotate(45deg);
+  background: var(--bg);
+  border: 2px solid var(--accent);
+  border-radius: 50%;
 }
 
 .timeline__item:first-child::before {
-  background: var(--ember);
-  border-color: var(--ember);
+  background: var(--accent);
+  border-color: var(--accent);
 }
 
 .timeline__item--edu::before {
-  border-color: var(--steel);
+  border-color: var(--cyan);
 }
 
 .entry__summary {
@@ -108,7 +108,7 @@ import SectionHeading from '../ui/SectionHeading.vue'
 
 .entry__period {
   padding-right: var(--space-6);
-  color: var(--brass);
+  color: var(--accent);
   font-size: var(--step--1);
   font-weight: 600;
   font-variant-numeric: tabular-nums;
@@ -121,22 +121,22 @@ import SectionHeading from '../ui/SectionHeading.vue'
 }
 
 .entry__title {
-  font-family: var(--font-display);
   font-size: var(--step-2);
-  font-weight: 700;
+  font-weight: 600;
+  letter-spacing: -0.02em;
   line-height: 1.1;
-  color: var(--bone);
+  color: var(--text);
 }
 
 .entry__org {
-  color: var(--steel);
+  color: var(--muted);
 }
 
 .entry__toggle {
   width: 0.7rem;
   height: 0.7rem;
-  border-right: 2px solid var(--brass-dim);
-  border-bottom: 2px solid var(--brass-dim);
+  border-right: 2px solid var(--muted);
+  border-bottom: 2px solid var(--muted);
   transform: translateY(-0.2rem) rotate(45deg);
   transition: transform 0.2s;
 }
@@ -146,7 +146,7 @@ import SectionHeading from '../ui/SectionHeading.vue'
 }
 
 .entry__summary:hover .entry__title {
-  color: var(--brass);
+  color: var(--accent);
 }
 
 .entry__summary:focus-visible {
@@ -158,17 +158,17 @@ import SectionHeading from '../ui/SectionHeading.vue'
   gap: var(--space-3);
   margin: 0 0 var(--space-5) calc(var(--rail) + var(--space-5) + var(--space-5));
   padding-left: 1.1em;
-  color: var(--steel);
+  color: var(--muted);
   max-width: var(--measure);
 }
 
 .entry__points strong {
-  color: var(--bone);
+  color: var(--text);
   font-weight: 600;
 }
 
 .entry__points li::marker {
-  color: var(--brass-dim);
+  color: var(--border-strong);
 }
 
 @media (max-width: 47.99rem) {

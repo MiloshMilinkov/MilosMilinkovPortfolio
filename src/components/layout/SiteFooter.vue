@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { site } from '../../data/site.ts'
 import ExternalLink from '../ui/ExternalLink.vue'
+import Monogram from '../ui/Monogram.vue'
 
 defineProps<{ minimal?: boolean }>()
 </script>
@@ -8,7 +9,10 @@ defineProps<{ minimal?: boolean }>()
 <template>
   <footer class="site-footer">
     <div class="container site-footer__inner">
-      <p class="site-footer__owner">© 2026 Miloš Milinkov</p>
+      <div class="site-footer__brand">
+        <Monogram :size="28" />
+        <p class="site-footer__owner">© 2026 Miloš Milinkov</p>
+      </div>
       <p class="site-footer__built">
         Built with Vue 3 and Vite, hosted on Cloudflare.
         <ExternalLink :href="site.repo">Source on GitHub</ExternalLink>
@@ -20,16 +24,16 @@ defineProps<{ minimal?: boolean }>()
 
 <style scoped>
 .site-footer {
-  border-top: 1px solid var(--plate);
+  border-top: 1px solid var(--border);
   padding-block: var(--space-6);
-  color: var(--steel);
+  color: var(--muted);
   font-size: var(--step--1);
 }
 
 .site-footer__inner {
   display: flex;
   flex-wrap: wrap;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
   gap: var(--space-3) var(--space-6);
 }
@@ -38,9 +42,22 @@ defineProps<{ minimal?: boolean }>()
   margin: 0;
 }
 
+.site-footer__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
 .site-footer__owner {
-  color: var(--bone);
-  font-family: var(--font-display);
-  font-size: var(--step-1);
+  color: var(--text);
+  font-weight: 600;
+}
+
+.site-footer a {
+  color: var(--muted);
+}
+
+.site-footer a:hover {
+  color: var(--text);
 }
 </style>

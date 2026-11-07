@@ -1,7 +1,13 @@
 import { expect, test } from '@playwright/test'
 import { site } from '../../src/data/site'
 
-const NAV = ['About', 'Skills', 'Experience', 'Projects', 'Contact']
+const NAV: [string, string][] = [
+  ['Services', 'services'],
+  ['Work', 'projects'],
+  ['Process', 'process'],
+  ['About', 'about'],
+  ['Contact', 'contact'],
+]
 const WEBKIT_TAB = 'WebKit (like Safari by default) does not move Tab focus to links'
 
 test('first Tab reaches a skip link to the main content', async ({ page, browserName }) => {
@@ -19,11 +25,12 @@ test.describe('desktop navigation', () => {
   test('links to every section and marks the one in view', async ({ page }) => {
     await page.goto('/')
     const nav = page.getByRole('navigation', { name: 'Main' })
-    for (const name of NAV) {
-      await expect(nav.getByRole('link', { name, exact: true })).toHaveAttribute('href', `#${name.toLowerCase()}`)
+    for (const [name, id] of NAV) {
+      await expect(nav.getByRole('link', { name, exact: true })).toHaveAttribute('href', `#${id}`)
     }
+    await expect(nav.getByRole('link', { name: 'Start a project' })).toHaveAttribute('href', '#contact')
     await page.locator('#projects').scrollIntoViewIfNeeded()
-    await expect(nav.getByRole('link', { name: 'Projects', exact: true })).toHaveAttribute('aria-current', 'true')
+    await expect(nav.getByRole('link', { name: 'Work', exact: true })).toHaveAttribute('aria-current', 'true')
     await expect(nav.getByRole('link', { name: 'About', exact: true })).not.toHaveAttribute('aria-current', 'true')
   })
 })
@@ -54,7 +61,8 @@ test.describe('mobile menu', () => {
     await page.goto('/')
     const button = page.getByRole('button', { name: 'Menu' })
     await button.click()
-    for (let i = 0; i < NAV.length + 1; i++) await page.keyboard.press('Tab')
+    // links + the Start a project button, then back to the menu button
+    for (let i = 0; i < NAV.length + 2; i++) await page.keyboard.press('Tab')
     await expect(button).toBeFocused()
   })
 
@@ -62,7 +70,7 @@ test.describe('mobile menu', () => {
     await page.goto('/')
     const button = page.getByRole('button', { name: 'Menu' })
     await button.click()
-    await page.locator(`#${await button.getAttribute('aria-controls')}`).getByRole('link', { name: 'Projects' }).click()
+    await page.locator(`#${await button.getAttribute('aria-controls')}`).getByRole('link', { name: 'Work' }).click()
     await expect(button).toHaveAttribute('aria-expanded', 'false')
     await expect(page).toHaveURL(/#projects$/)
   })
@@ -89,7 +97,7 @@ test('footer credits the owner and links to the source', async ({ page }) => {
 
 test('404 page explains and links home', async ({ page }) => {
   await page.goto('/missing-page')
-  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Signal lost')
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Page not found')
   await expect(page.getByRole('link', { name: 'Return to the portfolio' })).toHaveAttribute('href', '/')
   await expect(page.getByRole('banner').locator('svg.monogram')).toBeVisible()
 })

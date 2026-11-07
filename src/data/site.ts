@@ -2,11 +2,11 @@
 export const site = {
   name: 'Miloš Milinkov',
   alternateName: 'Milos Milinkov',
-  jobTitle: 'Software Developer',
-  roleLine: 'Software Developer · .NET & SQL · Full-Stack · AI-Assisted Engineering',
-  title: 'Miloš Milinkov — Software Developer (.NET, SQL, Vue.js)',
+  jobTitle: 'Full-stack web developer',
+  roleLine: 'Full-stack web developer in Belgrade',
+  title: 'Miloš Milinkov — Websites & Web Apps for Businesses',
   description:
-    'Miloš Milinkov, software developer in Belgrade: .NET & SQL Server back-office systems, Vue.js web apps and AI-assisted engineering.',
+    'Miloš Milinkov builds fast, search-friendly websites and web apps for businesses: designed, developed and hosted from Belgrade, Serbia.',
   // Replaced with the real workers.dev URL after the first deploy (plan Task 12).
   SITE_URL: 'https://milos-milinkov.workers.dev',
   locale: 'en_US',
@@ -15,7 +15,7 @@ export const site = {
   linkedin: 'https://www.linkedin.com/in/milo%C5%A1milinkov/',
   repo: 'https://github.com/MiloshMilinkov/MilosMilinkovPortfolio',
   ogImage: '/og-image.png',
-  ogImageAlt: 'Miloš Milinkov — Software Developer · .NET & SQL · Full-Stack · AI-Assisted Engineering',
+  ogImageAlt: 'Miloš Milinkov — fast, modern websites and web apps for businesses',
 } as const
 
 export type Site = typeof site

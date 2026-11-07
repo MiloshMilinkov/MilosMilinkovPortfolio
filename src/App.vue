@@ -5,7 +5,9 @@ import SiteHeader from './components/layout/SiteHeader.vue'
 import AboutSection from './components/sections/AboutSection.vue'
 import ContactSection from './components/sections/ContactSection.vue'
 import ExperienceSection from './components/sections/ExperienceSection.vue'
+import ProcessSection from './components/sections/ProcessSection.vue'
 import ProjectsSection from './components/sections/ProjectsSection.vue'
+import ServicesSection from './components/sections/ServicesSection.vue'
 import SkillsSection from './components/sections/SkillsSection.vue'
 </script>
 
@@ -14,10 +16,12 @@ import SkillsSection from './components/sections/SkillsSection.vue'
   <SiteHeader />
   <main id="main" tabindex="-1">
     <HeroSection />
+    <ServicesSection />
+    <ProjectsSection />
+    <ProcessSection />
     <AboutSection />
     <SkillsSection />
     <ExperienceSection />
-    <ProjectsSection />
     <ContactSection />
   </main>
   <SiteFooter />
