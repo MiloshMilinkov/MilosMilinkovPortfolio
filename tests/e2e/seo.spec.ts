@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test'
-import { profile } from '../../src/data/profile'
+import { en } from '../../src/i18n/messages/en'
 import { projects } from '../../src/data/projects'
 import { site } from '../../src/data/site'
 
@@ -14,7 +14,7 @@ test.describe('home page head', () => {
   test('has language, title and a short description', () => {
     expect(html).toMatch(/<html lang="en"/)
     // The title is HTML-escaped in the source ("&" → "&amp;"); browsers show it decoded.
-    expect(attr(html, /<title>([^<]*)<\/title>/)?.replaceAll('&amp;', '&')).toBe(site.title)
+    expect(attr(html, /<title>([^<]*)<\/title>/)?.replaceAll('&amp;', '&')).toBe(en.meta.title)
     const description = attr(html, /<meta name="description" content="([^"]*)"/) ?? ''
     expect(description.length).toBeGreaterThan(50)
     expect(description.length).toBeLessThanOrEqual(160)
@@ -64,7 +64,7 @@ test.describe('without JavaScript', () => {
 
   test('content is readable from the prerendered HTML', async ({ page }) => {
     await page.goto('/')
-    await expect(page.getByText(profile.bio[0]!.slice(0, 60))).toBeVisible()
+    await expect(page.getByText(en.about.bio[0]!.slice(0, 60))).toBeVisible()
     for (const p of projects) await expect(page.getByText(p.title, { exact: true }).first()).toBeAttached()
   })
 })

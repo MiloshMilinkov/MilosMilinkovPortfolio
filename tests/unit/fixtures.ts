@@ -10,9 +10,6 @@ export const skillFixture: Skill[] = [
 export function project(overrides: Partial<Project> & Pick<Project, 'id'>): Project {
   return {
     title: overrides.id,
-    kind: 'Test project',
-    summary: 'Summary.',
-    highlights: [],
     tech: [],
     status: 'source',
     repoUrl: `https://github.com/example/${overrides.id}`,

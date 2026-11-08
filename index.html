@@ -1,11 +1,11 @@
 <!doctype html>
-<html lang="en">
+<html lang="__LANG__">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>__TITLE__</title>
     <meta name="description" content="__DESCRIPTION__" />
-    <link rel="canonical" href="__SITE_URL__/" />
+    <link rel="canonical" href="__CANONICAL__" />
     <meta name="robots" content="index, follow, max-image-preview:large" />
     <meta name="author" content="Miloš Milinkov" />
     <meta name="theme-color" content="#121216" />
@@ -13,11 +13,11 @@
 
     <meta property="og:type" content="profile" />
     <meta property="og:site_name" content="Miloš Milinkov" />
-    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale" content="__OG_LOCALE__" />
     <meta property="og:title" content="__TITLE__" />
     <meta property="og:description" content="__DESCRIPTION__" />
-    <meta property="og:url" content="__SITE_URL__/" />
-    <meta property="og:image" content="__SITE_URL____OG_IMAGE__" />
+    <meta property="og:url" content="__CANONICAL__" />
+    <meta property="og:image" content="__OG_IMAGE__" />
     <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -28,13 +28,14 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="__TITLE__" />
     <meta name="twitter:description" content="__DESCRIPTION__" />
-    <meta name="twitter:image" content="__SITE_URL____OG_IMAGE__" />
+    <meta name="twitter:image" content="__OG_IMAGE__" />
     <meta name="twitter:image:alt" content="__OG_IMAGE_ALT__" />
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
+    <!--head-extra-->
     <noscript>
       <style>
         /* Without JavaScript the menu button cannot open the nav, so show the links instead. */

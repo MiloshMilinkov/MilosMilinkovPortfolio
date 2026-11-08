@@ -1,29 +1,30 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { profile } from '../../data/profile.ts'
+import { useI18n } from '../../i18n/index.ts'
 import { projects } from '../../data/projects.ts'
-import { skillGroups, skills, tierLabel } from '../../data/skills.ts'
+import { skillGroups, skills } from '../../data/skills.ts'
 import type { Skill, SkillGroup } from '../../data/types.ts'
 import { projectsUsing } from '../../lib/skillUsage.ts'
 import SectionHeading from '../ui/SectionHeading.vue'
 
 const TIER_SEGMENTS: Record<Skill['tier'], number> = { core: 3, proficient: 2, familiar: 1 }
 
-const activeGroup = ref<SkillGroup>(skillGroups[0]!.id)
+const { t } = useI18n()
+const activeGroup = ref<SkillGroup>(skillGroups[0]!)
 const selected = ref<Skill | null>(null)
 const tabRefs = ref<HTMLButtonElement[]>([])
 
 const skillsIn = (group: SkillGroup) => skills.filter((s) => s.group === group)
 const usageText = (id: string) => {
   const n = projectsUsing(projects, id).length
-  return n === 0 ? '' : `Used in ${n} project${n === 1 ? '' : 's'}`
+  return n === 0 ? '' : t.skills.usedIn(n)
 }
 const selectedProjects = computed(() => (selected.value ? projectsUsing(projects, selected.value.id) : []))
 
 function selectTab(index: number, focus = false) {
   const count = skillGroups.length
   const i = (index + count) % count
-  activeGroup.value = skillGroups[i]!.id
+  activeGroup.value = skillGroups[i]!
   if (focus) tabRefs.value[i]?.focus()
 }
 
@@ -53,44 +54,44 @@ function toggleSkill(skill: Skill) {
     <div class="container">
       <SectionHeading
         id="skills-title"
-        title="How I work and what I use"
-        :lede="profile.workflow"
+        :title="t.skills.title"
+        :lede="t.skills.lede"
       />
 
       <div class="skills__console card">
-        <div class="skills__tabs" role="tablist" aria-label="Skill groups" aria-orientation="horizontal">
+        <div class="skills__tabs" role="tablist" :aria-label="t.skills.tablistLabel" aria-orientation="horizontal">
           <button
             v-for="(group, i) in skillGroups"
-            :id="`tab-${group.id}`"
-            :key="group.id"
+            :id="`tab-${group}`"
+            :key="group"
             ref="tabRefs"
             class="skills__tab"
             type="button"
             role="tab"
-            :aria-selected="activeGroup === group.id ? 'true' : 'false'"
-            :aria-controls="`panel-${group.id}`"
-            :tabindex="activeGroup === group.id ? 0 : -1"
+            :aria-selected="activeGroup === group ? 'true' : 'false'"
+            :aria-controls="`panel-${group}`"
+            :tabindex="activeGroup === group ? 0 : -1"
             @click="selectTab(i)"
             @keydown="onTabKeydown($event, i)"
           >
-            {{ group.label }}
+            {{ t.skills.groups[group].label }}
           </button>
         </div>
 
         <div class="skills__panels">
           <div
             v-for="group in skillGroups"
-            :id="`panel-${group.id}`"
-            :key="group.id"
+            :id="`panel-${group}`"
+            :key="group"
             class="skills__panel"
             role="tabpanel"
-            :aria-labelledby="`tab-${group.id}`"
+            :aria-labelledby="`tab-${group}`"
             tabindex="0"
-            :hidden="activeGroup !== group.id"
+            :hidden="activeGroup !== group"
           >
-            <p class="skills__blurb">{{ group.blurb }}</p>
+            <p class="skills__blurb">{{ t.skills.groups[group].blurb }}</p>
             <ul class="skills__grid">
-              <li v-for="skill in skillsIn(group.id)" :key="skill.id">
+              <li v-for="skill in skillsIn(group)" :key="skill.id">
                 <button
                   class="skill"
                   type="button"
@@ -102,7 +103,7 @@ function toggleSkill(skill: Skill) {
                     <span class="meter" aria-hidden="true">
                       <i v-for="n in 3" :key="n" :class="{ on: n <= TIER_SEGMENTS[skill.tier] }" />
                     </span>
-                    <span class="skill__tier">{{ tierLabel[skill.tier] }}</span>
+                    <span class="skill__tier">{{ t.skills.tiers[skill.tier] }}</span>
                     <span v-if="usageText(skill.id)" class="skill__usage">{{ usageText(skill.id) }}</span>
                   </span>
                 </button>
@@ -114,14 +115,14 @@ function toggleSkill(skill: Skill) {
             <template v-if="selected">
               <p class="readout__title">
                 <strong>{{ selected.label }}</strong>
-                <span v-if="selectedProjects.length"> in these projects:</span>
-                <span v-else> is part of my everyday work rather than one listed project.</span>
+                <span v-if="selectedProjects.length"> {{ t.skills.readoutIn }}</span>
+                <span v-else> {{ t.skills.readoutNone }}</span>
               </p>
               <ul v-if="selectedProjects.length" class="readout__list">
                 <li v-for="p in selectedProjects" :key="p.id">{{ p.title }}</li>
               </ul>
             </template>
-            <p v-else class="readout__hint">Pick a tool to see which of my projects use it.</p>
+            <p v-else class="readout__hint">{{ t.skills.hint }}</p>
           </div>
         </div>
       </div>

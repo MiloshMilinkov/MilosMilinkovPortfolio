@@ -23,29 +23,39 @@ No linter is configured. Local e2e: `npx playwright test --project=chromium --pr
 
 Vue 3 + TypeScript + Vite 8, prerendered to static HTML and hydrated with `createSSRApp`.
 Served as Cloudflare Workers Static Assets (`wrangler.jsonc`, no Worker script; `public/_headers`
-sets CSP/HSTS/cache). Font: Geist (self-hosted, latin + latin-ext). Runtime dependency: `vue` only.
+sets CSP/HSTS/cache). Font: Geist (self-hosted, latin + latin-ext + cyrillic). Runtime dependency: `vue` only.
 
 ## Layout
 
-- `src/data/` — all content: `site.ts` (name, `SITE_URL`, links), `profile.ts`, `projects.ts`,
-  `services.ts` (services + process steps), `skills.ts`, `experience.ts`, `nav.ts`, `types.ts`.
+- `src/i18n/` — languages: `messages/en.ts` (defines the `Messages` shape), `sr.ts` (Serbian, Latin
+  script), `ru.ts`; `index.ts` (locales, `useI18n()`), `head.ts` (per-language title, canonical,
+  hreflang, OG, JSON-LD).
+- `src/data/` — non-text facts: `site.ts` (`SITE_URL`, links, OG/guide paths), `projects.ts` (ids,
+  URLs, status, tech), `profile.ts` (stat numbers), `services.ts` (ids/icons), `skills.ts`, `nav.ts`.
 - `src/lib/` — pure logic: project link rules, skill usage, JSON-LD, schematic art.
 - `src/components/` — `hero/`, `sections/`, `projects/`, `layout/`, `ui/` (Icon, cards, badges…).
 - `src/styles/` — `tokens.css` (palette, type scale), `base.css` (cards, buttons, pills), `fonts.css`.
-- `vite/seo-plugin.ts` — fills `__TOKENS__` in index.html/404.html, injects JSON-LD and the font
-  preload, emits robots.txt and sitemap.xml.
+- `vite/seo-plugin.ts` — font preload, robots.txt and the hreflang sitemap; fills the head tokens
+  only on the dev server. In a build, `scripts/prerender.mjs` fills them per language.
 - `scripts/` — `prerender.mjs`; `assets/` one-off generators (screenshots, icons, OG image).
 - `tests/unit` (Vitest), `tests/e2e` (Playwright + axe).
 
 ## Content rules
 
+- All visible text lives in `src/i18n/messages/*.ts`; change EN, SR and RU together (TypeScript
+  fails the build if a language misses a key). Pages: `/` (en), `/sr/`, `/ru/`, each prerendered
+  with its own head; the language picker links between them.
+- After changing hero copy, re-run `node scripts/assets/generate-og.mjs` (one OG image per language).
+- Cloudflare setup guides (PDF, per language) live in `public/guides/`; the Hosting section links them.
+- Portrait: `node scripts/assets/process-portrait.mjs <photo>` (4:5 crop, never upscaled).
 - Projects: `status` is `live` (needs `liveUrl`), `source` (needs `repoUrl`) or `classified` (no URL).
   Fictional showcase sites get `concept: true`: shown as Live but never counted as client work.
 - New live project screenshots: add `image: '<id>'`, then `node scripts/assets/capture-screenshots.mjs`.
 - `SITE_URL` in `src/data/site.ts` drives every absolute URL (canonical, OG, sitemap, JSON-LD).
-- Tool/technology names belong only in the workflow section (`#skills`); an e2e test enforces it.
+- Tool/technology names belong only in the workflow section (`#skills`) and the Hosting section
+  (`#hosting`, which explains Cloudflare); an e2e test enforces it for the other sections.
 - Never publish the phone number or the CV PDF; tests check for `+381` / `tel:`.
-- English only, dark theme only. Copy is client-facing: the site sells Miloš's web-building service.
+- Dark theme only. Copy is client-facing: the site sells Miloš's web-building service.
 
 ## Testing
 

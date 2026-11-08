@@ -1,32 +1,31 @@
 <script setup lang="ts">
 import { services } from '../../data/services.ts'
+import { useI18n } from '../../i18n/index.ts'
 import Icon from '../ui/Icon.vue'
 import SectionHeading from '../ui/SectionHeading.vue'
+
+const { t } = useI18n()
 </script>
 
 <template>
   <section id="services" class="section services" aria-labelledby="services-title">
     <div class="container">
-      <SectionHeading
-        id="services-title"
-        title="What I can build for you"
-        lede="From a first business website to a custom web app, designed, built and hosted by one developer who answers your emails."
-      />
+      <SectionHeading id="services-title" :title="t.services.title" :lede="t.services.lede" />
 
       <ul class="services__grid">
         <li v-for="(s, i) in services" :key="s.id" class="service card" :class="{ 'card--glow': i === 0 }">
           <span class="chip-icon" :class="{ 'chip-icon--accent': i === 0 }"><Icon :name="s.icon" /></span>
-          <h3>{{ s.title }}</h3>
-          <p class="service__summary">{{ s.summary }}</p>
-          <ul class="service__includes" :aria-label="`${s.title} includes`">
-            <li v-for="item in s.includes" :key="item"><Icon name="check" />{{ item }}</li>
+          <h3>{{ t.services.items[s.id].title }}</h3>
+          <p class="service__summary">{{ t.services.items[s.id].summary }}</p>
+          <ul class="service__includes" :aria-label="t.services.includesLabel(t.services.items[s.id].title)">
+            <li v-for="item in t.services.items[s.id].includes" :key="item"><Icon name="check" />{{ item }}</li>
           </ul>
         </li>
       </ul>
 
       <div class="services__cta card">
-        <p>Not sure what you need? Describe your business and I’ll suggest the simplest option, with a free quote.</p>
-        <a class="btn btn--primary" href="#contact">Get a free quote <Icon name="arrow" /></a>
+        <p>{{ t.services.ctaText }}</p>
+        <a class="btn btn--primary" href="#contact">{{ t.services.ctaButton }} <Icon name="arrow" /></a>
       </div>
     </div>
   </section>

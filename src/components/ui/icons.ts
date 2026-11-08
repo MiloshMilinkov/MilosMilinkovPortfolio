@@ -12,6 +12,7 @@ export const icons = {
   copy: 'M9 9h10v10H9V9Zm-4 6V5h10',
   check: 'M5 12.5 9.5 17 19 7.5',
   briefcase: 'M4 8h16v11H4V8Zm5 0V5h6v3M4 13h16',
+  download: 'M12 4v11m-5-5 5 5 5-5M5 20h14',
   spark: 'M12 3v4m0 10v4M3 12h4m10 0h4M6 6l2.5 2.5m7 7L18 18M18 6l-2.5 2.5m-7 7L6 18',
 } as const
 

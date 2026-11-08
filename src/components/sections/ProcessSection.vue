@@ -1,19 +1,17 @@
 <script setup lang="ts">
-import { steps } from '../../data/services.ts'
+import { useI18n } from '../../i18n/index.ts'
 import SectionHeading from '../ui/SectionHeading.vue'
+
+const { t } = useI18n()
 </script>
 
 <template>
   <section id="process" class="section process" aria-labelledby="process-title">
     <div class="container">
-      <SectionHeading
-        id="process-title"
-        title="How we’ll work together"
-        lede="Four clear steps, with you involved at every one. No surprises on scope or price."
-      />
+      <SectionHeading id="process-title" :title="t.process.title" :lede="t.process.lede" />
 
       <ol class="steps">
-        <li v-for="(step, i) in steps" :key="step.title" class="step card">
+        <li v-for="(step, i) in t.process.steps" :key="step.title" class="step card">
           <span class="step__number" aria-hidden="true">{{ String(i + 1).padStart(2, '0') }}</span>
           <h3>{{ step.title }}</h3>
           <p>{{ step.text }}</p>

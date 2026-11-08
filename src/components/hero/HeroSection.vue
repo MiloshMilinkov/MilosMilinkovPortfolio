@@ -3,10 +3,12 @@ import { ref } from 'vue'
 import { useInView } from '../../composables/useInView.ts'
 import { profile } from '../../data/profile.ts'
 import { projects } from '../../data/projects.ts'
+import { useI18n } from '../../i18n/index.ts'
 import Icon from '../ui/Icon.vue'
 import StatTile from '../sections/StatTile.vue'
 import Portrait from './Portrait.vue'
 
+const { t } = useI18n()
 const statsEl = ref<HTMLElement | null>(null)
 const statsInView = useInView(statsEl, { rootMargin: '0px' })
 const liveCount = projects.filter((p) => p.status === 'live' && !p.concept).length
@@ -16,12 +18,12 @@ const liveCount = projects.filter((p) => p.status === 'live' && !p.concept).leng
   <section id="top" class="hero" aria-labelledby="hero-title">
     <div class="container hero__grid">
       <div class="hero__text">
-        <p class="pill hero__pill"><span class="pill__dot" aria-hidden="true" />Websites and web apps for businesses</p>
-        <h1 id="hero-title" class="hero__title">{{ profile.headline }}</h1>
-        <p class="hero__lede">{{ profile.heroLead }}</p>
+        <p class="pill hero__pill"><span class="pill__dot" aria-hidden="true" />{{ t.hero.pill }}</p>
+        <h1 id="hero-title" class="hero__title">{{ t.hero.headline }}</h1>
+        <p class="hero__lede">{{ t.hero.lead }}</p>
         <div class="hero__actions">
-          <a class="btn btn--primary" href="#contact">Start a project <Icon name="arrow" /></a>
-          <a class="btn btn--ghost" href="#projects">See my work</a>
+          <a class="btn btn--primary" href="#contact">{{ t.hero.primary }} <Icon name="arrow" /></a>
+          <a class="btn btn--ghost" href="#projects">{{ t.hero.secondary }}</a>
         </div>
       </div>
 
@@ -32,12 +34,12 @@ const liveCount = projects.filter((p) => p.status === 'live' && !p.concept).leng
       <div class="card card--glow hero__live">
         <span class="chip-icon chip-icon--accent"><Icon name="rocket" /></span>
         <div>
-          <p class="hero__live-value">{{ liveCount }} client sites live</p>
-          <p class="hero__live-text">A law office and a fitness coach, both built, launched and maintained by me.</p>
+          <p class="hero__live-value">{{ t.hero.liveValue(liveCount) }}</p>
+          <p class="hero__live-text">{{ t.hero.liveText }}</p>
         </div>
       </div>
-      <ul ref="statsEl" class="hero__stats" aria-label="At a glance">
-        <StatTile v-for="stat in profile.stats" :key="stat.label" :stat="stat" :start="statsInView" />
+      <ul ref="statsEl" class="hero__stats" :aria-label="t.hero.statsLabel">
+        <StatTile v-for="stat in profile.stats" :key="stat.id" :stat="stat" :label="t.hero.stats[stat.id]" :start="statsInView" />
       </ul>
     </div>
   </section>

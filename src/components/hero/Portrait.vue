@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import { profile } from '../../data/profile.ts'
 import { site } from '../../data/site.ts'
+import { useI18n } from '../../i18n/index.ts'
 import ResponsiveImage from '../ui/ResponsiveImage.vue'
+
+const { t } = useI18n()
 </script>
 
 <template>
@@ -9,16 +11,16 @@ import ResponsiveImage from '../ui/ResponsiveImage.vue'
     <figure class="portrait__frame card">
       <ResponsiveImage
         base="portrait"
-        :widths="[360]"
+        :widths="[400, 506]"
         sizes="(min-width: 56rem) 432px, min(24rem, 100vw)"
-        :alt="profile.portraitAlt"
-        :width="360"
-        :height="360"
+        :alt="t.hero.portraitAlt"
+        :width="506"
+        :height="633"
         eager
       />
       <figcaption class="portrait__caption">
         <span class="portrait__name">{{ site.name }}</span>
-        <span class="portrait__role">{{ site.roleLine }}</span>
+        <span class="portrait__role">{{ t.hero.roleLine }}</span>
       </figcaption>
     </figure>
   </div>

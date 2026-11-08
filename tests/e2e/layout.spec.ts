@@ -5,8 +5,8 @@ const NAV: [string, string][] = [
   ['Services', 'services'],
   ['Work', 'projects'],
   ['Process', 'process'],
+  ['Hosting', 'hosting'],
   ['About', 'about'],
-  ['Workflow', 'skills'],
   ['Contact', 'contact'],
 ]
 const WEBKIT_TAB = 'WebKit (like Safari by default) does not move Tab focus to links'
@@ -25,7 +25,7 @@ test.describe('desktop navigation', () => {
 
   test('links to every section and marks the one in view', async ({ page }) => {
     await page.goto('/')
-    const nav = page.getByRole('navigation', { name: 'Main' })
+    const nav = page.getByRole('navigation', { name: 'Menu' })
     for (const [name, id] of NAV) {
       await expect(nav.getByRole('link', { name, exact: true })).toHaveAttribute('href', `#${id}`)
     }

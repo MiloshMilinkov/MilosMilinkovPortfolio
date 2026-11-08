@@ -2,11 +2,16 @@
 import { nextTick, onBeforeUnmount, ref, watch } from 'vue'
 import { SECTION_IDS, navLinks } from '../../data/nav.ts'
 import { useActiveSection } from '../../composables/useActiveSection.ts'
+import { localeInfo, useI18n } from '../../i18n/index.ts'
 import Monogram from '../ui/Monogram.vue'
+import LanguagePicker from './LanguagePicker.vue'
 
 /** `minimal`: the 404 page — no section nav, just the mark and a way home. */
 const props = defineProps<{ minimal?: boolean }>()
 
+const { t, locale } = useI18n()
+// The 404 page is a single English page (minimal header), so it links to the English home.
+const homePath = props.minimal ? '/' : localeInfo[locale].path
 const active = props.minimal ? ref('') : useActiveSection([...SECTION_IDS])
 const open = ref(false)
 const button = ref<HTMLButtonElement | null>(null)
@@ -55,12 +60,12 @@ onBeforeUnmount(() => document.removeEventListener('keydown', onKeydown))
 <template>
   <header class="site-header">
     <div class="site-header__bar container">
-      <a class="brand" :href="minimal ? '/' : '#top'" :aria-label="minimal ? 'Miloš Milinkov — home' : 'Miloš Milinkov — back to top'">
+      <a class="brand" :href="minimal ? homePath : '#top'" :aria-label="t.a11y.toTop">
         <Monogram :size="32" />
         <span class="brand__name" aria-hidden="true">Miloš Milinkov</span>
       </a>
 
-      <a v-if="minimal" class="btn btn--ghost site-header__home" href="/">Back to the portfolio</a>
+      <a v-if="minimal" class="btn btn--ghost site-header__home" :href="homePath">Back to the portfolio</a>
 
       <template v-else>
         <button
@@ -72,19 +77,20 @@ onBeforeUnmount(() => document.removeEventListener('keydown', onKeydown))
           @click="toggle"
         >
           <span class="menu-button__bars" aria-hidden="true" />
-          Menu
+          <span class="menu-button__text">{{ t.header.menu }}</span>
         </button>
 
-        <nav id="site-menu" ref="panel" class="site-nav" :class="{ 'is-open': open }" aria-label="Main">
+        <nav id="site-menu" ref="panel" class="site-nav" :class="{ 'is-open': open }" :aria-label="t.header.menu">
           <ul class="site-nav__links">
-            <li v-for="link in navLinks" :key="link.id">
-              <a :href="`#${link.id}`" :aria-current="active === link.id ? 'true' : undefined" @click="close()">
-                {{ link.label }}
+            <li v-for="id in navLinks" :key="id">
+              <a :href="`#${id}`" :aria-current="active === id ? 'true' : undefined" @click="close()">
+                {{ t.nav[id] }}
               </a>
             </li>
           </ul>
-          <a class="btn btn--primary site-nav__cta" href="#contact" @click="close()">Start a project</a>
+          <a class="btn btn--primary site-nav__cta" href="#contact" @click="close()">{{ t.header.cta }}</a>
         </nav>
+        <LanguagePicker class="site-header__lang" />
       </template>
     </div>
   </header>
@@ -110,6 +116,7 @@ onBeforeUnmount(() => document.removeEventListener('keydown', onKeydown))
 }
 
 .brand {
+  margin-right: auto;
   display: inline-flex;
   align-items: center;
   gap: var(--space-3);
@@ -121,6 +128,10 @@ onBeforeUnmount(() => document.removeEventListener('keydown', onKeydown))
   font-size: var(--step-0);
   font-weight: 600;
   letter-spacing: -0.01em;
+}
+
+.site-header__lang {
+  flex: none;
 }
 
 .site-header__home {
@@ -176,8 +187,9 @@ onBeforeUnmount(() => document.removeEventListener('keydown', onKeydown))
   display: none;
 }
 
-@media (max-width: 55.99rem) {
+@media (max-width: 67.99rem) {
   .menu-button {
+    order: 2;
     display: inline-flex;
     align-items: center;
     gap: var(--space-3);
@@ -254,6 +266,22 @@ onBeforeUnmount(() => document.removeEventListener('keydown', onKeydown))
     margin-top: var(--space-4);
     min-height: 2.9rem;
     font-size: var(--step-0);
+  }
+}
+
+/* Very narrow phones: logo only, and a bars-only menu button (names stay for screen readers). */
+@media (max-width: 25.99rem) {
+  .brand__name {
+    display: none;
+  }
+
+  .menu-button__text {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
   }
 }
 </style>

@@ -1,4 +1,5 @@
 import type { Project, Skill } from '../data/types.ts'
+import type { Messages } from '../i18n/messages/en.ts'
 
 export interface ProjectAction {
   href: string
@@ -11,26 +12,26 @@ export interface ResolvedProjectLink {
   note: string | null
 }
 
-export const NOTE_SOURCE_ONLY = 'Not publicly hosted — view the source on GitHub.'
-export const NOTE_CLASSIFIED = 'Proprietary system under NDA — details on request.'
+/** Link labels and notes for one language. */
+export type LinkText = Messages['projects']['links']
 
 /** Decides where a project card leads (spec §3, "Project link rules"). */
-export function resolveProjectLink(p: Project): ResolvedProjectLink {
+export function resolveProjectLink(p: Project, text: LinkText): ResolvedProjectLink {
   switch (p.status) {
     case 'live':
       return {
-        primary: p.liveUrl ? { href: p.liveUrl, label: 'Visit live site' } : null,
-        secondary: p.repoUrl ? { href: p.repoUrl, label: 'Source' } : null,
+        primary: p.liveUrl ? { href: p.liveUrl, label: text.visit } : null,
+        secondary: p.repoUrl ? { href: p.repoUrl, label: text.source } : null,
         note: null,
       }
     case 'source':
       return {
-        primary: p.repoUrl ? { href: p.repoUrl, label: 'View source on GitHub' } : null,
+        primary: p.repoUrl ? { href: p.repoUrl, label: text.viewSource } : null,
         secondary: null,
-        note: NOTE_SOURCE_ONLY,
+        note: text.noteSource,
       }
     case 'classified':
-      return { primary: null, secondary: null, note: NOTE_CLASSIFIED }
+      return { primary: null, secondary: null, note: text.noteClassified }
   }
 }
 

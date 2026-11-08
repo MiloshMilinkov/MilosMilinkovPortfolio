@@ -3,18 +3,21 @@ import { computed } from 'vue'
 import type { Project } from '../../data/types.ts'
 import { resolveProjectLink } from '../../lib/projectLinks.ts'
 import ExternalLink from '../ui/ExternalLink.vue'
+import { useI18n } from '../../i18n/index.ts'
 
 const props = defineProps<{ project: Project }>()
-const link = computed(() => resolveProjectLink(props.project))
+const { t } = useI18n()
+const text = computed(() => t.projects.items[props.project.id]!)
+const link = computed(() => resolveProjectLink(props.project, t.projects.links))
 </script>
 
 <template>
   <li class="row" :class="{ 'row--linked': link.primary }" :data-project="project.id">
     <div class="row__head">
       <h4 class="row__title">{{ project.title }}</h4>
-      <span class="row__kind">{{ project.kind }}</span>
+      <span class="row__kind">{{ text.kind }}</span>
     </div>
-    <p class="row__summary">{{ project.summary }}</p>
+    <p class="row__summary">{{ text.summary }}</p>
     <ExternalLink v-if="link.primary" :href="link.primary.href" class="row__link">{{ link.primary.label }}</ExternalLink>
   </li>
 </template>

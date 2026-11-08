@@ -1,32 +1,7 @@
-import type { Skill, SkillGroupInfo } from './types.ts'
+import type { Skill, SkillGroup } from './types.ts'
 
-export const skillGroups: SkillGroupInfo[] = [
-  {
-    id: 'backend',
-    label: 'Backend',
-    blurb: 'C# and .NET in production since 2022; Node.js and Express for full-stack projects.',
-  },
-  {
-    id: 'frontend',
-    label: 'Frontend',
-    blurb: 'Vue 3 + Vite is my default for client sites and apps, with TypeScript where it pays off.',
-  },
-  {
-    id: 'data',
-    label: 'Data',
-    blurb: 'Stored procedures, query tuning and SSIS pipelines that move financial data between systems.',
-  },
-  {
-    id: 'ai',
-    label: 'AI',
-    blurb: 'Agents plan, implement, test and document under my review — I own architecture and quality gates.',
-  },
-  {
-    id: 'tools',
-    label: 'Tools',
-    blurb: 'Version control, containers, browser testing and edge hosting for shipping with confidence.',
-  },
-]
+/** Group order; labels and blurbs live in the language files (skills.groups). */
+export const skillGroups: SkillGroup[] = ['backend', 'frontend', 'data', 'ai', 'tools']
 
 export const skills: Skill[] = [
   // Backend
@@ -63,8 +38,3 @@ export const skills: Skill[] = [
   { id: 'vscode', label: 'Visual Studio / VS Code', group: 'tools', tier: 'core' },
 ]
 
-export const tierLabel: Record<Skill['tier'], string> = {
-  core: 'Core',
-  proficient: 'Proficient',
-  familiar: 'Familiar',
-}

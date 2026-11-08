@@ -1,24 +1,25 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { profile } from '../../data/profile.ts'
 import { site } from '../../data/site.ts'
 import ExternalLink from '../ui/ExternalLink.vue'
 import Icon from '../ui/Icon.vue'
 import SectionHeading from '../ui/SectionHeading.vue'
+import { useI18n } from '../../i18n/index.ts'
 
+const { t } = useI18n()
 const copyStatus = ref('')
 
 async function copyEmail() {
   try {
     await navigator.clipboard.writeText(site.email)
-    copyStatus.value = 'Email address copied'
+    copyStatus.value = t.contact.copied
   } catch {
-    copyStatus.value = `Copy failed — the address is ${site.email}`
+    copyStatus.value = t.contact.copyFailed(site.email)
   }
 }
 
 const linkedinLabel = decodeURIComponent(site.linkedin.replace('https://www.', '')).replace(/\/$/, '')
-const projectMail = `mailto:${site.email}?subject=${encodeURIComponent('New website project')}`
+const projectMail = `mailto:${site.email}?subject=${encodeURIComponent(t.contact.mailSubject)}`
 const githubLabel = site.github.replace('https://', '')
 </script>
 
@@ -29,13 +30,13 @@ const githubLabel = site.github.replace('https://', '')
         <div class="contact__pitch">
           <SectionHeading
             id="contact-title"
-            title="Have a project in mind?"
-            lede="Tell me about your business and what the site should do. I’ll reply with ideas and a free quote."
+            :title="t.contact.title"
+            :lede="t.contact.lede"
           />
           <div class="contact__actions">
-            <a class="btn btn--primary" :href="projectMail"><Icon name="mail" />Email me about a project</a>
-            <button type="button" class="btn btn--ghost" aria-label="Copy email address" @click="copyEmail">
-              <Icon name="copy" />Copy email
+            <a class="btn btn--primary" :href="projectMail"><Icon name="mail" />{{ t.contact.emailButton }}</a>
+            <button type="button" class="btn btn--ghost" :aria-label="t.contact.copyAria" @click="copyEmail">
+              <Icon name="copy" />{{ t.contact.copyButton }}
             </button>
           </div>
           <p class="contact__status" aria-live="polite">{{ copyStatus }}</p>
@@ -43,20 +44,20 @@ const githubLabel = site.github.replace('https://', '')
 
         <ul class="channels">
           <li class="channel">
-            <span class="channel__label">Email</span>
+            <span class="channel__label">{{ t.contact.labels.email }}</span>
             <a class="channel__value" :href="`mailto:${site.email}`">{{ site.email }}</a>
           </li>
           <li class="channel">
-            <span class="channel__label">LinkedIn</span>
+            <span class="channel__label">{{ t.contact.labels.linkedin }}</span>
             <ExternalLink class="channel__value" :href="site.linkedin">{{ linkedinLabel }}</ExternalLink>
           </li>
           <li class="channel">
-            <span class="channel__label">GitHub</span>
+            <span class="channel__label">{{ t.contact.labels.github }}</span>
             <ExternalLink class="channel__value" :href="site.github">{{ githubLabel }}</ExternalLink>
           </li>
           <li class="channel">
-            <span class="channel__label">Location</span>
-            <span class="channel__value channel__value--plain">{{ profile.location }}</span>
+            <span class="channel__label">{{ t.contact.labels.location }}</span>
+            <span class="channel__value channel__value--plain">{{ t.about.location }}</span>
           </li>
         </ul>
       </div>
