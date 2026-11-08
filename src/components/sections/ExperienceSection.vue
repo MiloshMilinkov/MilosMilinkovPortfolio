@@ -1,15 +1,17 @@
 <script setup lang="ts">
-import { education, roles } from '../../data/experience.ts'
+import { useI18n } from '../../i18n/index.ts'
 import SectionHeading from '../ui/SectionHeading.vue'
+
+const { t } = useI18n()
 </script>
 
 <template>
   <section id="experience" class="section experience" aria-labelledby="experience-title">
     <div class="container">
-      <SectionHeading id="experience-title" title="Experience" lede="Most recent first. Open an entry for the details." />
+      <SectionHeading id="experience-title" :title="t.experience.title" :lede="t.experience.lede" />
 
       <ol class="timeline">
-        <li v-for="(role, i) in roles" :key="role.org + role.title" class="timeline__item">
+        <li v-for="(role, i) in t.experience.roles" :key="role.org + role.title" class="timeline__item">
           <details class="entry" :open="i === 0">
             <summary class="entry__summary">
               <span class="entry__period">{{ role.period }}</span>
@@ -27,7 +29,7 @@ import SectionHeading from '../ui/SectionHeading.vue'
           </details>
         </li>
 
-        <li v-for="edu in education" :key="edu.school" class="timeline__item timeline__item--edu">
+        <li v-for="edu in t.experience.education" :key="edu.school" class="timeline__item timeline__item--edu">
           <details class="entry">
             <summary class="entry__summary">
               <span class="entry__period">{{ edu.period }}</span>

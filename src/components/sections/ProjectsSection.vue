@@ -3,6 +3,9 @@ import { projects } from '../../data/projects.ts'
 import ProjectCard from '../projects/ProjectCard.vue'
 import ProjectRow from '../projects/ProjectRow.vue'
 import SectionHeading from '../ui/SectionHeading.vue'
+import { useI18n } from '../../i18n/index.ts'
+
+const { t } = useI18n()
 
 const featured = projects.filter((p) => p.featured)
 const archive = projects.filter((p) => !p.featured)
@@ -13,8 +16,8 @@ const archive = projects.filter((p) => !p.featured)
     <div class="container">
       <SectionHeading
         id="projects-title"
-        title="Selected work"
-        lede="Client sites and concept sites you can visit today, plus apps and systems I’ve built. Live sites open in a new tab; projects that aren’t hosted link to their source code."
+        :title="t.projects.title"
+        :lede="t.projects.lede"
       />
 
       <ol class="featured">
@@ -24,7 +27,7 @@ const archive = projects.filter((p) => !p.featured)
       </ol>
 
       <div v-if="archive.length" class="archive">
-        <h3 class="archive__title">More on GitHub</h3>
+        <h3 class="archive__title">{{ t.projects.archiveTitle }}</h3>
         <ul class="archive__list">
           <ProjectRow v-for="p in archive" :key="p.id" :project="p" />
         </ul>

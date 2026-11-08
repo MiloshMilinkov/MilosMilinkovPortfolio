@@ -1,19 +1,14 @@
 import type { Project } from './types.ts'
 
+// Text (kind, summary, highlights) lives in the language files (projects.items).
+
 const gh = (repo: string) => `https://github.com/MiloshMilinkov/${repo}`
 
 export const projects: Project[] = [
   {
     id: 'advokat-vladic',
     title: 'Advokatska kancelarija Vladić',
-    kind: 'Law office website',
     year: '2026',
-    summary: 'A fast law office website with a blog the office runs itself, and search-friendly tags on every page.',
-    highlights: [
-      'Admin blog editor with a live preview.',
-      '11 existing articles moved into the new site.',
-      'Sitemap and per-page SEO for practice areas and articles.',
-    ],
     tech: ['vue', 'typescript', 'vite', 'cloudflare', 'sqlite', 'claude-code'],
     status: 'live',
     liveUrl: 'https://advokat-vladic.milos300399.workers.dev/',
@@ -24,12 +19,6 @@ export const projects: Project[] = [
   {
     id: 'arizonalifts',
     title: 'ARIZONALIFTS',
-    kind: 'Fitness coach website',
-    summary: 'Website for fitness trainer @arizonalifts, which I develop, host and maintain.',
-    highlights: [
-      'Fast, mobile-first single-page site on the client’s own domain.',
-      'Ongoing development and maintenance for the client.',
-    ],
     tech: ['vue', 'vite', 'javascript', 'cloudflare'],
     status: 'live',
     liveUrl: 'https://arizonalifts.com',
@@ -40,16 +29,7 @@ export const projects: Project[] = [
   {
     id: 'little-fern-coffee',
     title: 'Little Fern Coffee',
-    kind: 'Concept site for a neighbourhood coffee bar',
     year: '2026',
-    summary:
-      'A showcase site for a made-up coffee bar, built to show local businesses what their website could look like.',
-    highlights: [
-      'Live “open now / closed” badge based on Belgrade time.',
-      'Chalkboard menu with tabs for coffee, other drinks and pastries.',
-      'Opening hours with today highlighted, an events list and an illustrated map.',
-      'Lightweight pages that load almost instantly on any phone.',
-    ],
     tech: ['htmlcss', 'javascript', 'cloudflare'],
     status: 'live',
     liveUrl: 'https://little-fern-coffee.milos300399.workers.dev/',
@@ -61,16 +41,7 @@ export const projects: Project[] = [
   {
     id: 'mabels-chair',
     title: 'Mabel’s Chair',
-    kind: 'Concept site for a hair studio and barber',
     year: '2026',
-    summary:
-      'A showcase site for a made-up hair studio and barber, built to show local businesses what their website could look like.',
-    highlights: [
-      'Lit vanity-mirror hero with a live “open now / closed” badge.',
-      'Price list, gallery of recent work, team and reviews.',
-      'Booking request form beside the address and opening hours (demo: nothing is sent).',
-      'Lightweight pages that load almost instantly on any phone.',
-    ],
     tech: ['htmlcss', 'javascript', 'cloudflare'],
     status: 'live',
     liveUrl: 'https://mabels-chair.milos300399.workers.dev/',
@@ -82,16 +53,7 @@ export const projects: Project[] = [
   {
     id: 'projectanvil',
     title: 'ProjectAnvil',
-    kind: 'Project, task & knowledge workspace',
     year: '2026',
-    summary:
-      'An installable, offline-capable workspace for projects, tasks, notes, canvases, a relationship graph and decision records.',
-    highlights: [
-      'Team workspaces with Viewer / Editor / Admin roles, live collaborative editing, mentions and notifications.',
-      'Recurring tasks with time-zone-aware reminders, bulk editing, and saved board, list and timeline views.',
-      'Security hardening, verified backups with rollback, and automated tests across all major browsers.',
-      'Built with an AI-assisted workflow: I set the architecture, standards and docs; AI agents implemented under my review.',
-    ],
     tech: ['typescript', 'react', 'vite', 'playwright', 'codex'],
     status: 'source',
     repoUrl: gh('ProjectAnvil'),
@@ -100,15 +62,6 @@ export const projects: Project[] = [
   {
     id: 'euronet',
     title: 'Financial Back-Office & DCC Reporting',
-    kind: 'Internal systems at Euronet Worldwide',
-    year: '2022 — present',
-    summary: 'Automated invoicing, payment tracking and email reporting for finance and accounting teams.',
-    highlights: [
-      'Automated invoice generation and payment tracking.',
-      'Automated DCC email reports, with the report logic kept in the database.',
-      'Data pipelines that move and transform data between internal and external systems.',
-      'Streamlined financial operations and more accurate, timely reporting for decision-making.',
-    ],
     tech: ['dotnet', 'csharp', 'mssql', 'ssis'],
     status: 'classified',
     featured: true,
@@ -116,13 +69,7 @@ export const projects: Project[] = [
   {
     id: 'silicon-lottery',
     title: 'Silicon Lottery',
-    kind: 'E-commerce web app (BSc thesis)',
     year: '2023',
-    summary: 'An online store for computer components, built as my final-year thesis.',
-    highlights: [
-      'Separate back end and front end, with a layered architecture.',
-      'Runs in containers for a one-command setup.',
-    ],
     tech: ['aspnet', 'csharp', 'angular', 'mssql', 'sqlite', 'docker'],
     status: 'source',
     repoUrl: gh('SiliconLottery_Extended'),

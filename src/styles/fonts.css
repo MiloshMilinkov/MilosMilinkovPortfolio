@@ -1,5 +1,5 @@
 /*
- * Geist (variable), self-hosted, latin + latin-ext only (latin-ext carries š, č, ć, đ, ž).
+ * Geist (variable), self-hosted: latin, latin-ext (š, č, ć, đ, ž) and cyrillic (Russian page).
  * unicode-range lets the browser fetch latin-ext only when such a character appears.
  */
 @font-face {
@@ -19,4 +19,12 @@
   src: url('@fontsource-variable/geist/files/geist-latin-ext-wght-normal.woff2') format('woff2');
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329,
     U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Geist';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url('@fontsource-variable/geist/files/geist-cyrillic-wght-normal.woff2') format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
 }

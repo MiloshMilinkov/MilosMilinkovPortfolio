@@ -15,6 +15,12 @@
         src: url('../../node_modules/@fontsource-variable/geist/files/geist-latin-ext-wght-normal.woff2') format('woff2');
         unicode-range: U+0100-02BA;
       }
+      @font-face {
+        font-family: 'Geist';
+        font-weight: 100 900;
+        src: url('../../node_modules/@fontsource-variable/geist/files/geist-cyrillic-wght-normal.woff2') format('woff2');
+        unicode-range: U+0400-04FF;
+      }
       * { box-sizing: border-box; }
       html, body { margin: 0; width: 1200px; height: 630px; overflow: hidden; }
       body {
@@ -42,14 +48,13 @@
   </head>
   <body>
     <div>
-      <span class="pill"><span class="dot"></span>Websites and web apps for businesses</span>
-      <h1>Fast, modern websites that bring you clients.</h1>
-      <p>Miloš Milinkov · full-stack developer, Belgrade</p>
+      <span class="pill"><span class="dot"></span><span id="pill">Websites and web apps for businesses</span></span>
+      <h1 id="headline">Fast, modern websites that bring you clients.</h1>
+      <p id="role">Miloš Milinkov · full-stack developer, Belgrade</p>
     </div>
     <div class="card">
-      <img src="../../public/images/portrait-360.webp" alt="" />
+      <img src="../../public/images/portrait-506.webp" alt="" />
       <div class="name">Miloš Milinkov</div>
-      <div class="role">Design · build · hosting</div>
     </div>
   </body>
 </html>

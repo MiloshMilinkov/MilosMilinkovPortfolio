@@ -1,16 +1,13 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import type { ProjectStatus } from '../../data/types.ts'
+import { useI18n } from '../../i18n/index.ts'
 
 const props = defineProps<{ status: ProjectStatus }>()
 
-const labels: Record<ProjectStatus, string> = {
-  live: 'Live',
-  source: 'Source only',
-  classified: 'Classified',
-}
+const { t } = useI18n()
 
-const label = computed(() => labels[props.status])
+const label = computed(() => t.projects.status[props.status])
 </script>
 
 <template>

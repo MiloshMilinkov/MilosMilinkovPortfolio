@@ -14,7 +14,7 @@
     "typecheck": "vue-tsc -b",
     "test": "vitest run",
     "test:e2e": "playwright test",
-    "validate:html": "html-validate dist/index.html dist/404.html",
+    "validate:html": "html-validate dist/index.html dist/sr/index.html dist/ru/index.html dist/404.html",
     "check": "npm run typecheck && npm test && npm run build && npm run validate:html",
     "preview": "npm run build && wrangler dev --port 8788 --ip 127.0.0.1",
     "deploy": "npm run build && wrangler deploy"

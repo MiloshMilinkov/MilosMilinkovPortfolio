@@ -3,14 +3,14 @@ import { toRef } from 'vue'
 import { useCountUp } from '../../composables/useCountUp.ts'
 import type { Stat } from '../../data/types.ts'
 
-const props = defineProps<{ stat: Stat; start: boolean }>()
+const props = defineProps<{ stat: Stat; label: string; start: boolean }>()
 const shown = useCountUp(props.stat.value, toRef(props, 'start'))
 </script>
 
 <template>
   <li class="stat card">
     <data class="stat__value" :value="stat.value">{{ shown }}{{ stat.suffix }}</data>
-    <span class="stat__label">{{ stat.label }}</span>
+    <span class="stat__label">{{ label }}</span>
   </li>
 </template>
 

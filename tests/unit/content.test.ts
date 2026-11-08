@@ -1,12 +1,12 @@
 import { describe, expect, it } from 'vitest'
-import { education, roles } from '../../src/data/experience'
 import { profile } from '../../src/data/profile'
 import { projects } from '../../src/data/projects'
 import { site } from '../../src/data/site'
 import { skillGroups, skills } from '../../src/data/skills'
+import { messages } from '../../src/i18n'
 import { validateProjects } from '../../src/lib/projectLinks'
 
-const allData = { site, profile, skills, skillGroups, projects, roles, education }
+const allData = { site, profile, skills, skillGroups, projects, messages }
 
 function collectStrings(value: unknown, out: string[] = []): string[] {
   if (typeof value === 'string') out.push(value)
@@ -40,13 +40,18 @@ describe('site content', () => {
   })
 
   it('stat tiles agree with the project data', () => {
-    const byLabel = (needle: string) => profile.stats.find((s) => s.label.includes(needle))
     // 'projects built' counts everything on GitHub, so it may exceed the listed projects.
-    expect(byLabel('projects')?.value).toBeGreaterThanOrEqual(projects.length)
+    expect(profile.stats.find((s) => s.id === 'projects')?.value).toBeGreaterThanOrEqual(projects.length)
+  })
+
+  it('every project has its text in every language', () => {
+    for (const [locale, t] of Object.entries(messages)) {
+      for (const p of projects) expect(t.projects.items[p.id], `${locale}: ${p.id}`).toBeDefined()
+    }
   })
 
   it('every skill group has at least one skill', () => {
-    for (const g of skillGroups) expect(skills.some((s) => s.group === g.id)).toBe(true)
+    for (const g of skillGroups) expect(skills.some((s) => s.group === g)).toBe(true)
   })
 
   it('never exposes the phone number or a CV file', () => {

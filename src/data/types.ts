@@ -9,23 +9,12 @@ export interface Skill {
   tier: SkillTier
 }
 
-export interface SkillGroupInfo {
-  id: SkillGroup
-  label: string
-  blurb: string
-}
-
 export type ProjectStatus = 'live' | 'source' | 'classified'
 
 export interface Project {
   id: string
   title: string
-  /** Short description of what it is, e.g. 'Law office website'. */
-  kind: string
   year?: string
-  /** One sentence. */
-  summary: string
-  highlights: string[]
   /** Skill ids: usage counts in the workflow section, JSON-LD keywords and validation. */
   tech: string[]
   status: ProjectStatus
@@ -62,7 +51,7 @@ export interface Education {
 }
 
 export interface Stat {
+  id: 'years' | 'projects' | 'pagespeed'
   value: number
   suffix: string
-  label: string
 }

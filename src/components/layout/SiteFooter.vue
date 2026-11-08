@@ -2,8 +2,10 @@
 import { site } from '../../data/site.ts'
 import ExternalLink from '../ui/ExternalLink.vue'
 import Monogram from '../ui/Monogram.vue'
+import { useI18n } from '../../i18n/index.ts'
 
 defineProps<{ minimal?: boolean }>()
+const { t } = useI18n()
 </script>
 
 <template>
@@ -14,10 +16,10 @@ defineProps<{ minimal?: boolean }>()
         <p class="site-footer__owner">© 2026 Miloš Milinkov</p>
       </div>
       <p class="site-footer__built">
-        Designed, built and hosted by me.
-        <ExternalLink :href="site.repo">Source on GitHub</ExternalLink>
+        {{ t.footer.built }}
+        <ExternalLink :href="site.repo">{{ t.footer.source }}</ExternalLink>
       </p>
-      <a v-if="!minimal" class="site-footer__top" href="#top">Back to top</a>
+      <a v-if="!minimal" class="site-footer__top" href="#top">{{ t.footer.top }}</a>
     </div>
   </footer>
 </template>

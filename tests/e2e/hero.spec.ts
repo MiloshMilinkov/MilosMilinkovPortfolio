@@ -1,10 +1,11 @@
 import { expect, test } from '@playwright/test'
 import { profile } from '../../src/data/profile'
+import { en } from '../../src/i18n/messages/en'
 
 test('hero leads with the offer and clear next steps', async ({ page }) => {
   await page.goto('/')
   const hero = page.locator('#top')
-  await expect(hero.getByRole('heading', { level: 1 })).toHaveText(profile.headline)
+  await expect(hero.getByRole('heading', { level: 1 })).toHaveText(en.hero.headline)
   await expect(hero).toContainText('Miloš Milinkov')
   await expect(hero.getByRole('link', { name: 'Start a project' })).toHaveAttribute('href', '#contact')
   await expect(hero.getByRole('link', { name: 'See my work' })).toHaveAttribute('href', '#projects')

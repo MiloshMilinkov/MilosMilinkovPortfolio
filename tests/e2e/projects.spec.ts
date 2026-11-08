@@ -88,13 +88,16 @@ test('live projects show screenshots, others show schematic art', async ({ page 
   await expect(card(page, 'silicon-lottery').locator('svg.schematic')).toHaveCount(1)
 })
 
-test('technology names appear only in the workflow section', async ({ page }) => {
+test('technology names appear only in the workflow and hosting sections', async ({ page }) => {
   await page.goto('/')
   const tools =
     /\b(Vue|React|Angular|ASP\.NET|SQL Server|SQLite|MongoDB|Cloudflare|Vite|TypeScript|Playwright|Docker|SSIS|Codex|Claude Code|Node\.js)\b|\.NET\b/
-  for (const id of ['top', 'services', 'projects', 'process', 'about', 'experience', 'contact']) {
-    const text = await page.locator(`#${id}`).innerText()
-    expect(text.match(tools)?.[0] ?? null, id).toBeNull()
+  // Exceptions by design: the workflow section lists tools; Hosting explains Cloudflare.
+  const sections = page.locator('main > section:not(#skills):not(#hosting)')
+  expect(await sections.count()).toBeGreaterThan(5)
+  for (const section of await sections.all()) {
+    const text = await section.innerText()
+    expect(text.match(tools)?.[0] ?? null, (await section.getAttribute('id')) ?? '').toBeNull()
   }
   await expect(page.locator('#skills')).toContainText('Claude Code')
 })

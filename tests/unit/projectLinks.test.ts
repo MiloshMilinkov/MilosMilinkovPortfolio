@@ -1,5 +1,8 @@
 import { describe, expect, it } from 'vitest'
+import { en } from '../../src/i18n/messages/en'
 import { resolveProjectLink, validateProjects } from '../../src/lib/projectLinks'
+
+const links = en.projects.links
 import { project, skillFixture } from './fixtures'
 
 describe('resolveProjectLink', () => {
@@ -10,7 +13,7 @@ describe('resolveProjectLink', () => {
       liveUrl: 'https://example.com',
       repoUrl: 'https://github.com/x/live',
     })
-    expect(resolveProjectLink(p)).toEqual({
+    expect(resolveProjectLink(p, links)).toEqual({
       primary: { href: 'https://example.com', label: 'Visit live site' },
       secondary: { href: 'https://github.com/x/live', label: 'Source' },
       note: null,
@@ -19,12 +22,12 @@ describe('resolveProjectLink', () => {
 
   it('live project without a repo has no secondary link', () => {
     const p = project({ id: 'live', status: 'live', liveUrl: 'https://example.com', repoUrl: undefined })
-    expect(resolveProjectLink(p).secondary).toBeNull()
+    expect(resolveProjectLink(p, links).secondary).toBeNull()
   })
 
   it('source-only project links to the repo with the not-hosted note', () => {
     const p = project({ id: 'src', status: 'source', repoUrl: 'https://github.com/x/src' })
-    expect(resolveProjectLink(p)).toEqual({
+    expect(resolveProjectLink(p, links)).toEqual({
       primary: { href: 'https://github.com/x/src', label: 'View source on GitHub' },
       secondary: null,
       note: 'Not publicly hosted — view the source on GitHub.',
@@ -33,7 +36,7 @@ describe('resolveProjectLink', () => {
 
   it('classified project has no link and the NDA note', () => {
     const p = project({ id: 'nda', status: 'classified', repoUrl: undefined })
-    expect(resolveProjectLink(p)).toEqual({
+    expect(resolveProjectLink(p, links)).toEqual({
       primary: null,
       secondary: null,
       note: 'Proprietary system under NDA — details on request.',

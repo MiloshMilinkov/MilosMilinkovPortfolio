@@ -1,31 +1,33 @@
 <script setup lang="ts">
-import { profile } from '../../data/profile.ts'
+import { useI18n } from '../../i18n/index.ts'
 import SectionHeading from '../ui/SectionHeading.vue'
+
+const { t } = useI18n()
 </script>
 
 <template>
   <section id="about" class="section about" aria-labelledby="about-title">
     <div class="container about__grid">
       <div>
-        <SectionHeading id="about-title" title="About me" />
-        <p v-for="(paragraph, i) in profile.bio" :key="i" :class="{ about__lead: i === 0 }">{{ paragraph }}</p>
+        <SectionHeading id="about-title" :title="t.about.title" />
+        <p v-for="(paragraph, i) in t.about.bio" :key="i" :class="{ about__lead: i === 0 }">{{ paragraph }}</p>
       </div>
 
-      <aside class="about__facts card" aria-label="Quick facts">
+      <aside class="about__facts card" :aria-label="t.about.factsLabel">
         <div>
-          <h3 class="about__facts-title">Based in</h3>
-          <p>{{ profile.location }}</p>
+          <h3 class="about__facts-title">{{ t.about.basedIn }}</h3>
+          <p>{{ t.about.location }}</p>
         </div>
         <div>
-          <h3 class="about__facts-title">Languages</h3>
+          <h3 class="about__facts-title">{{ t.about.languagesTitle }}</h3>
           <ul class="about__list">
-            <li v-for="item in profile.languages" :key="item">{{ item }}</li>
+            <li v-for="item in t.about.languages" :key="item">{{ item }}</li>
           </ul>
         </div>
         <div>
-          <h3 class="about__facts-title">Interests</h3>
+          <h3 class="about__facts-title">{{ t.about.interestsTitle }}</h3>
           <ul class="about__list">
-            <li v-for="item in profile.interests" :key="item">{{ item }}</li>
+            <li v-for="item in t.about.interests" :key="item">{{ item }}</li>
           </ul>
         </div>
       </aside>

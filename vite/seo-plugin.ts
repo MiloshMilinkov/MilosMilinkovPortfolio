@@ -1,39 +1,33 @@
 import type { Plugin } from 'vite'
 import { site } from '../src/data/site.ts'
-import { buildJsonLd } from '../src/lib/jsonld.ts'
-
-const escapeAttr = (value: string) =>
-  value.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-
-/** Tokens in index.html / 404.html, filled from src/data/site.ts. */
-const tokens: Record<string, string> = {
-  __SITE_URL__: site.SITE_URL,
-  __TITLE__: site.title,
-  __DESCRIPTION__: site.description,
-  __OG_IMAGE__: site.ogImage,
-  __OG_IMAGE_ALT__: site.ogImageAlt,
-}
+import { alternates, fillHead, homeUrl } from '../src/i18n/head.ts'
+import { LOCALES, localeFromPath } from '../src/i18n/index.ts'
 
 export function renderRobots(): string {
   return `User-agent: *\nAllow: /\n\nSitemap: ${site.SITE_URL}/sitemap.xml\n`
 }
 
+/** One <url> per language, each listing every language version (hreflang alternates). */
 export function renderSitemap(lastmod: string): string {
+  const links = alternates()
+    .map((a) => `    <xhtml:link rel="alternate" hreflang="${a.hreflang}" href="${a.href}"/>`)
+    .join('\n')
+  const urls = LOCALES.map((l) =>
+    ['  <url>', `    <loc>${homeUrl(l)}</loc>`, `    <lastmod>${lastmod}</lastmod>`, links, '  </url>'].join('\n'),
+  )
   return [
     '<?xml version="1.0" encoding="UTF-8"?>',
-    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
-    '  <url>',
-    `    <loc>${site.SITE_URL}/</loc>`,
-    `    <lastmod>${lastmod}</lastmod>`,
-    '  </url>',
+    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">',
+    ...urls,
     '</urlset>',
     '',
   ].join('\n')
 }
 
 /**
- * Derives every SEO artefact from the content data (spec §2, §6):
- * head tokens, JSON-LD on the home page, robots.txt and sitemap.xml.
+ * Font preload marker, robots.txt and sitemap.xml. In a build, the per-language head
+ * (title, canonical, hreflang, JSON-LD, font preload…) is filled by scripts/prerender.mjs;
+ * the dev server fills it here in the language of the requested URL.
  */
 export function seoPlugin(): Plugin {
   return {
@@ -45,25 +39,18 @@ export function seoPlugin(): Plugin {
       order: 'post',
       handler(html, ctx) {
         let out = html
-        for (const [token, value] of Object.entries(tokens)) out = out.replaceAll(token, escapeAttr(value))
 
-        // Preload the latin Geist file: the hero heading is the LCP text, and
-        // fonts arriving after first paint would force a costly full-page relayout.
+        // The hero heading (the LCP text) should not wait for its font: fonts arriving after
+        // first paint force a costly relayout. The marker names both subsets; fillHead()
+        // turns it into a preload of the one each language's headline is set in.
         const files = ctx.bundle ? Object.keys(ctx.bundle) : []
-        for (const family of ['geist']) {
-          const file = files.find((f) => new RegExp(`${family}-latin-wght-normal-[\\w-]+\\.woff2$`).test(f))
-          if (!file) continue
-          out = out.replace(
-            '<meta name="viewport"',
-            `<link rel="preload" href="/${file}" as="font" type="font/woff2" crossorigin>\n    <meta name="viewport"`,
-          )
+        const latin = files.find((f) => /geist-latin-wght-normal-[\w-]+\.woff2$/.test(f)) ?? ''
+        const cyrillic = files.find((f) => /geist-cyrillic-wght-normal-[\w-]+\.woff2$/.test(f)) ?? ''
+        if (latin) {
+          out = out.replace('<meta name="viewport"', `<!--font:latin=${latin};cyrillic=${cyrillic}-->\n    <meta name="viewport"`)
         }
 
-        if (ctx.path === '/index.html' || ctx.path === '/') {
-          // Escape "<" so content can never close the script element early.
-          const json = JSON.stringify(buildJsonLd()).replace(/</g, '\\u003c')
-          out = out.replace('</head>', `  <script type="application/ld+json">${json}</script>\n  </head>`)
-        }
+        if (ctx.server && out.includes('__LANG__')) out = fillHead(out, localeFromPath(ctx.originalUrl ?? '/'))
         return out
       },
     },

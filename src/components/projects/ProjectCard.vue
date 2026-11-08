@@ -6,9 +6,12 @@ import ExternalLink from '../ui/ExternalLink.vue'
 import ResponsiveImage from '../ui/ResponsiveImage.vue'
 import SchematicArt from '../ui/SchematicArt.vue'
 import StatusBadge from '../ui/StatusBadge.vue'
+import { useI18n } from '../../i18n/index.ts'
 
 const props = defineProps<{ project: Project; flip?: boolean }>()
-const link = computed(() => resolveProjectLink(props.project))
+const { t } = useI18n()
+const text = computed(() => t.projects.items[props.project.id]!)
+const link = computed(() => resolveProjectLink(props.project, t.projects.links))
 
 /**
  * A click anywhere on the card follows its primary link (the brief: "when clicked,
@@ -35,7 +38,7 @@ function onCardClick(event: MouseEvent) {
         :base="`projects/${project.image}`"
         :widths="[640, 960, 1280]"
         sizes="(min-width: 64rem) 560px, calc(100vw - 2rem)"
-        :alt="`Screenshot of the ${project.title} website`"
+        :alt="t.projects.screenshotAlt(project.title)"
         :width="1280"
         :height="800"
       />
@@ -45,13 +48,13 @@ function onCardClick(event: MouseEvent) {
     <div class="project__body">
       <p class="project__meta">
         <StatusBadge :status="project.status" />
-        <span class="project__kind">{{ project.kind }}</span>
-        <span v-if="project.year" class="project__year">{{ project.year }}</span>
+        <span class="project__kind">{{ text.kind }}</span>
+        <span v-if="text.year ?? project.year" class="project__year">{{ text.year ?? project.year }}</span>
       </p>
       <h3 class="project__title">{{ project.title }}</h3>
-      <p class="project__summary">{{ project.summary }}</p>
-      <ul v-if="project.highlights.length" class="project__highlights">
-        <li v-for="(h, i) in project.highlights" :key="i">{{ h }}</li>
+      <p class="project__summary">{{ text.summary }}</p>
+      <ul v-if="text.highlights.length" class="project__highlights">
+        <li v-for="(h, i) in text.highlights" :key="i">{{ h }}</li>
       </ul>
 
       <div class="project__footer">

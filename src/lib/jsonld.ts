@@ -1,16 +1,18 @@
-import { education } from '../data/experience.ts'
-import { profile } from '../data/profile.ts'
 import { projects } from '../data/projects.ts'
 import { site } from '../data/site.ts'
 import { skills } from '../data/skills.ts'
+import { localeInfo, messages, type Locale } from '../i18n/index.ts'
 import { resolveProjectLink } from './projectLinks.ts'
 
 /**
- * schema.org structured data for the home page (spec §6), built from the same
- * content modules the page renders, so the two can never disagree.
+ * schema.org structured data for the home page in one language, built from the
+ * same content the page renders, so the two can never disagree. The person and
+ * the website keep one id across languages; the profile page is per language.
  */
-export function buildJsonLd(): Record<string, unknown> {
-  const home = `${site.SITE_URL}/`
+export function buildJsonLd(locale: Locale = 'en'): Record<string, unknown> {
+  const t = messages[locale]
+  const lang = localeInfo[locale].htmlLang
+  const page = `${site.SITE_URL}${localeInfo[locale].path}`
   const id = (fragment: string) => `${site.SITE_URL}/#${fragment}`
   const skillLabel = new Map(skills.map((s) => [s.id, s.label]))
 
@@ -19,14 +21,14 @@ export function buildJsonLd(): Record<string, unknown> {
     '@id': id('person'),
     name: site.name,
     alternateName: site.alternateName,
-    jobTitle: site.jobTitle,
-    description: profile.headline,
-    url: home,
-    image: `${site.SITE_URL}/images/portrait-360.webp`,
+    jobTitle: t.meta.jobTitle,
+    description: t.hero.headline,
+    url: `${site.SITE_URL}/`,
+    image: `${site.SITE_URL}/images/portrait-506.webp`,
     email: `mailto:${site.email}`,
     address: { '@type': 'PostalAddress', addressLocality: 'Belgrade', addressCountry: 'RS' },
     worksFor: { '@type': 'Organization', name: 'Euronet Worldwide' },
-    alumniOf: education.map((e) => ({ '@type': 'CollegeOrUniversity', name: e.school })),
+    alumniOf: t.experience.education.map((e) => ({ '@type': 'CollegeOrUniversity', name: e.school })),
     knowsAbout: skills.map((s) => s.label),
     knowsLanguage: ['sr', 'en'],
     sameAs: [site.github, site.linkedin],
@@ -38,37 +40,37 @@ export function buildJsonLd(): Record<string, unknown> {
       {
         '@type': 'WebSite',
         '@id': id('website'),
-        url: home,
+        url: `${site.SITE_URL}/`,
         name: site.name,
-        description: site.description,
-        inLanguage: 'en',
+        description: t.meta.description,
+        inLanguage: ['en', 'sr-Latn', 'ru'],
         publisher: { '@id': person['@id'] },
       },
       {
         '@type': 'ProfilePage',
-        '@id': id('profile'),
-        url: home,
-        name: site.title,
-        inLanguage: 'en',
+        '@id': `${page}#profile`,
+        url: page,
+        name: t.meta.title,
+        inLanguage: lang,
         isPartOf: { '@id': id('website') },
         mainEntity: { '@id': person['@id'] },
       },
       person,
       {
         '@type': 'ItemList',
-        '@id': id('projects'),
-        name: 'Projects',
+        '@id': `${page}#projects`,
+        name: t.projects.title,
         itemListElement: projects.map((p, i) => {
-          const href = resolveProjectLink(p).primary?.href
+          const href = resolveProjectLink(p, t.projects.links).primary?.href
           return {
             '@type': 'ListItem',
             position: i + 1,
             item: {
               '@type': 'CreativeWork',
               name: p.title,
-              description: p.summary,
+              description: t.projects.items[p.id]?.summary,
               ...(href ? { url: href } : {}),
-              keywords: p.tech.map((t) => skillLabel.get(t) ?? t).join(', '),
+              keywords: p.tech.map((tech) => skillLabel.get(tech) ?? tech).join(', '),
               creator: { '@id': person['@id'] },
             },
           }
