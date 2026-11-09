@@ -2,9 +2,9 @@ import { expect, test, type Page } from '@playwright/test'
 
 const card = (page: Page, id: string) => page.locator(`#projects [data-project="${id}"]`)
 
-test('shows seven featured projects and no archive group', async ({ page }) => {
+test('shows eight featured projects and no archive group', async ({ page }) => {
   await page.goto('/')
-  await expect(page.locator('#projects .featured > [data-project]')).toHaveCount(7)
+  await expect(page.locator('#projects .featured > [data-project]')).toHaveCount(8)
   await expect(page.locator('#projects .archive')).toHaveCount(0)
 })
 
@@ -28,6 +28,7 @@ test('concept sites link to the live demo and say they are concepts', async ({ p
   for (const [id, url] of [
     ['little-fern-coffee', 'https://little-fern-coffee.milos300399.workers.dev/'],
     ['mabels-chair', 'https://mabels-chair.milos300399.workers.dev/'],
+    ['lovely-layers', 'https://lovely-layers.milos300399.workers.dev/'],
   ]) {
     const c = card(page, id!)
     await expect(c.locator('[data-status]')).toHaveText('Live')

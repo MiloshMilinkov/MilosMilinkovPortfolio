@@ -131,6 +131,17 @@ export const sr: Messages = {
           'Lagane stranice koje se gotovo trenutno učitavaju na svakom telefonu.',
         ],
       },
+      'lovely-layers': {
+        kind: 'Demo sajt za poslastičarnicu',
+        summary:
+          'Demo sajt za izmišljenu poslastičarnicu, napravljen da lokalnim firmama pokaže kako bi njihov sajt mogao da izgleda.',
+        highlights: [
+          'Konfigurator torte: ukus, veličina, boja fila, ukrasi i natpis, uz crtež uživo, presek torte i cenu.',
+          'Svaka torta se crta u pregledaču, pa nema fotografija za učitavanje.',
+          'Forma za porudžbinu, utisci kupaca i radno vreme sa oznakom „otvoreno / zatvoreno“ uživo (demo: ništa se ne šalje).',
+          'Lagane stranice koje se gotovo trenutno učitavaju na svakom telefonu.',
+        ],
+      },
       projectanvil: {
         kind: 'Radni prostor za projekte, zadatke i znanje',
         summary:

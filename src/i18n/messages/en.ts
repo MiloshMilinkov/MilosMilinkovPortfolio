@@ -138,6 +138,17 @@ export const en = {
           'Lightweight pages that load almost instantly on any phone.',
         ],
       },
+      'lovely-layers': {
+        kind: 'Concept site for a cake bakery',
+        summary:
+          'A showcase site for a made-up cake bakery, built to show local businesses what their website could look like.',
+        highlights: [
+          'Cake builder: pick flavour, size, frosting, decorations and writing, with a live drawing, a cut slice and the price.',
+          'Every cake is drawn in the browser, so there are no photos to load.',
+          'Order request form, reviews and opening hours with a live “open now / closed” badge (demo: nothing is sent).',
+          'Lightweight pages that load almost instantly on any phone.',
+        ],
+      },
       projectanvil: {
         kind: 'Project, task & knowledge workspace',
         summary:

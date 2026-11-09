@@ -51,6 +51,18 @@ export const projects: Project[] = [
     image: 'mabels-chair',
   },
   {
+    id: 'lovely-layers',
+    title: 'Lovely Layers',
+    year: '2026',
+    tech: ['htmlcss', 'javascript', 'cloudflare'],
+    status: 'live',
+    liveUrl: 'https://lovely-layers.milos300399.workers.dev/',
+    repoUrl: gh('lovely-layers'),
+    featured: true,
+    concept: true,
+    image: 'lovely-layers',
+  },
+  {
     id: 'projectanvil',
     title: 'ProjectAnvil',
     year: '2026',
