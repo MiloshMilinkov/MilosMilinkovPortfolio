@@ -3,6 +3,7 @@ import { services } from '../../data/services.ts'
 import { useI18n } from '../../i18n/index.ts'
 import Icon from '../ui/Icon.vue'
 import SectionHeading from '../ui/SectionHeading.vue'
+import ServiceArt from '../ui/ServiceArt.vue'
 
 const { t } = useI18n()
 </script>
@@ -13,19 +14,19 @@ const { t } = useI18n()
       <SectionHeading id="services-title" :title="t.services.title" :lede="t.services.lede" />
 
       <ul class="services__grid">
-        <li v-for="(s, i) in services" :key="s.id" class="service card" :class="{ 'card--glow': i === 0 }">
-          <span class="chip-icon" :class="{ 'chip-icon--accent': i === 0 }"><Icon :name="s.icon" /></span>
-          <h3>{{ t.services.items[s.id].title }}</h3>
-          <p class="service__summary">{{ t.services.items[s.id].summary }}</p>
-          <ul class="service__includes" :aria-label="t.services.includesLabel(t.services.items[s.id].title)">
-            <li v-for="item in t.services.items[s.id].includes" :key="item"><Icon name="check" />{{ item }}</li>
+        <li v-for="id in services" :key="id" class="service card">
+          <div class="service__art"><ServiceArt :kind="id" /></div>
+          <h3>{{ t.services.items[id].title }}</h3>
+          <p class="service__summary">{{ t.services.items[id].summary }}</p>
+          <ul class="service__includes check-list" :aria-label="t.services.includesLabel(t.services.items[id].title)">
+            <li v-for="item in t.services.items[id].includes" :key="item"><Icon name="check" />{{ item }}</li>
           </ul>
         </li>
       </ul>
 
       <div class="services__cta card">
         <p>{{ t.services.ctaText }}</p>
-        <a class="btn btn--primary" href="#contact">{{ t.services.ctaButton }} <Icon name="arrow" /></a>
+        <a class="btn btn--primary" href="#contact">{{ t.services.ctaButton }}</a>
       </div>
     </div>
   </section>
@@ -43,7 +44,27 @@ const { t } = useI18n()
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
-  padding: clamp(1.25rem, 1rem + 1vw, 2rem);
+  padding: var(--space-3) var(--space-3) clamp(1.25rem, 1rem + 1vw, 1.75rem);
+}
+
+.service > :not(.service__art) {
+  margin-inline: clamp(0.5rem, 0.25rem + 0.8vw, 1rem);
+}
+
+/* Illustration panel: the scene on a softly lit surface. */
+.service__art {
+  display: grid;
+  place-items: center;
+  padding: var(--space-5) var(--space-5) var(--space-4);
+  border-radius: calc(var(--radius) - 8px);
+  background:
+    radial-gradient(ellipse 70% 90% at 50% 0%, rgb(var(--accent-rgb) / 0.12), transparent 70%),
+    var(--surface-2);
+  border: 1px solid var(--border);
+}
+
+.service__art :deep(svg) {
+  max-width: 22rem;
 }
 
 .service h3 {
@@ -59,25 +80,10 @@ const { t } = useI18n()
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--space-2) var(--space-4);
-  margin-top: var(--space-3);
+  margin-top: auto;
   padding-top: var(--space-4);
   border-top: 1px solid var(--border);
-  list-style: none;
   font-size: var(--step--1);
-}
-
-.service__includes li {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--space-2);
-}
-
-.service__includes svg {
-  width: 1rem;
-  height: 1rem;
-  margin-top: 0.2em;
-  flex: none;
-  color: var(--accent);
 }
 
 .services__cta {

@@ -91,7 +91,7 @@ const { t } = useI18n()
 }
 
 .timeline__item--edu::before {
-  border-color: var(--cyan);
+  border-color: var(--mint);
 }
 
 .entry__summary {

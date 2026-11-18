@@ -88,7 +88,7 @@ const githubLabel = site.github.replace('https://', '')
 .contact__status {
   min-height: 1.6em;
   margin: var(--space-3) 0 0;
-  color: var(--cyan);
+  color: var(--mint);
   font-size: var(--step--1);
 }
 

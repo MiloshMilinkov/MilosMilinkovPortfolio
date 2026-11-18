@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import { useInView } from '../../composables/useInView.ts'
 import { profile } from '../../data/profile.ts'
 import { projects } from '../../data/projects.ts'
+import { isClientSite } from '../../lib/projectLinks.ts'
 import { useI18n } from '../../i18n/index.ts'
 import Icon from '../ui/Icon.vue'
 import StatTile from '../sections/StatTile.vue'
@@ -11,7 +12,7 @@ import Portrait from './Portrait.vue'
 const { t } = useI18n()
 const statsEl = ref<HTMLElement | null>(null)
 const statsInView = useInView(statsEl, { rootMargin: '0px' })
-const liveCount = projects.filter((p) => p.status === 'live' && !p.concept).length
+const liveCount = projects.filter(isClientSite).length
 </script>
 
 <template>
@@ -22,7 +23,7 @@ const liveCount = projects.filter((p) => p.status === 'live' && !p.concept).leng
         <h1 id="hero-title" class="hero__title">{{ t.hero.headline }}</h1>
         <p class="hero__lede">{{ t.hero.lead }}</p>
         <div class="hero__actions">
-          <a class="btn btn--primary" href="#contact">{{ t.hero.primary }} <Icon name="arrow" /></a>
+          <a class="btn btn--primary" href="#contact">{{ t.hero.primary }}</a>
           <a class="btn btn--ghost" href="#projects">{{ t.hero.secondary }}</a>
         </div>
       </div>
@@ -30,17 +31,20 @@ const liveCount = projects.filter((p) => p.status === 'live' && !p.concept).leng
       <Portrait class="hero__portrait" />
     </div>
 
-    <div class="container hero__strip">
-      <div class="card card--glow hero__live">
-        <span class="chip-icon chip-icon--accent"><Icon name="rocket" /></span>
-        <div>
-          <p class="hero__live-value">{{ t.hero.liveValue(liveCount) }}</p>
-          <p class="hero__live-text">{{ t.hero.liveText }}</p>
+    <!-- Proof bar: live client sites and the numbers, one panel split into segments. -->
+    <div class="container">
+      <div class="hero__strip card">
+        <div class="hero__live">
+          <span class="chip-icon chip-icon--accent"><Icon name="rocket" /></span>
+          <div>
+            <p class="hero__live-value"><span class="pill__dot" aria-hidden="true" />{{ t.hero.liveValue(liveCount) }}</p>
+            <p class="hero__live-text">{{ t.hero.liveText }}</p>
+          </div>
         </div>
+        <ul ref="statsEl" class="hero__stats" :aria-label="t.hero.statsLabel">
+          <StatTile v-for="stat in profile.stats" :key="stat.id" :stat="stat" :label="t.hero.stats[stat.id]" :start="statsInView" />
+        </ul>
       </div>
-      <ul ref="statsEl" class="hero__stats" :aria-label="t.hero.statsLabel">
-        <StatTile v-for="stat in profile.stats" :key="stat.id" :stat="stat" :label="t.hero.stats[stat.id]" :start="statsInView" />
-      </ul>
     </div>
   </section>
 </template>
@@ -90,26 +94,33 @@ const liveCount = projects.filter((p) => p.status === 'live' && !p.concept).leng
   justify-self: end;
 }
 
-/* Proof strip under the hero: live sites + stat tiles. */
+/* Proof bar under the hero: live sites + stats in one panel. */
 .hero__strip {
   display: grid;
-  grid-template-columns: minmax(0, 1.5fr) minmax(0, 2fr);
-  gap: var(--space-3);
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 2fr);
   margin-top: clamp(2.5rem, 2rem + 3vw, 4rem);
+  overflow: hidden;
+  background-image:
+    radial-gradient(ellipse 50% 120% at 0% 0%, rgb(var(--accent-rgb) / 0.14), transparent 70%),
+    linear-gradient(180deg, rgb(255 255 255 / 0.025), transparent 40%);
 }
 
 .hero__live {
   display: flex;
   align-items: center;
   gap: var(--space-4);
-  padding: var(--space-5);
+  padding: var(--space-5) var(--space-6);
 }
 
 .hero__live-value {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
   margin: 0 0 var(--space-1);
   font-size: var(--step-2);
   font-weight: 600;
   letter-spacing: -0.02em;
+  line-height: 1.2;
 }
 
 .hero__live-text {
@@ -121,14 +132,17 @@ const liveCount = projects.filter((p) => p.status === 'live' && !p.concept).leng
 .hero__stats {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--space-3);
   list-style: none;
+}
+
+.hero__stats > li {
+  border-left: 1px solid var(--border);
 }
 
 @media (prefers-reduced-motion: no-preference) {
   .hero__text > *,
   .hero__portrait,
-  .hero__strip > * {
+  .hero__strip {
     animation: rise 0.7s var(--ease-out) both;
   }
 
@@ -148,7 +162,7 @@ const liveCount = projects.filter((p) => p.status === 'live' && !p.concept).leng
     animation-delay: 0.12s;
   }
 
-  .hero__strip > * {
+  .hero__strip {
     animation-delay: 0.25s;
   }
 }
@@ -164,6 +178,15 @@ const liveCount = projects.filter((p) => p.status === 'live' && !p.concept).leng
   .hero__grid,
   .hero__strip {
     grid-template-columns: 1fr;
+  }
+
+  .hero__live {
+    padding: var(--space-5);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .hero__stats > li:first-child {
+    border-left: 0;
   }
 
   .hero__portrait {

@@ -48,7 +48,8 @@ test('skills show their level and how many projects use them', async ({ page }) 
   const vue = skills.getByRole('button', { name: /Vue\.js/ })
   await expect(vue).toContainText('Core')
   await expect(vue).toContainText('Used in 2 projects')
-  await expect(skills.getByRole('button', { name: /React/ })).toContainText('Used in 1 project')
+  await expect(skills.getByRole('button', { name: /React/ })).toContainText('Used in 2 projects')
+  await expect(skills.getByRole('button', { name: /Tailwind/ })).toContainText('Used in 1 project')
 })
 
 test('selecting a skill lists the projects that use it', async ({ page }) => {

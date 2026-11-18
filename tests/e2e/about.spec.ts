@@ -20,7 +20,7 @@ test('languages and interests are listed', async ({ page }) => {
 test('services list what each offer includes and lead to a quote', async ({ page }) => {
   await page.goto('/')
   const section = page.locator('#services')
-  for (const { id } of services) {
+  for (const id of services) {
     const s = en.services.items[id]
     await expect(section.getByRole('heading', { name: s.title })).toBeVisible()
     await expect(section.getByRole('list', { name: `${s.title} includes` }).getByRole('listitem')).toHaveCount(s.includes.length)

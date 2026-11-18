@@ -5,7 +5,7 @@ import sharp from 'sharp'
 import { publicDir } from './lib.mjs'
 
 const svg = await readFile(path.join(publicDir, 'favicon.svg'))
-const VOID = '#0b0c0e'
+const VOID = '#0f1221'
 
 /** Icon on a solid background, the mark scaled to `scale` of the canvas (maskable safe zone ≈ 0.8). */
 async function icon(size, file, { scale = 1, background = null } = {}) {

@@ -50,7 +50,7 @@ function toggleSkill(skill: Skill) {
 </script>
 
 <template>
-  <section id="skills" class="section skills" aria-labelledby="skills-title">
+  <section id="skills" class="section section--band skills" aria-labelledby="skills-title">
     <div class="container">
       <SectionHeading
         id="skills-title"
@@ -168,7 +168,7 @@ function toggleSkill(skill: Skill) {
 }
 
 .skills__tab[aria-selected='true'] {
-  background: linear-gradient(135deg, var(--accent-strong), var(--accent-deep));
+  background: var(--accent-gradient);
   color: #fff;
 }
 
@@ -215,7 +215,7 @@ function toggleSkill(skill: Skill) {
 }
 
 .skill[aria-pressed='true'] {
-  border-color: rgb(217 70 239 / 0.55);
+  border-color: rgb(var(--accent-rgb) / 0.55);
   background: var(--accent-soft);
 }
 

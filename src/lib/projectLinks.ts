@@ -28,11 +28,27 @@ export function resolveProjectLink(p: Project, text: LinkText): ResolvedProjectL
       return {
         primary: p.repoUrl ? { href: p.repoUrl, label: text.viewSource } : null,
         secondary: null,
-        note: text.noteSource,
+        note: p.desktop ? text.noteDesktop : text.noteSource,
       }
     case 'classified':
       return { primary: null, secondary: null, note: text.noteClassified }
   }
+}
+
+/** A hosted site for a real client (concept sites are live too, but not client work). */
+export const isClientSite = (p: Project): boolean => p.status === 'live' && !p.concept
+
+export type ProjectGroup = 'client' | 'concept' | 'apps'
+export type CardSize = 'large' | 'medium' | 'small'
+
+/** Work section: client sites, then concept sites, then everything that is not a website. */
+export const projectGroup = (p: Project): ProjectGroup => (isClientSite(p) ? 'client' : p.concept ? 'concept' : 'apps')
+
+/** Client sites get large cards; apps with a screenshot medium; the rest small. */
+export function cardSize(p: Project): CardSize {
+  const group = projectGroup(p)
+  if (group === 'client') return 'large'
+  return group === 'apps' && p.image ? 'medium' : 'small'
 }
 
 /** Returns a list of content problems; an empty list means the data is valid. */

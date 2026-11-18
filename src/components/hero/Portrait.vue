@@ -32,14 +32,14 @@ const { t } = useI18n()
   margin: 0;
 }
 
-/* Soft magenta light behind the photo. */
+/* Soft orchid and violet light behind the photo. */
 .portrait::before {
   content: '';
   position: absolute;
   /* Horizontal spread stays inside the 2rem page gutter. */
   inset: -12% -6% -6%;
   z-index: -1;
-  background: radial-gradient(closest-side, rgb(217 70 239 / 0.3), rgb(34 211 238 / 0.06) 65%, transparent);
+  background: radial-gradient(closest-side, rgb(var(--accent-rgb) / 0.26), rgb(var(--accent-deep-rgb) / 0.14) 55%, transparent);
   pointer-events: none;
 }
 
@@ -76,7 +76,7 @@ const { t } = useI18n()
   display: grid;
   gap: 2px;
   padding: 3.5rem var(--space-5) var(--space-5);
-  background: linear-gradient(to top, rgb(18 18 22 / 0.92), rgb(18 18 22 / 0.6) 55%, transparent);
+  background: linear-gradient(to top, rgb(var(--bg-rgb) / 0.94), rgb(var(--bg-rgb) / 0.6) 55%, transparent);
 }
 
 .portrait__name {

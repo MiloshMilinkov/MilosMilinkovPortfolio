@@ -10,7 +10,7 @@ const reasonIcons = ['briefcase', 'spark', 'shield'] as const
 </script>
 
 <template>
-  <section id="hosting" class="section hosting" aria-labelledby="hosting-title">
+  <section id="hosting" class="section section--band hosting" aria-labelledby="hosting-title">
     <div class="container">
       <SectionHeading id="hosting-title" :title="t.hosting.title" :lede="t.hosting.lede" />
 
@@ -190,11 +190,11 @@ const reasonIcons = ['briefcase', 'spark', 'shield'] as const
 }
 
 .hosting__note--warn {
-  border-color: rgb(255 120 120 / 0.25);
+  border-color: rgb(255 179 143 / 0.3);
 }
 
 .hosting__note--warn li::marker {
-  color: #ff8a8a;
+  color: var(--peach);
 }
 
 .hosting__guide .btn {

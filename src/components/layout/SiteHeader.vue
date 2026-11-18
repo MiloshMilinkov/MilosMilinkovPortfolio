@@ -101,7 +101,7 @@ onBeforeUnmount(() => document.removeEventListener('keydown', onKeydown))
   position: sticky;
   top: 0;
   z-index: 50;
-  background: rgb(18 18 22 / 0.78);
+  background: rgb(var(--bg-rgb) / 0.8);
   backdrop-filter: blur(14px) saturate(140%);
   -webkit-backdrop-filter: blur(14px) saturate(140%);
   border-bottom: 1px solid var(--border);

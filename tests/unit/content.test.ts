@@ -20,12 +20,12 @@ describe('site content', () => {
     expect(validateProjects(projects, skills)).toEqual([])
   })
 
-  it('has 8 projects, all featured', () => {
-    expect(projects).toHaveLength(8)
-    expect(projects.filter((p) => p.featured)).toHaveLength(8)
+  it('has 10 projects, all featured', () => {
+    expect(projects).toHaveLength(10)
+    expect(projects.filter((p) => p.featured)).toHaveLength(10)
   })
 
-  it('marks exactly the hosted sites as live and Euronet as classified', () => {
+  it('marks exactly the hosted sites as live, the desktop apps as source and Euronet as classified', () => {
     const ids = (status: string) => projects.filter((p) => p.status === status).map((p) => p.id)
     expect(ids('live').sort()).toEqual([
       'advokat-vladic',
@@ -35,6 +35,7 @@ describe('site content', () => {
       'mabels-chair',
     ])
     expect(projects.filter((p) => p.concept).map((p) => p.id)).toEqual(['little-fern-coffee', 'mabels-chair', 'lovely-layers'])
+    expect(ids('source').sort()).toEqual(['disksweep', 'keepitincheck', 'projectanvil', 'silicon-lottery'])
     expect(ids('classified')).toEqual(['euronet'])
   })
 

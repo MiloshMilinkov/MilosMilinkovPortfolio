@@ -10,6 +10,7 @@ export const skills: Skill[] = [
   { id: 'aspnet', label: 'ASP.NET Core', group: 'backend', tier: 'proficient' },
   { id: 'node', label: 'Node.js', group: 'backend', tier: 'proficient' },
   { id: 'express', label: 'Express.js', group: 'backend', tier: 'proficient' },
+  { id: 'rust', label: 'Rust', group: 'backend', tier: 'familiar' },
   // Frontend
   { id: 'vue', label: 'Vue.js', group: 'frontend', tier: 'core' },
   { id: 'javascript', label: 'JavaScript', group: 'frontend', tier: 'core' },
@@ -33,6 +34,7 @@ export const skills: Skill[] = [
   { id: 'cloudflare', label: 'Cloudflare Workers', group: 'tools', tier: 'proficient' },
   { id: 'playwright', label: 'Playwright', group: 'tools', tier: 'proficient' },
   { id: 'docker', label: 'Docker', group: 'tools', tier: 'proficient' },
+  { id: 'tauri', label: 'Tauri', group: 'tools', tier: 'familiar' },
   { id: 'vercel', label: 'Vercel', group: 'tools', tier: 'familiar' },
   { id: 'postman', label: 'Postman / Thunder Client', group: 'tools', tier: 'proficient' },
   { id: 'vscode', label: 'Visual Studio / VS Code', group: 'tools', tier: 'core' },

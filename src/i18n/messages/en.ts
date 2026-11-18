@@ -87,14 +87,24 @@ export const en = {
   },
   projects: {
     title: 'Selected work',
-    lede: 'Client sites and concept sites you can visit today, plus apps and systems I’ve built. Live sites open in a new tab; projects that aren’t hosted link to their source code.',
+    lede: 'Client sites and concept sites you can visit today, plus apps and systems I’ve built.',
     archiveTitle: 'More on GitHub',
+    highlightsLabel: 'Key features',
     status: { live: 'Live', source: 'Source only', classified: 'Classified' },
+    groups: {
+      client: { title: 'Client websites', text: 'Live sites for real businesses, built, launched and looked after by me.' },
+      concept: {
+        title: 'Concept sites',
+        text: 'Sites for made-up local businesses that show what yours could look like. Each one loads almost instantly on any phone.',
+      },
+      apps: { title: 'Apps and systems', text: 'Windows apps, a team workspace, internal finance systems and my thesis project.' },
+    },
     links: {
       visit: 'Visit live site',
       source: 'Source',
       viewSource: 'View source on GitHub',
       noteSource: 'Not publicly hosted — view the source on GitHub.',
+      noteDesktop: 'Windows desktop app — view the source on GitHub.',
       noteClassified: 'Proprietary system under NDA — details on request.',
     },
     screenshotAlt: (title: string) => `Screenshot of the ${title} website`,
@@ -113,6 +123,7 @@ export const en = {
         summary: 'Website for fitness trainer @arizonalifts, which I develop, host and maintain.',
         highlights: [
           'Fast, mobile-first single-page site on the client’s own domain.',
+          'Latest Instagram and TikTok posts on the page, and rich previews when the link is shared.',
           'Ongoing development and maintenance for the client.',
         ],
       },
@@ -124,7 +135,6 @@ export const en = {
           'Live “open now / closed” badge based on Belgrade time.',
           'Chalkboard menu with tabs for coffee, other drinks and pastries.',
           'Opening hours with today highlighted, an events list and an illustrated map.',
-          'Lightweight pages that load almost instantly on any phone.',
         ],
       },
       'mabels-chair': {
@@ -135,7 +145,6 @@ export const en = {
           'Lit vanity-mirror hero with a live “open now / closed” badge.',
           'Price list, gallery of recent work, team and reviews.',
           'Booking request form beside the address and opening hours (demo: nothing is sent).',
-          'Lightweight pages that load almost instantly on any phone.',
         ],
       },
       'lovely-layers': {
@@ -146,7 +155,28 @@ export const en = {
           'Cake builder: pick flavour, size, frosting, decorations and writing, with a live drawing, a cut slice and the price.',
           'Every cake is drawn in the browser, so there are no photos to load.',
           'Order request form, reviews and opening hours with a live “open now / closed” badge (demo: nothing is sent).',
-          'Lightweight pages that load almost instantly on any phone.',
+        ],
+      },
+      keepitincheck: {
+        kind: 'Windows app for memory and CPU',
+        summary:
+          'A slim panel on the edge of the screen that shows which apps use your memory and processor, and safely closes the ones doing nothing.',
+        highlights: [
+          'Live CPU and memory gauges, with multi-window apps such as browsers grouped into one row.',
+          'Spots idle apps and gives a plain reason for each, like “Idle for 47 min, no window, using 312 MB”.',
+          'Closes apps only after you confirm, and never touches Windows, security software or the app you are using.',
+          'Startup apps manager and a weekly report. Runs offline, with no tracking.',
+        ],
+      },
+      disksweep: {
+        kind: 'Windows app for disk clean-up',
+        summary:
+          'Finds clutter on a drive that is safe to remove: empty folders, leftovers of uninstalled programs, programs you no longer use, and old temporary, large and downloaded files.',
+        highlights: [
+          'Every item shows why it was listed and a risk level: Safe, Review or Risky.',
+          'Windows, installed programs, cloud-synced folders and code repositories can never be selected.',
+          'Nothing is deleted outright: items go to the Recycle Bin or to a quarantine you can restore from.',
+          'Offers a System Restore point before cleaning, and runs a program’s own uninstaller.',
         ],
       },
       projectanvil: {

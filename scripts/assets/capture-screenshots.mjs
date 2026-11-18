@@ -1,11 +1,13 @@
 // Captures the live client sites at 1280×800 and writes AVIF/WebP variants
-// to public/images/projects/<id>-<width>.<ext>. Usage: node scripts/assets/capture-screenshots.mjs
+// to public/images/projects/<id>-<width>.<ext>.
+// Usage: node scripts/assets/capture-screenshots.mjs [<project id> ...]  (no ids: every live site)
 import path from 'node:path'
 import { chromium } from '@playwright/test'
 import { projects } from '../../src/data/projects.ts'
 import { publicDir, writeVariants } from './lib.mjs'
 
-const targets = projects.filter((p) => p.status === 'live' && p.liveUrl && p.image)
+const only = process.argv.slice(2)
+const targets = projects.filter((p) => p.status === 'live' && p.liveUrl && p.image && (!only.length || only.includes(p.id)))
 
 const browser = await chromium.launch()
 const page = await browser.newPage({ viewport: { width: 1280, height: 800 }, deviceScaleFactor: 1 })

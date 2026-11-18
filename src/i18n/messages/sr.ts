@@ -84,14 +84,27 @@ export const sr: Messages = {
   },
   projects: {
     title: 'Izdvojeni radovi',
-    lede: 'Sajtovi za klijente i demo sajtovi koje možete posetiti već danas, plus aplikacije i sistemi koje sam napravio. Sajtovi se otvaraju u novoj kartici; projekti koji nisu objavljeni vode na izvorni kod.',
+    lede: 'Sajtovi za klijente i demo sajtovi koje možete posetiti već danas, plus aplikacije i sistemi koje sam napravio.',
     archiveTitle: 'Još na GitHub-u',
+    highlightsLabel: 'Glavne mogućnosti',
     status: { live: 'Online', source: 'Samo kod', classified: 'Poverljivo' },
+    groups: {
+      client: { title: 'Sajtovi za klijente', text: 'Sajtovi pravih firmi koje sam napravio, objavio i koje održavam.' },
+      concept: {
+        title: 'Demo sajtovi',
+        text: 'Sajtovi za izmišljene lokalne firme koji pokazuju kako bi vaš sajt mogao da izgleda. Svaki se gotovo trenutno učitava na svakom telefonu.',
+      },
+      apps: {
+        title: 'Aplikacije i sistemi',
+        text: 'Aplikacije za Windows, radni prostor za timove, interni finansijski sistemi i moj diplomski projekat.',
+      },
+    },
     links: {
       visit: 'Posetite sajt',
       source: 'Kod',
       viewSource: 'Pogledajte kod na GitHub-u',
       noteSource: 'Nije javno objavljen — pogledajte izvorni kod na GitHub-u.',
+      noteDesktop: 'Desktop aplikacija za Windows — pogledajte izvorni kod na GitHub-u.',
       noteClassified: 'Interni sistem pod ugovorom o poverljivosti — detalji na upit.',
     },
     screenshotAlt: (title: string) => `Snimak ekrana sajta ${title}`,
@@ -108,7 +121,11 @@ export const sr: Messages = {
       arizonalifts: {
         kind: 'Sajt fitnes trenerke',
         summary: 'Sajt za fitnes trenerku @arizonalifts, koji razvijam, hostujem i održavam.',
-        highlights: ['Brz sajt na jednoj stranici, prilagođen telefonima, na domenu klijenta.', 'Stalni razvoj i održavanje za klijenta.'],
+        highlights: [
+          'Brz sajt na jednoj stranici, prilagođen telefonima, na domenu klijenta.',
+          'Najnovije objave sa Instagrama i TikToka na stranici i lep prikaz linka kada se sajt podeli.',
+          'Stalni razvoj i održavanje za klijenta.',
+        ],
       },
       'little-fern-coffee': {
         kind: 'Demo sajt za kafić u komšiluku',
@@ -117,7 +134,6 @@ export const sr: Messages = {
           'Oznaka „otvoreno / zatvoreno“ uživo, po beogradskom vremenu.',
           'Meni u stilu školske table, sa karticama za kafu, ostala pića i peciva.',
           'Radno vreme sa istaknutim današnjim danom, lista događaja i ilustrovana mapa.',
-          'Lagane stranice koje se gotovo trenutno učitavaju na svakom telefonu.',
         ],
       },
       'mabels-chair': {
@@ -128,7 +144,6 @@ export const sr: Messages = {
           'Uvodni deo sa osvetljenim ogledalom i oznakom „otvoreno / zatvoreno“ uživo.',
           'Cenovnik, galerija radova, tim i utisci klijenata.',
           'Forma za zakazivanje pored adrese i radnog vremena (demo: ništa se ne šalje).',
-          'Lagane stranice koje se gotovo trenutno učitavaju na svakom telefonu.',
         ],
       },
       'lovely-layers': {
@@ -139,7 +154,28 @@ export const sr: Messages = {
           'Konfigurator torte: ukus, veličina, boja fila, ukrasi i natpis, uz crtež uživo, presek torte i cenu.',
           'Svaka torta se crta u pregledaču, pa nema fotografija za učitavanje.',
           'Forma za porudžbinu, utisci kupaca i radno vreme sa oznakom „otvoreno / zatvoreno“ uživo (demo: ništa se ne šalje).',
-          'Lagane stranice koje se gotovo trenutno učitavaju na svakom telefonu.',
+        ],
+      },
+      keepitincheck: {
+        kind: 'Windows aplikacija za memoriju i procesor',
+        summary:
+          'Uzan panel uz ivicu ekrana koji pokazuje koje aplikacije troše memoriju i procesor i bezbedno zatvara one koje ništa ne rade.',
+        highlights: [
+          'Merači procesora i memorije uživo; aplikacije sa više prozora, poput pregledača, prikazane su u jednom redu.',
+          'Pronalazi neaktivne aplikacije i za svaku daje jasan razlog, npr. „Neaktivna 47 min, bez prozora, koristi 312 MB”.',
+          'Zatvara aplikacije tek kada potvrdite i nikada ne dira Windows, zaštitni softver ni aplikaciju koju koristite.',
+          'Pregled aplikacija koje se pokreću sa sistemom i nedeljni izveštaj. Radi bez interneta i bez praćenja.',
+        ],
+      },
+      disksweep: {
+        kind: 'Windows aplikacija za čišćenje diska',
+        summary:
+          'Pronalazi na disku ono što je bezbedno ukloniti: prazne foldere, ostatke deinstaliranih programa, programe koje više ne koristite i stare privremene, velike i preuzete fajlove.',
+        highlights: [
+          'Uz svaku stavku piše zašto je navedena i nivo rizika: bezbedno, proveriti ili rizično.',
+          'Windows, instalirani programi, folderi sinhronizovani sa oblakom i repozitorijumi koda nikada ne mogu da se izaberu.',
+          'Ništa se ne briše odmah: stavke idu u Korpu za otpatke ili u karantin iz kog možete da ih vratite.',
+          'Pre čišćenja nudi tačku za vraćanje sistema i pokreće deinstalaciju samog programa.',
         ],
       },
       projectanvil: {

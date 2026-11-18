@@ -1,33 +1,48 @@
 :root {
   color-scheme: dark;
 
-  /* Surfaces: charcoal, a step lighter than pure black. */
-  --bg: #121216;
-  --surface: #1b1b21;
-  --surface-2: #23232b;
-  --border: rgb(255 255 255 / 0.07);
-  --border-strong: rgb(255 255 255 / 0.13);
+  /* Surfaces: a deep blue-violet night, softer on the eyes than neutral black. */
+  --bg: #0f1221;
+  --bg-rgb: 15 18 33;
+  --bg-band: #131729;
+  --surface: #171b2f;
+  --surface-2: #1d2238;
+  --surface-3: #252b45;
+  --tint-rgb: 196 204 255; /* cool lavender used for borders, dots and lines */
+  --border: rgb(var(--tint-rgb) / 0.08);
+  --border-strong: rgb(var(--tint-rgb) / 0.16);
 
-  /* Text */
-  --text: #f4f4f6;
-  --muted: #a6a6b0;
-  --subtle: #7c7c87;
+  /* Text: warm white body copy, muted ≥ 7:1 and subtle ≥ 4.5:1 on every surface. */
+  --text: #eef0f8;
+  --text-rgb: 238 240 248;
+  --muted: #b8bdd2;
+  --subtle: #8f95ad;
 
-  /* Accents: magenta (main), cyan (small highlights only). */
-  --accent: #e055f5; /* text/icons on dark: ≈ 5.6:1 on --bg */
-  --accent-strong: #c026d3; /* button fills with white text: ≥ 4.7:1 */
-  --accent-deep: #a21caf;
-  --accent-soft: rgb(217 70 239 / 0.14);
-  --cyan: #22d3ee;
+  /* Accents: orchid (main), mint (live / success), peach and sky (illustrations only). */
+  --accent: #d48cf8; /* text/icons: ≈ 8:1 on --bg */
+  --accent-rgb: 212 140 248;
+  --accent-strong: #9a4fdc; /* button fills with white text: ≥ 4.6:1 */
+  --accent-deep: #6a4fdf;
+  --accent-deep-rgb: 106 79 223;
+  --accent-soft: rgb(var(--accent-rgb) / 0.14);
+  --accent-gradient: linear-gradient(135deg, var(--accent-strong), var(--accent-deep));
+  --mint: #7ee0c3;
+  --mint-rgb: 126 224 195;
+  --peach: #ffb38f;
+  --sky: #8fb4ff;
+  --sky-rgb: 143 180 255;
+  /* Window-control dots in the browser frames and illustrations. */
+  --dot-close: #f39a8b;
+  --dot-min: #f2cf7c;
 
   --font: 'Geist', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
 
-  --step--1: clamp(0.84rem, 0.82rem + 0.1vw, 0.9rem);
-  --step-0: clamp(1rem, 0.97rem + 0.15vw, 1.0625rem);
-  --step-1: clamp(1.15rem, 1.08rem + 0.35vw, 1.35rem);
-  --step-2: clamp(1.4rem, 1.25rem + 0.8vw, 1.9rem);
-  --step-3: clamp(2rem, 1.6rem + 2vw, 3.1rem);
-  --step-4: clamp(2.6rem, 1.8rem + 4.2vw, 5rem);
+  --step--1: clamp(0.9rem, 0.87rem + 0.12vw, 0.95rem);
+  --step-0: clamp(1.0625rem, 1.02rem + 0.2vw, 1.125rem);
+  --step-1: clamp(1.2rem, 1.12rem + 0.4vw, 1.4rem);
+  --step-2: clamp(1.45rem, 1.3rem + 0.8vw, 1.95rem);
+  --step-3: clamp(2rem, 1.6rem + 2vw, 3rem);
+  --step-4: clamp(2.6rem, 1.8rem + 4vw, 4.6rem);
 
   --space-1: 0.25rem;
   --space-2: 0.5rem;
@@ -39,14 +54,14 @@
   --space-8: 4.5rem;
 
   --radius-sm: 10px;
-  --radius: 18px;
-  --radius-lg: 26px;
+  --radius: 20px;
+  --radius-lg: 28px;
 
-  --measure: 64ch;
+  --measure: 62ch;
   --header-h: 4.25rem;
   --gutter: 1rem;
 
-  --shadow: 0 1px 0 rgb(255 255 255 / 0.04) inset, 0 20px 40px -24px rgb(0 0 0 / 0.7);
+  --shadow: 0 1px 0 rgb(255 255 255 / 0.05) inset, 0 24px 48px -28px rgb(4 6 18 / 0.9);
   --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 

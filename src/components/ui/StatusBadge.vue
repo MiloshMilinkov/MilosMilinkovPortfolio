@@ -40,13 +40,13 @@ const label = computed(() => t.projects.status[props.status])
 
 .status--live {
   color: var(--text);
-  border-color: rgb(34 211 238 / 0.35);
-  background: rgb(34 211 238 / 0.08);
+  border-color: rgb(var(--mint-rgb) / 0.35);
+  background: rgb(var(--mint-rgb) / 0.08);
 }
 
 .status--live .status__dot {
-  background: var(--cyan);
-  box-shadow: 0 0 0 3px rgb(34 211 238 / 0.2);
+  background: var(--mint);
+  box-shadow: 0 0 0 3px rgb(var(--mint-rgb) / 0.2);
 }
 
 .status--source .status__dot {

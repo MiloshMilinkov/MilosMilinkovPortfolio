@@ -34,6 +34,11 @@ describe('resolveProjectLink', () => {
     })
   })
 
+  it('desktop app links to the repo with the desktop-app note', () => {
+    const p = project({ id: 'app', status: 'source', desktop: true })
+    expect(resolveProjectLink(p, links).note).toBe('Windows desktop app — view the source on GitHub.')
+  })
+
   it('classified project has no link and the NDA note', () => {
     const p = project({ id: 'nda', status: 'classified', repoUrl: undefined })
     expect(resolveProjectLink(p, links)).toEqual({

@@ -5,6 +5,6 @@ export const profile = {
   stats: [
     { id: 'years', value: 4, suffix: '+' },
     { id: 'projects', value: 10, suffix: '' },
-    { id: 'pagespeed', value: 100, suffix: '' },
+    { id: 'pagespeed', value: 100, suffix: '', max: 100 },
   ] satisfies Stat[],
 }

@@ -50,12 +50,26 @@ sets CSP/HSTS/cache). Font: Geist (self-hosted, latin + latin-ext + cyrillic). R
 - Portrait: `node scripts/assets/process-portrait.mjs <photo>` (4:5 crop, never upscaled).
 - Projects: `status` is `live` (needs `liveUrl`), `source` (needs `repoUrl`) or `classified` (no URL).
   Fictional showcase sites get `concept: true`: shown as Live but never counted as client work.
-- New live project screenshots: add `image: '<id>'`, then `node scripts/assets/capture-screenshots.mjs`.
+- New live project screenshots: add `image: '<id>'`, then `node scripts/assets/capture-screenshots.mjs [<id>]`
+  (no id re-captures every live site).
+- Desktop-app screenshots (KeepItInCheck, DiskSweep): capture PNGs yourself (KeepItInCheck's built UI
+  runs on mock data in a plain browser; a WPF window can be grabbed with PowerShell `PrintWindow`), then
+  `node scripts/assets/frame-app-shots.mjs <id> <shot.png> [<shot2.png>]` places them on the site backdrop.
+  Never use a capture that shows personal file paths.
+- The Work section groups projects automatically (`projectGroup` / `cardSize` in `src/lib/projectLinks.ts`):
+  live + not concept → client sites, `concept` → concept sites, everything else → apps. Large (client)
+  cards list highlights; smaller cards fold them into a "Key features" toggle. `desktop: true` gives a
+  source-only project the desktop-app note.
 - `SITE_URL` in `src/data/site.ts` drives every absolute URL (canonical, OG, sitemap, JSON-LD).
 - Tool/technology names belong only in the workflow section (`#skills`) and the Hosting section
   (`#hosting`, which explains Cloudflare); an e2e test enforces it for the other sections.
 - Never publish the phone number or the CV PDF; tests check for `+381` / `tel:`.
-- Dark theme only. Copy is client-facing: the site sells Miloš's web-building service.
+- Dark theme only (deep blue-violet night, orchid accent, mint for live/success; tokens in
+  `src/styles/tokens.css`; for transparency use the `-rgb` twins, e.g. `rgb(var(--accent-rgb) / x)`,
+  never raw colour values; SVG art takes colours through CSS classes). Copy is
+  client-facing: the site sells Miloš's web-building service.
+- After changing palette colours, also update `public/favicon.svg` + `Monogram.vue` and re-run
+  `node scripts/assets/generate-icons.mjs`; OG images come from `scripts/assets/og-template.html`.
 
 ## Testing
 

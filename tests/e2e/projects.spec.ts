@@ -2,10 +2,59 @@ import { expect, test, type Page } from '@playwright/test'
 
 const card = (page: Page, id: string) => page.locator(`#projects [data-project="${id}"]`)
 
-test('shows eight featured projects and no archive group', async ({ page }) => {
+test('groups ten projects into client sites, concept sites and apps', async ({ page }) => {
   await page.goto('/')
-  await expect(page.locator('#projects .featured > [data-project]')).toHaveCount(8)
+  const group = (id: string) => page.locator(`#projects .group--${id} [data-project]`)
+  await expect(page.locator('#projects [data-project]')).toHaveCount(10)
+  await expect(group('client')).toHaveCount(2)
+  await expect(group('concept')).toHaveCount(3)
+  await expect(group('apps')).toHaveCount(5)
   await expect(page.locator('#projects .archive')).toHaveCount(0)
+  await expect(page.locator('#projects').getByRole('heading', { level: 3 })).toHaveText([
+    'Client websites',
+    'Concept sites',
+    'Apps and systems',
+  ])
+})
+
+test('live sites sit in a browser frame that shows their address', async ({ page }) => {
+  await page.goto('/')
+  await expect(card(page, 'arizonalifts').locator('.browser-bar')).toContainText('arizonalifts.com')
+  await expect(card(page, 'disksweep').locator('.browser-bar')).toHaveCount(0)
+})
+
+test('smaller cards fold their features behind a toggle', async ({ page }) => {
+  await page.goto('/')
+  const fern = card(page, 'little-fern-coffee')
+  const toggle = fern.getByText('Key features')
+  const list = fern.locator('details li').first()
+  let opened = false
+  page.on('popup', () => (opened = true))
+  await expect(list).toBeHidden()
+  await toggle.click()
+  await expect(list).toBeVisible()
+  // Opening the features must not follow the card's link.
+  await page.waitForTimeout(300)
+  expect(opened).toBe(false)
+  // Client sites list their features openly.
+  await expect(card(page, 'advokat-vladic').locator('details')).toHaveCount(0)
+})
+
+test('desktop apps link to their source with a desktop-app note', async ({ page }) => {
+  await page.goto('/')
+  for (const [id, repo] of [
+    ['keepitincheck', 'KeepItInCheck'],
+    ['disksweep', 'DiskSweep'],
+  ]) {
+    const c = card(page, id!)
+    await expect(c.locator('[data-status]')).toHaveText('Source only')
+    await expect(c).toContainText('Windows desktop app — view the source on GitHub.')
+    await expect(c.getByRole('link', { name: /View source on GitHub/ })).toHaveAttribute(
+      'href',
+      `https://github.com/MiloshMilinkov/${repo}`,
+    )
+    await expect(c.locator('picture source[type="image/avif"]')).toHaveCount(1)
+  }
 })
 
 test('a live project links to the site, with the source as a second link', async ({ page }) => {
@@ -65,7 +114,7 @@ test('clicking anywhere on a live card opens the site', async ({ page, context }
   await page.goto('/')
   const arizona = card(page, 'arizonalifts')
   await arizona.scrollIntoViewIfNeeded()
-  const box = (await arizona.locator('h3').boundingBox())!
+  const box = (await arizona.locator('h4').boundingBox())!
   // Do not actually leave for the live site: capture the popup's URL and close it.
   await context.route('https://arizonalifts.com/**', (route) => route.fulfill({ body: 'ok' }))
   const [popup] = await Promise.all([page.waitForEvent('popup'), page.mouse.click(box.x + 5, box.y + box.height / 2)])

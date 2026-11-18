@@ -25,6 +25,8 @@ export interface Project {
   featured: boolean
   /** A showcase site for a fictional business: live, but not client work. */
   concept?: boolean
+  /** A desktop app: never hosted, so its note says so instead of "not publicly hosted". */
+  desktop?: boolean
   /** Base name of a screenshot in /images/projects (`<image>-<width>.<avif|webp>`). */
   image?: string
 }
@@ -54,4 +56,6 @@ export interface Stat {
   id: 'years' | 'projects' | 'pagespeed'
   value: number
   suffix: string
+  /** Set for scores: the tile draws a gauge filled to value / max. */
+  max?: number
 }
