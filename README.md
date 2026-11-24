@@ -9,6 +9,8 @@ Portfolio and service site of Miloš Milinkov — fast, modern websites and web 
 
 Built with Vue 3, TypeScript and Vite, prerendered to static HTML and served from Cloudflare Workers.
 
+![Portfolio home page](docs/screenshot.jpg)
+
 ## Development
 
 ```bash
