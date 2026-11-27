@@ -1,7 +1,6 @@
 # CLAUDE.md — Miloš Milinkov portfolio
 
-Portfolio and service site for Miloš's web-building business. Proprietary, view only (see LICENSE).
-Live: https://milos-milinkov.milos300399.workers.dev · Repo: MiloshMilinkov/MilosMilinkovPortfolio (public).
+Portfolio and service site for Miloš's web-building business. Proprietary, view only (see LICENSE). Live: https://milos-milinkov.milos300399.workers.dev · Repo: MiloshMilinkov/MilosMilinkovPortfolio (public).
 
 ## Commands
 
@@ -21,55 +20,34 @@ No linter is configured. Local e2e: `npx playwright test --project=chromium --pr
 
 ## Stack
 
-Vue 3 + TypeScript + Vite 8, prerendered to static HTML and hydrated with `createSSRApp`.
-Served as Cloudflare Workers Static Assets (`wrangler.jsonc`, no Worker script; `public/_headers`
-sets CSP/HSTS/cache). Font: Geist (self-hosted, latin + latin-ext + cyrillic). Runtime dependency: `vue` only.
+Vue 3 + TypeScript + Vite 8, prerendered to static HTML and hydrated with `createSSRApp`. Served as Cloudflare Workers Static Assets (`wrangler.jsonc`, no Worker script; `public/_headers` sets CSP/HSTS/cache). Font: Geist (self-hosted, latin + latin-ext + cyrillic). Runtime dependency: `vue` only.
 
 ## Layout
 
-- `src/i18n/` — languages: `messages/en.ts` (defines the `Messages` shape), `sr.ts` (Serbian, Latin
-  script), `ru.ts`; `index.ts` (locales, `useI18n()`), `head.ts` (per-language title, canonical,
-  hreflang, OG, JSON-LD).
-- `src/data/` — non-text facts: `site.ts` (`SITE_URL`, links, OG/guide paths), `projects.ts` (ids,
-  URLs, status, tech), `profile.ts` (stat numbers), `services.ts` (ids/icons), `skills.ts`, `nav.ts`.
+- `src/i18n/` — languages: `messages/en.ts` (defines the `Messages` shape), `sr.ts` (Serbian, Latin script), `ru.ts`; `index.ts` (locales, `useI18n()`), `head.ts` (per-language title, canonical, hreflang, OG, JSON-LD).
+- `src/data/` — non-text facts: `site.ts` (`SITE_URL`, links, OG/guide paths), `projects.ts` (ids, URLs, status, tech), `profile.ts` (stat numbers), `services.ts` (ids/icons), `skills.ts`, `nav.ts`.
 - `src/lib/` — pure logic: project link rules, skill usage, JSON-LD, schematic art.
 - `src/components/` — `hero/`, `sections/`, `projects/`, `layout/`, `ui/` (Icon, cards, badges…).
 - `src/styles/` — `tokens.css` (palette, type scale), `base.css` (cards, buttons, pills), `fonts.css`.
-- `vite/seo-plugin.ts` — font preload, robots.txt and the hreflang sitemap; fills the head tokens
-  only on the dev server. In a build, `scripts/prerender.mjs` fills them per language.
+- `vite/seo-plugin.ts` — font preload, robots.txt and the hreflang sitemap; fills the head tokens only on the dev server. In a build, `scripts/prerender.mjs` fills them per language.
 - `scripts/` — `prerender.mjs`; `assets/` one-off generators (screenshots, icons, OG image).
 - `tests/unit` (Vitest), `tests/e2e` (Playwright + axe).
 
 ## Content rules
 
-- All visible text lives in `src/i18n/messages/*.ts`; change EN, SR and RU together (TypeScript
-  fails the build if a language misses a key). Pages: `/` (en), `/sr/`, `/ru/`, each prerendered
-  with its own head; the language picker links between them.
+- All visible text lives in `src/i18n/messages/*.ts`; change EN, SR and RU together (TypeScript fails the build if a language misses a key). Pages: `/` (en), `/sr/`, `/ru/`, each prerendered with its own head; the language picker links between them.
 - After changing hero copy, re-run `node scripts/assets/generate-og.mjs` (one OG image per language).
 - Cloudflare setup guides (PDF, per language) live in `public/guides/`; the Hosting section links them.
 - Portrait: `node scripts/assets/process-portrait.mjs <photo>` (4:5 crop, never upscaled).
-- Projects: `status` is `live` (needs `liveUrl`), `source` (needs `repoUrl`) or `classified` (no URL).
-  Fictional showcase sites get `concept: true`: shown as Live but never counted as client work.
-- New live project screenshots: add `image: '<id>'`, then `node scripts/assets/capture-screenshots.mjs [<id>]`
-  (no id re-captures every live site).
-- Desktop-app screenshots (KeepItInCheck, DiskSweep): capture PNGs yourself (KeepItInCheck's built UI
-  runs on mock data in a plain browser; a WPF window can be grabbed with PowerShell `PrintWindow`), then
-  `node scripts/assets/frame-app-shots.mjs <id> <shot.png> [<shot2.png>]` places them on the site backdrop.
-  Never use a capture that shows personal file paths.
-- The Work section groups projects automatically (`projectGroup` / `cardSize` in `src/lib/projectLinks.ts`):
-  live + not concept → client sites, `concept` → concept sites, everything else → apps. Large (client)
-  cards list highlights; smaller cards fold them into a "Key features" toggle. `desktop: true` gives a
-  source-only project the desktop-app note.
+- Projects: `status` is `live` (needs `liveUrl`), `source` (needs `repoUrl`) or `classified` (no URL). Fictional showcase sites get `concept: true`: shown as Live but never counted as client work.
+- New live project screenshots: add `image: '<id>'`, then `node scripts/assets/capture-screenshots.mjs [<id>]` (no id re-captures every live site).
+- Desktop-app screenshots (KeepItInCheck, DiskSweep): capture PNGs yourself (KeepItInCheck's built UI runs on mock data in a plain browser; a WPF window can be grabbed with PowerShell `PrintWindow`), then `node scripts/assets/frame-app-shots.mjs <id> <shot.png> [<shot2.png>]` places them on the site backdrop. Never use a capture that shows personal file paths.
+- The Work section groups projects automatically (`projectGroup` / `cardSize` in `src/lib/projectLinks.ts`): live + not concept → client sites, `concept` → concept sites, everything else → apps. Large (client) cards list highlights; smaller cards fold them into a "Key features" toggle. `desktop: true` gives a source-only project the desktop-app note.
 - `SITE_URL` in `src/data/site.ts` drives every absolute URL (canonical, OG, sitemap, JSON-LD).
-- Tool/technology names belong only in the workflow section (`#skills`) and the Hosting section
-  (`#hosting`, which explains Cloudflare); an e2e test enforces it for the other sections.
+- Tool/technology names belong only in the workflow section (`#skills`) and the Hosting section (`#hosting`, which explains Cloudflare); an e2e test enforces it for the other sections.
 - Never publish the phone number or the CV PDF; tests check for `+381` / `tel:`.
-- Dark theme only (deep blue-violet night, orchid accent, mint for live/success; tokens in
-  `src/styles/tokens.css`; for transparency use the `-rgb` twins, e.g. `rgb(var(--accent-rgb) / x)`,
-  never raw colour values; SVG art takes colours through CSS classes). Copy is
-  client-facing: the site sells Miloš's web-building service.
-- After changing palette colours, also update `public/favicon.svg` + `Monogram.vue` and re-run
-  `node scripts/assets/generate-icons.mjs`; OG images come from `scripts/assets/og-template.html`.
+- Dark theme only (deep blue-violet night, orchid accent, mint for live/success; tokens in `src/styles/tokens.css`; for transparency use the `-rgb` twins, e.g. `rgb(var(--accent-rgb) / x)`, never raw colour values; SVG art takes colours through CSS classes). Copy is client-facing: the site sells Miloš's web-building service.
+- After changing palette colours, also update `public/favicon.svg` + `Monogram.vue` and re-run `node scripts/assets/generate-icons.mjs`; OG images come from `scripts/assets/og-template.html`.
 
 ## Testing
 
@@ -78,14 +56,8 @@ sets CSP/HSTS/cache). Font: Geist (self-hosted, latin + latin-ext + cyrillic). R
 
 ## Gotchas
 
-- Firefox and full Chrome cannot launch on this Windows machine (`spawn UNKNOWN`); local e2e runs
-  Chromium (Playwright headless shell) + WebKit; CI on GitHub runs Chromium + Firefox. Local
-  Lighthouse does not work either: use pagespeed.web.dev on the live URL.
-- A Playwright file filter like `projects` also matches the `D:\Projects` path and runs every spec:
-  pass the full path, e.g. `tests/e2e/projects.spec.ts`.
-- Files imported by `vite.config.ts` (src/data, src/lib, vite/) must use explicit `.ts` import
-  extensions: Vite 8 loads the config natively.
+- Firefox and full Chrome cannot launch on this Windows machine (`spawn UNKNOWN`); local e2e runs Chromium (Playwright headless shell) + WebKit; CI on GitHub runs Chromium + Firefox. Local Lighthouse does not work either: use pagespeed.web.dev on the live URL.
+- A Playwright file filter like `projects` also matches the `D:\Projects` path and runs every spec: pass the full path, e.g. `tests/e2e/projects.spec.ts`.
+- Files imported by `vite.config.ts` (src/data, src/lib, vite/) must use explicit `.ts` import extensions: Vite 8 loads the config natively.
 - WebKit's Tab key skips links (like Safari): Tab-order tests skip WebKit.
-- Push with plain `git push` (Git Credential Manager). The `gh` CLI token lacks the `workflow` scope,
-  so it cannot push changes to `.github/workflows`.
-- Before committing logic changes, run the `simplify` skill, then `code-review` at low effort.
+- Push with plain `git push` (Git Credential Manager). The `gh` CLI token lacks the `workflow` scope, so it cannot push changes to `.github/workflows`.

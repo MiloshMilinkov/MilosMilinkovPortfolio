@@ -23,6 +23,14 @@ npm run deploy       # build and deploy to Cloudflare Workers
 
 Content lives in `src/data/`; `SITE_URL` in `src/data/site.ts` controls every absolute URL (canonical, Open Graph, sitemap).
 
+## How it was built
+
+Built with [Claude Code](https://claude.com/claude-code). The project rules and commands are in
+[CLAUDE.md](CLAUDE.md), the
+[design spec](docs/superpowers/specs/2026-11-06-portfolio-site-design.md) and
+[implementation plan](docs/superpowers/plans/2026-11-06-portfolio-site.md) in `docs/superpowers/`,
+and the general workflow in [claude-workflow](https://github.com/MiloshMilinkov/claude-workflow).
+
 ## License
 
 Copyright © 2026 Miloš Milinkov. All rights reserved.
